@@ -30,14 +30,18 @@ audio:not([controls]) { display: none; }
  * 3. Prevent iOS text size adjust on device orientation change, without disabling user zoom: h5bp.com/g
  */
 
-html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+html { font-size: 75%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 
 body { 
   /*background-image: url(images/sun.jpg); top center fixed;  notre étoile */
-  background: black url(images/sun.jpg);
+  background: url("images/nasa-sun-blue.png") no-repeat fixed center center black;
   background-repeat: no-repeat;
   background-position: center;
-  margin: 0 5rem 0 5rem; font-size: 13px; line-height: 1.231; }
+  background-size: 100%;
+  /*margin: 0 5rem 0 5rem;*/
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.231; }
 
 body, button, input, select, textarea { font-family: sans-serif; color: #222; }
 
@@ -57,25 +61,26 @@ header nav {
   background: none repeat scroll 0 0 rgba(4, 13, 22, 0.4);
   overflow: hidden;
   padding-top: 0;
+  width: 100%;
+  margin-bottom: 5rem;
+  margin-top: 0;
 }
 
 header nav ul li {
 	list-style-type: none;
 }
 
-header nav ul li a,header nav ul li a:visited{
+header nav ul li a,header nav ul li a:visited,header nav ul li a:active{
 	background: #04101c;
 	background: rgba(4, 13, 22, 0.4);
 	color: #4e86a6; /* Blue */
 	display: block;
   float: left;
 	font-weight: bold;
-	font-size: 15px;
-	font-size: 1.5rem;
-  font-family: 'Sorts Mill Goudy','Arial', serif;
+	font-size: 1.8rem;
+  font-family: 'Sorts Mill Goudy','Courrier', Monospace;
 	text-decoration: none;
 	text-transform: lowercase;
-	padding: 10px 12px;
 	padding: 1rem 1.2rem;
 }
 
@@ -85,12 +90,13 @@ header nav ul li a:hover
   text-decoration:overline underline;
 }
 
-section.vevent {
+section.bienvenue {
   background: rgba(4, 13, 22, 0.4);
 	color: #4e86a6; /* Blue */
-	margin-top: 240px;
-	margin-top: 3rem;
-	padding-bottom: 0;
+  border: 0;
+  margin-bottom: 5rem;
+  margin-top: 5rem;
+  padding: 3.5rem 8rem 2.5rem 8rem;
 }
 
 header a.logo {
@@ -109,37 +115,53 @@ header h2.description {
 	margin-top: -4rem;
 }
 
-header h3,
 header h3 {
   background-color: rgba(100, 50, 200, 0.35);
   color: #4E86A6;
   text-align: justify;
-  border-radius: 20px;
+  border-radius: 2rem;
 	font-size: 2rem;
 	font-weight: bold;
-  padding: 1.5rem;
+  padding: 18px;
+  margin: 0;
 }
 
 header h4 {
-	font-size: 8px;
 	font-size: 0.8rem;
   color: #E6C800;
   text-align: right;
+  margin-top: 0.2rem;
+  margin-bottom: 0;
 }
 
+section.main {
+  margin: 5rem 8rem 5rem 8rem;
+}
 
+footer {
+  margin-left: 8rem;
+  margin-right: 8rem;
+}
 
 /* =============================================================================
    Links
    ========================================================================== */
 
-a { color: #DCF72F; text-decoration:none;}
-a:visited { color: #F1FDA4; }
-a:hover { color: #06e; text-decoration:underline; }
-a:focus { outline: thin dotted; }
+a {
+  color: #DCF72F;
+  text-decoration:none;
+}
+a:visited { 
+  color: #F1FDA4;
+}
+/*a:focus { outline: thin dotted; }*/
 
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
-a:hover, a:active {color: #0ff; outline: dotted; }
+a:hover, a:active {
+  color: #0ff;
+  /*outline: dotted;*/
+  text-decoration:underline; 
+}
 
 
 /* =============================================================================
@@ -154,9 +176,9 @@ blockquote { margin: 1em 40px; }
 
 dfn { font-style: italic; }
 
-dt {color: #fff; border-bottom-width: 5px; margin-bottom: 10px;font-style: italic;}
+dt {color: #fff; margin-top:1rem; margin-bottom: 1rem;font-style: italic;}
 
-p.event {color: #fff; margin-top: 10px;}
+p.event {color: #fff; margin-top: 0.1rem;}
 
 h2 {
   font-family: 'Bangers','Arial', cursive;
@@ -182,6 +204,8 @@ p {
   font-family: 'Salsa','Georgia', serif;
   color: #FFFFFF;
   text-align: justify;
+  border-radius: 0.5rem;
+  border: 0.2rem;
   margin: 0 1rem;
   padding: 0.5rem;
 }
