@@ -258,7 +258,7 @@ nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0
  */
 
 img { 
-	background-color: rgba(100, 50, 200, 0.35);
+	background-color: rgba(4, 13, 22, 0.75);
 	margin: 0; padding: 0.5rem;
 	border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
 
