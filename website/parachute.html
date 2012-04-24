@@ -1,0 +1,137 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+
+	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
+	More info: h5bp.com/b/378 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Confection du parachute</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="cansat, 2012, Supop, Institut d'Optique">
+	<meta name="author" content="Zubair Iftikhar">
+
+	<!-- Mobile viewport optimized: j.mp/bplateviewport -->
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+	<!-- CSS: implied media=all -->
+	<!-- CSS concatenated and minified via ant build script-->
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+	<!-- end CSS-->
+	<link rel="icon" href="http://arduino.cc/en/favicon.png" type="image/x-icon" />
+	<!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+	<link href='http://fonts.googleapis.com/css?family=Bangers|Sorts+Mill+Goudy:400italic|Philosopher:700|Salsa&subset=latin-ext' rel='stylesheet' type='text/css'>
+
+	<script src="js/libs/modernizr-custom.min.js"></script>
+</head>
+<body>
+	<header>
+		<nav>
+			<ul>
+				<li><a id="lkhome" href="/">accueil</a></li>
+				<li><a id="lkbut">l'objectif</a></li>
+				<li><a id="lkdesign">confection</a></li>
+				<li><a id="lkcrash">crash test</a></li>
+				<li><a id="lkcontact">contact</a></li>
+			</ul>
+		</nav>
+    <div class=centrage><img src="images/logo-small240.png" alt="Cansat"/></div>
+
+	</header>
+	<section id="but" class="main">
+		<h2>l'objectif <a class="top">↑</a></h2>
+
+		<p>Le Cansat doit être largué d'envrion 150 mètres de haut. Un parachute sera alors utile pour éviter qu'il ne s'écrase au sol lamentablement, mais aussi pour pouvoir prendre un <em>maximum</em> de photographies pendent la chute. Cependent le règlement du concours impose une vitesse de chute minimale de 2 m/s.
+		</p>
+		<p>Nous devons donc faire le <em>design</em> d'un parachute qui corresondra à ces contraintes. Nous ne cherchons qu'un ordre de grandeur des dimensions du parachute, la finition se fera après une phase de test.
+		</p>
+	</section>
+  
+	<section id="design" class="main">
+		<h2>confection <a class="top">↑</a></h2>
+		<p>On part du principe qu'avant qu'il n'atterrise, la vitesse du Cansat ne pourra jamais être inférieure à la vitesse du régime stationnaire du freinage visqueux dans l'air. Nous pouvons alors raisonner de façon statique et essayer de déterminer la forme du parachute étant donnée la vitesse limite du Cansat, que nous noterons V<sub>L</sub>.
+		</p>
+		<p>La vitesse à déterminer traduit l'équilibre entre la force de frottement fluide de l'air, F<sub>x</sub> , et le poids du système, P. Les expressions de ces deux forces sont données ci-dessous :
+		</p>
+		<div class="centrage"><div class="equ"><img src="images/forces.svg" alt="relation energie impulsion"/></div></div>
+		<p>On voit apparaître plusieurs coefficients, voici leurs signification:</p>
+			<ul>
+				<li>ρ : masse volumique de l'air, en toute rigueure, cette grandeur varie en fonction de l'altitude, mais nous ne cherchons qu'un ordre de grandeur de la solution, on prendra donc 1,2 kg/m<sup>3</sup> ;</li>
+				<li>S : est la surface frontale du parachute, c'est la surface de son projeté orthogonal au sol ;</li>
+				<li>C<sub>x</sub> : est le coefficient de trainée du parachute ;</li>
+				<li>V<sub>L</sub> : est la vitesse relative du système par rapport à l'air, on prend la vitesse limite fixée par le règlement: 2 m/s ;</li>
+				<li>m : est la masse du système, nous ne la connaissons pas encore parce que le Cansat n'est pas encore terminé, le <em>maximum</em> autorisé est 350 g ;</li>
+				<li>g : accélération gravitationelle, comme la masse volumique, il s'agit d'une variable, nous prendreons 9,8 m/s<sup>2</sup>.
+			</ul>
+		<p>La valeur du coefficient C<sub>x</sub> n'est pas encore très bien connue (merci de nous contacter si vous disposez d'une souflerie ^^), et nous allons prendre 1 puisqu'on choisira de concevoir un parachute hemisphérique. 
+		</p>
+		<p>Le seul paramètre que nous cherchons à determiner est alors le rayon, R,  de cette sphère. On le déduit de la surface permettant d'équilibrer ces deux forces:
+		</p>
+		<div class="centrage"><div class="equ"><img src="images/rayon.svg" alt="relation energie impulsion"/></div></div>
+		<p>En faisant l'application numérique pour une masse de 300 g, on trouve un rayon de R=62cm. Nous allons utiliser cette nouvelle donnée pour confectionner un parachute en sac plastique dans un premier temps. Après quelques essais, nous allons faire la version finale avec de la toile de spi.
+		</p>
+	</section>
+  
+  
+  
+  <section id="crash" class="main">
+		<h2>crash test <a class="top">↑</a></h2>
+    <p>La date des crash tests n'a pas encore été décidée.
+    </p>
+    
+	</section>	
+	
+	<section id="contact" class="main">
+		<h2>Contact <a class="top">↑</a></h2>
+		
+		<p>Pour plus d'informations n'hésitez pas nous contacter à l'adresse <a class="contact-link" href="mailto:cansat2012@supop.fr">cansat2012@supop.fr</a>.
+		</p>
+		<p>Vous pouvez croire que ce site n'est pas très esthétique. C'est sans doute vrai, mais essayez tout de même d'utiliser un navigateur tel que <a href="http://www.mozilla-europe.org/fr/">Mozilla Firefox</a>. En effet, ce site a été réalisé avec les dernières technologie du web, et il nécessite un navigateur récent.
+		</p>
+	</section>
+	
+	<footer>
+  <div class="centrage"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a></div><br /><p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</p>
+	</footer>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		var documentBody = (($.browser.chrome)||($.browser.safari)) ? document.body : document.documentElement;
+	  
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-27825146-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	  	
+	  	var temps=1000;
+		$('#lkbut').click(function() {
+			$(documentBody).animate({scrollTop: $('#but').offset().top}, temps);
+		});
+		$('#lkdesign').click(function() {
+			$(documentBody).animate({scrollTop: $('#design').offset().top}, temps);
+		});
+		$('#lkcrash').click(function() {
+			$(documentBody).animate({scrollTop: $('#crash').offset().top}, temps);
+		});
+		$('#lkcontact').click(function() {
+			$(documentBody).animate({scrollTop: $('#contact').offset().top}, temps);
+		});
+
+		$('.top').click(function() {
+			$(documentBody).animate({scrollTop: $('#lkhome').offset().top}, temps);
+		});
+	</script>
+  
+</body>
+</html>

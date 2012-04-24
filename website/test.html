@@ -1,0 +1,96 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+
+	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
+	More info: h5bp.com/b/378 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Projet Cansat 2012</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="cansat, 2012, Supop, Institut d'Optique">
+	<meta name="author" content="Zubair Iftikhar">
+
+	<!-- Mobile viewport optimized: j.mp/bplateviewport -->
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+	<!-- CSS: implied media=all -->
+	<!-- CSS concatenated and minified via ant build script-->
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+	<!-- end CSS-->
+	<link rel="icon" href="http://arduino.cc/en/favicon.png" type="image/x-icon" />
+	<!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+	<link href='http://fonts.googleapis.com/css?family=Bangers|Sorts+Mill+Goudy:400italic|Philosopher:700|Salsa&subset=latin-ext' rel='stylesheet' type='text/css'>
+
+	<script src="js/libs/modernizr-custom.min.js"></script>
+	
+	<!-- Inclusion de thickbox.js pour afficher les images -->
+	<link rel="stylesheet" href="js/thickbox.css" type="text/css" media="screen" />
+	
+</head>
+<body>
+	<header>
+		<nav>
+			<ul>
+				<li><a id="linkabout" >à propos du projet</a></li>
+				<li><a href="#team">l'équipe</a></li>
+				<li><a href="#mission">les missions</a></li>
+				<li><a href="#agenda">agenda</a></li>
+				<li><a id="linkcontact">contact</a></li>
+			</ul>
+		</nav>
+    <div class="centrage"><img src="images/logo-small240.png" alt="Cansat"/></div>
+		<section class="bienvenue"> 
+			<h3 class="description">Le projet Cansat 2012, c'est la réalisation d'un prototype de satellite de taille miniature, suffisamment petit pour tenir dans une canette de 33 cL.</h3>
+
+			<h4><span class="location">Institut d'Optique Graduate School</span></h4> 
+		</section>
+	</header>
+
+	<span>
+		<ul class="polaroids">
+				<li>
+					<a title="La caméra fonctionne..." href="images/hkgfmh.bmp" class="thickbox">
+						<img alt="Test de la caméra, par Clément" src="images/hkgfmh.bmp" />
+					</a>
+				</li>
+		</ul>
+	</span>
+	
+	<footer>
+  <div class="centrage"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a></div><br /><p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</p>
+	</footer>
+
+  <script src="js/jquery-1.7.2.js"></script>
+  	<!-- Inclusion de thickbox.js pour afficher les images -->
+	<script type="text/javascript" src="js/thickbox.js"></script>
+  <script type="text/javascript">
+  
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27825146-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+	var documentBody = (($.browser.chrome)||($.browser.safari)) ? document.body : document.documentElement;
+
+	$('#top').click(function() {
+		$(documentBody).animate({scrollTop: $('#bottom').offset().top}, 2000);
+	});
+
+	$('#bottom').click(function() {
+		$(documentBody).animate({scrollTop: $('#top').offset().top}, 2000);
+	});
+  </script>
+  
+</body>
+</html>
