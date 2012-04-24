@@ -33,8 +33,7 @@ audio:not([controls]) { display: none; }
 html { font-size: 75%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 
 body { 
-  /*background-image: url(images/sun.jpg); top center fixed;  notre étoile */
-  background: url("images/nasa-sun-blue.png") no-repeat fixed center center black;
+  background: url("images/nasa-sun-blue.jpg") no-repeat fixed center center black;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
@@ -75,10 +74,9 @@ header nav ul li a,header nav ul li a:visited,header nav ul li a:active{
 	background: rgba(4, 13, 22, 0.4);
 	color: #4e86a6; /* Blue */
 	display: block;
-  float: left;
-	font-weight: bold;
+	float: left;
 	font-size: 1.8rem;
-  font-family: "Sorts Mill Goudy";
+  	font-family: 'Audiowide', cursive;;
 	text-decoration: none;
 	text-transform: lowercase;
 	padding: 1rem 1.2rem;
@@ -124,22 +122,22 @@ header h2.description {
 }
 
 header h3 {
-  background-color: rgba(100, 50, 200, 0.35);
-  color: #4E86A6;
-  text-align: justify;
-  border-radius: 2rem;
+	background-color: rgba(100, 50, 200, 0.35);
+	color: #4E86A6;
+	text-align: justify;
+	border-radius: 2rem;
 	font-size: 2rem;
 	font-weight: bold;
-  padding: 18px;
-  margin: 0;
+	padding: 18px;
+	margin: 0;
 }
 
 header h4 {
 	font-size: 0.8rem;
-  color: #E6C800;
-  text-align: right;
-  margin-top: 0.2rem;
-  margin-bottom: 0;
+	color: #E6C800;
+	text-align: right;
+	margin-top: 0.2rem;
+	margin-bottom: 0;
 }
 
 section.main {
@@ -147,13 +145,17 @@ section.main {
 }
 
 .main ul {
+  margin: 0 1rem 0 5rem;
+  color: white;
+}
+
+#design ul {
   background-color: rgba(0, 0, 0, 0.45);
   font-family: 'Salsa','Georgia', serif;
   color: #FFFFFF;
   text-align: justify;
   border-radius: 0.5rem;
   border: 0.2rem;
-  margin: 0 1rem 0 5rem;
   padding: 0.5rem;
 }
 
@@ -187,7 +189,14 @@ a:hover, a:active {
    Typography
    ========================================================================== */
 
-abbr[title] { border-bottom: 1px dotted; }
+abbr[title] { border-bottom: 1px dotted;
+	color: white;
+	font-style: italic;
+	margin-bottom: 1rem;
+	margin-top: 1rem;
+}
+
+
 
 b, strong { font-weight: bold; }
 
@@ -197,7 +206,9 @@ dfn { font-style: italic; }
 
 dt {color: #fff; margin-top:1rem; margin-bottom: 1rem;font-style: italic;}
 
-p.event {color: #fff; margin-top: 0.1rem;}
+p.event {color: #fff; 
+	margin: 1rem 1rem 1rem 4rem;
+}
 
 h2 {
   font-family: 'Bangers','Arial', cursive;
@@ -251,7 +262,7 @@ sub { bottom: -0.25em; }
    ========================================================================== */
 
 font-family: 'Bangers', cursive;
-font-family: 'Sorts Mill Goudy', serif;
+font-family: 'Audiowide', cursive;
 font-family: 'Philosopher', sans-serif;
 font-family: 'Salsa', cursive;
 
