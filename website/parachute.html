@@ -8,7 +8,7 @@
 
 	<title>Confection du parachute</title>
 	<meta name="description" content="">
-	<meta name="keywords" content="cansat, 2012, Supop, Institut d'Optique">
+	<meta name="keywords" content="parachute, cansat, 2012, Supop, Institut d'Optique">
 	<meta name="author" content="Zubair Iftikhar">
 
 	<!-- Mobile viewport optimized: j.mp/bplateviewport -->
@@ -23,7 +23,8 @@
 	<link rel="icon" href="http://arduino.cc/en/favicon.png" type="image/x-icon" />
 	<!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
 	<link href='http://fonts.googleapis.com/css?family=Bangers|Audiowide|Philosopher:700|Salsa&amp;subset=latin-ext' rel='stylesheet' type='text/css'>
-
+	<!-- Inclusion de thickbox.js pour afficher les images -->
+	<link rel="stylesheet" href="js/thickbox.css" type="text/css" media="screen" />
 	<script src="js/libs/modernizr-custom.min.js"></script>
 </head>
 <body>
@@ -32,6 +33,7 @@
 			<ul>
 				<li><a id="lkhome" href="/">accueil</a></li>
 				<li><a id="lkbut">l'objectif</a></li>
+				<li><a id="lkdim">dimensionnement</a></li>
 				<li><a id="lkdesign">confection</a></li>
 				<li><a id="lkcrash">crash test</a></li>
 				<li><a id="lkcontact">contact</a></li>
@@ -44,17 +46,17 @@
 
 		<p>Le Cansat doit être largué d'envrion 150 mètres de haut. Un parachute sera alors utile pour éviter qu'il ne s'écrase au sol lamentablement, mais aussi pour pouvoir prendre un <em>maximum</em> de photographies pendent la chute. Cependent le règlement du concours impose une vitesse de chute minimale de 2 m/s.
 		</p>
-		<p>Nous devons donc faire le <em>design</em> d'un parachute qui corresondra à ces contraintes. Nous ne cherchons qu'un ordre de grandeur des dimensions du parachute, la finition se fera après une phase de test.
+		<p>Nous devons donc faire le <em>design</em> d'un parachute qui correspondra à ces contraintes. Nous ne cherchons qu'un ordre de grandeur des dimensions du parachute, la finition se fera après une phase de test.
 		</p>
 	</section>
   
-	<section id="design" class="main">
-		<h2>confection <a class="top">↑</a></h2>
+	<section id="dim" class="main">
+		<h2>dimensionnement <a class="top">↑</a></h2>
 		<p>On part du principe qu'avant qu'il n'atterrise, la vitesse du Cansat ne pourra jamais être inférieure à la vitesse du régime stationnaire du freinage visqueux dans l'air. Nous pouvons alors raisonner de façon statique et essayer de déterminer la forme du parachute étant donnée la vitesse limite du Cansat, que nous noterons V<sub>L</sub>.
 		</p>
 		<p>La vitesse à déterminer traduit l'équilibre entre la force de frottement fluide de l'air, F<sub>x</sub> , et le poids du système, P. Les expressions de ces deux forces sont données ci-dessous :
 		</p>
-		<div class="centrage"><div class="equ"><img src="images/svg/forces.svg" alt="relation energie impulsion"/></div></div>
+		<div class="centrage"><div class="equ"><img src="images/svg/forces.svg" title="F_x=\frac{1}{2}\ \rho\ S\ C_{x}V_{L}^2 \hspace{5mm} \textrm{ et } \hspace{5mm} P=mg" alt="F_x=\frac{1}{2}\ \rho\ S\ C_{x}V_{L}^2 \hspace{5mm} \textrm{ et } \hspace{5mm} P=mg"/></div></div>
 		<p>On voit apparaître plusieurs coefficients, voici leurs signification:</p>
 			<ul>
 				<li>ρ : masse volumique de l'air, en toute rigueure, cette grandeur varie en fonction de l'altitude, mais nous ne cherchons qu'un ordre de grandeur de la solution, on prendra donc 1,2 kg/m<sup>3</sup> ;</li>
@@ -68,14 +70,104 @@
 		</p>
 		<p>Le seul paramètre que nous cherchons à determiner est alors le côté, a,  des carrés. On le déduit de la surface permettant d'équilibrer ces deux forces:
 		</p>
-		<div class="centrage"><div class="equ"><img src="images/svg/surface.svg" alt="relation energie impulsion"/></div></div>
-		<p>En faisant l'application numérique pour une masse de 300 g, on trouve un côté de a=62cm. Nous allons utiliser cette nouvelle donnée pour confectionner un parachute en sac plastique dans un premier temps. Après quelques essais, nous allons faire la version finale avec de la toile de spi.
+		<div class="centrage"><div class="equ"><img src="images/svg/surface.svg" title="S=\frac{2\ mg}{\rho\ C_{x}V_{L}^2} \hspace{1mm} \textrm{, et } \hspace{1mm} S=5a^2" alt="S=\frac{2\ mg}{\rho\ C_{x}V_{L}^2} \hspace{1mm} \textrm{, et } \hspace{1mm} S=5a^2"/></div></div>
+		<p>En faisant l'application numérique pour une masse de 300 g, on trouve un côté de a=50cm. Il faudra donc utiliser environ 1,5 m<sup>2</sup> de toile, sur un rectangle de proportion 2/3. Nous allons utiliser cette nouvelle donnée pour confectionner un parachute en sac plastique dans un premier temps. Après quelques essais, nous allons faire la version finale avec de la toile de spi.
 		</p>
 	</section>
   
+	<section id="design" class="main">
+		<h2>confection <a class="top">↑</a></h2>
+    <p>Voici quelques images qui montrent la confection du parachute à l'aide de sac plastique:
+    </p>
+	<br style="clear: both;"/>
+    <span>
+		<ul class="polaroids">
+			<li>
+				<a title="sac poubelle 50L" href="images/parachute/DSCF2862.JPG" class="thickbox">
+					<img alt="sac poubelle 50L" src="images/parachute/thumbs/DSCF2862.gif" />
+				</a>
+			</li>
+			<li>
+				<a title="ablation du cul-de-sac" href="images/parachute/DSCF2863.JPG" class="thickbox">
+					<img alt="découpage de la fermeture" src="images/parachute/thumbs/DSCF2863.gif" />
+				</a>
+			</li>	
+			<li>
+				<a title="largeur de 50cm" href="images/parachute/DSCF2865.JPG" class="thickbox">
+					<img alt="largeur de 50cm" src="images/parachute/thumbs/DSCF2865.gif" />
+				</a>
+			</li>
+			<li>
+				<a title="longueur de 50cm" href="images/parachute/DSCF2867.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2867.gif" />
+				</a>
+			</li>	
+			<li>
+				<a title="c'est bien un carré" href="images/parachute/DSCF2868.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2868.gif" />
+				</a>
+			</li>
+			<li>
+				<a title="l'outil fondamental" href="images/parachute/DSCF2869.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2869.gif" />
+				</a>
+			</li>	
+			<li>
+				<a title="points de suture" href="images/parachute/DSCF2870.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2870.gif" />
+				</a>
+			</li>
+			<li>
+				<a title="ça prend forme" href="images/parachute/DSCF2871.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2871.gif" />
+				</a>
+			</li>	
+			<li>
+				<a title="fixation pour suspente" href="images/parachute/DSCF2872.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2872.gif" />
+				</a>
+			</li>
+			<li>
+				<a title="utilisation d'un fer" href="images/parachute/DSCF2877.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2877.gif" />
+				</a>
+			</li>
+			<li>
+				<a title="cautérisation" href="images/parachute/DSCF2873.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2873.gif" />
+				</a>
+			</li>
+			<li>
+				<a title="fer usité" href="images/parachute/DSCF2883.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2883.gif" />
+				</a>
+			</li>
+			<li>
+				<a title="arrivée d'air frais" href="images/parachute/DSCF2874.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2874.gif" />
+				</a>
+			</li>
+			<li>
+				<a title="préparation des suspentes" href="images/parachute/DSCF2886.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2886.gif" />
+				</a>
+			</li>
+			<li>
+				<a title="fixation" href="images/parachute/DSCF2887.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2887.gif" />
+				</a>
+			</li>	
+			<li>
+				<a title="résultat final" href="images/parachute/DSCF2889.JPG" class="thickbox">
+					<img alt="Test de la caméra, par Clément" src="images/parachute/thumbs/DSCF2889.gif" />
+				</a>
+			</li>	
+		</ul>
+	</span>
+	<br style="clear: both;"/>
+	</section>	
   
-  
-  <section id="crash" class="main">
+	<section id="crash" class="main">
 		<h2>crash test <a class="top">↑</a></h2>
     <p>La date des crash tests n'a pas encore été décidée.
     </p>
@@ -96,6 +188,8 @@
 	</footer>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!-- Inclusion de thickbox.js pour afficher les images -->
+	<script type="text/javascript" src="js/thickbox.js"></script>
 	<script type="text/javascript">
 		var documentBody = (($.browser.chrome)||($.browser.safari)) ? document.body : document.documentElement;
 	  
@@ -113,6 +207,9 @@
 		$('#lkbut').click(function() {
 			$(documentBody).animate({scrollTop: $('#but').offset().top}, temps);
 		});
+		$('#lkdim').click(function() {
+			$(documentBody).animate({scrollTop: $('#dim').offset().top}, temps);
+		});
 		$('#lkdesign').click(function() {
 			$(documentBody).animate({scrollTop: $('#design').offset().top}, temps);
 		});
@@ -122,7 +219,7 @@
 		$('#lkcontact').click(function() {
 			$(documentBody).animate({scrollTop: $('#contact').offset().top}, temps);
 		});
-
+		
 		$('.top').click(function() {
 			$(documentBody).animate({scrollTop: $('#lkhome').offset().top}, temps);
 		});
