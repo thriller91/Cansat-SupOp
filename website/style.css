@@ -33,8 +33,7 @@ audio:not([controls]) { display: none; }
 html { font-size: 75%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 
 body { 
-  /*background-image: url(images/sun.jpg); top center fixed;  notre étoile */
-  background: url("images/nasa-sun-blue.png") no-repeat fixed center center black;
+  background: url("images/nasa-sun-blue.jpg") no-repeat fixed center center black;
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
@@ -62,7 +61,7 @@ header nav {
   overflow: hidden;
   padding-top: 0;
   width: 100%;
-  margin-bottom: 5rem;
+  margin-bottom: 0;
   margin-top: 0;
 }
 
@@ -75,10 +74,9 @@ header nav ul li a,header nav ul li a:visited,header nav ul li a:active{
 	background: rgba(4, 13, 22, 0.4);
 	color: #4e86a6; /* Blue */
 	display: block;
-  float: left;
-	font-weight: bold;
+	float: left;
 	font-size: 1.8rem;
-  font-family: 'Sorts Mill Goudy','Courrier', Monospace;
+  	font-family: 'Audiowide', cursive;;
 	text-decoration: none;
 	text-transform: lowercase;
 	padding: 1rem 1.2rem;
@@ -103,8 +101,16 @@ header a.logo {
 	display: block;
 }
 
-div.centrage {text-align: center;
-  margin: 1rem 0;}
+div.centrage {
+	text-align: center;
+	margin: 5rem 0;
+}
+
+div.equ img {
+	background-color: rgba(255, 255, 255, 0.50);
+	height: 6rem;
+}
+
 
 header h2 {
 	color: #fff;
@@ -116,26 +122,41 @@ header h2.description {
 }
 
 header h3 {
-  background-color: rgba(100, 50, 200, 0.35);
-  color: #4E86A6;
-  text-align: justify;
-  border-radius: 2rem;
+	background-color: rgba(100, 50, 200, 0.35);
+	color: #4E86A6;
+	text-align: justify;
+	border-radius: 2rem;
 	font-size: 2rem;
 	font-weight: bold;
-  padding: 18px;
-  margin: 0;
+	padding: 18px;
+	margin: 0;
 }
 
 header h4 {
 	font-size: 0.8rem;
-  color: #E6C800;
-  text-align: right;
-  margin-top: 0.2rem;
-  margin-bottom: 0;
+	color: #E6C800;
+	text-align: right;
+	margin-top: 0.2rem;
+	margin-bottom: 0;
 }
 
 section.main {
   margin: 5rem 8rem 5rem 8rem;
+}
+
+.main ul {
+  margin: 0 1rem 0 5rem;
+  color: white;
+}
+
+#design ul {
+  background-color: rgba(0, 0, 0, 0.45);
+  font-family: 'Salsa','Georgia', serif;
+  color: #FFFFFF;
+  text-align: justify;
+  border-radius: 0.5rem;
+  border: 0.2rem;
+  padding: 0.5rem;
 }
 
 footer {
@@ -168,7 +189,14 @@ a:hover, a:active {
    Typography
    ========================================================================== */
 
-abbr[title] { border-bottom: 1px dotted; }
+abbr[title] { border-bottom: 1px dotted;
+	color: white;
+	font-style: italic;
+	margin-bottom: 1rem;
+	margin-top: 1rem;
+}
+
+
 
 b, strong { font-weight: bold; }
 
@@ -178,7 +206,9 @@ dfn { font-style: italic; }
 
 dt {color: #fff; margin-top:1rem; margin-bottom: 1rem;font-style: italic;}
 
-p.event {color: #fff; margin-top: 0.1rem;}
+p.event {color: #fff; 
+	margin: 1rem 1rem 1rem 4rem;
+}
 
 h2 {
   font-family: 'Bangers','Arial', cursive;
@@ -232,7 +262,7 @@ sub { bottom: -0.25em; }
    ========================================================================== */
 
 font-family: 'Bangers', cursive;
-font-family: 'Sorts Mill Goudy', serif;
+font-family: 'Audiowide', cursive;
 font-family: 'Philosopher', sans-serif;
 font-family: 'Salsa', cursive;
 
@@ -255,7 +285,13 @@ nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0
  * 2. Remove the gap between images and borders on image containers: h5bp.com/e 
  */
 
-img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+img { 
+	background-color: rgba(4, 13, 22, 0.75);
+	margin: 0 auto; padding: 0.5rem;
+	border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle;
+	display: block; }
+	
+
 
 /*
  * Correct overflow not hidden in IE9 
@@ -358,9 +394,101 @@ td { vertical-align: top; }
 
 
 
+ul.polaroids.img {
+	display: block;
+    margin-bottom: 12px;
+    width: 190px;
+}
+
+ul.polaroids a:after {
+	content: attr(title);
+}
+
+
+ul.polaroids a {
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    color: #333333;
+    display: inline;
+    float: left;
+    font-family: "Marker Felt",sans-serif;
+    font-size: 18px;
+    margin: 0 0 27px 30px;
+    padding: 10px 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    width: auto;
+}
+
+ul.polaroids li {
+    display: inline;
+}
 
 
 
+/* By default, we tilt all our images -2 degrees */
+ul.polaroids a {
+-webkit-transform: rotate(-2deg);
+-moz-transform: rotate(-2deg);
+}
+ 
+/* Rotate all even images 2 degrees */
+ul.polaroids li:nth-child(even) a {
+-webkit-transform: rotate(2deg);
+-moz-transform: rotate(2deg);
+}
+ 
+/* Don't rotate every third image, but offset its position */
+ul.polaroids li:nth-child(3n) a {
+-webkit-transform: none;
+-moz-transform: none;
+position: relative;
+top: -5px;
+}
+ 
+/* Rotate every fifth image by 5 degrees and offset it */
+ul.polaroids li:nth-child(5n) a {
+-webkit-transform: rotate(5deg);
+-moz-transform: rotate(5deg);
+position: relative;
+right: 5px;
+}
+ 
+/* Keep default rotate for every eighth, but offset it */
+ul.polaroids li:nth-child(8n) a {
+position: relative;
+top: 8px;
+right: 5px;
+}
+ 
+/* Keep default rotate for every eleventh, but offset it */
+ul.polaroids li:nth-child(11n) a {
+position: relative;
+top: 3px;
+left: -5px;
+}
+
+
+/* Scale the images on hover, add transitions for smoothing things out, and ensure the hover appears on top */
+ul.polaroids a:hover {
+-webkit-transform: scale(1.25);
+-moz-transform: scale(1.25);
+position: relative;
+z-index: 5;
+}
+
+/* Add drop shadows and smooth out the transition (Safari only) */
+ul.polaroids a {
+-webkit-transition: -webkit-transform .15s linear;
+-webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+-moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
+}
+ 
+/* On hover, darken the shadows a bit */
+ul.polaroids a {
+-webkit-box-shadow: 0 3px 6px rgba(0,0,0,.5);
+-moz-box-shadow: 0 3px 6px rgba(0,0,0,.5);
+}
 
 
 
