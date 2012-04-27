@@ -120,6 +120,9 @@ void uCAM::begin(void)
 	{
 		return;
 	}
+
+	commINITIAL(response,0x07,0x05,0x05);
+	
 	commSET_PACKAGE_SIZE(response);
 	
 	return;
