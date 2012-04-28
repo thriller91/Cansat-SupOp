@@ -60,6 +60,16 @@ int main(int argc, char * argv[])
 	char whichdata;
 	string s="";
 	int nbr_line;
+	
+	uint8_t cam,imgId;
+	uint32_t imgDate;
+	uint8_t temp;
+	uint16_t nbPkg;
+	
+	uint16_t pkgId;
+	uint16_t pkgSize;
+
+	char ** imgPkg(0);
 
 	while (1)
 	{
@@ -108,7 +118,64 @@ int main(int argc, char * argv[])
 					TimeAtmAccData.close();
 					GPS.close();
 					
+					imgPkg = new char*[nbPkg];
+					
+					
+				case 10:
+					read(port,buffer(&c,1));
+					cam = 0x80 & c;
+					imgId = 0x7F & c;
+					cout<<"receiving image "<<imgId<<" from camera"<<cam<<endl;
+					imgDate = 0;
+					for (int i=0;i<4;i++)
+					{
+						read(port,buffer(&c,1));
+						temp = c;
+						imgDate += temp<<(8*i);
+					}
+					nbPkg=0;
+					for (int i=0;i<2;i++)
+					{
+						read(port,buffer(&c,1));
+						temp = c;
+						nbPkg += temp<<(8*i);
+					}
+					
+					
+					
+					
+					
 				case 01:
+					read(port,buffer(&c,1));
+					cam = 0x80 & c;
+					imgId = 0x7F & c;
+					
+					string filename = "img_" + cam + "_" + imgId;
+					ofstream img(filename.c_str(),ios::app | ios::binary);
+					
+					pkgId = 0;
+					for (int i=0;i<2;i++)
+					{
+						read(port,buffer(&c,1));
+						temp = c;
+						imgId += temp<<(8*i);
+					}
+					
+					for (int i=0;i<2;i++)
+					{
+						read(port,buffer(&c,1));
+						temp = c;
+						pkgSize += temp<<(8*i);
+					}
+					
+					imgPkg[pkgId] = new char[pkgSize];
+					
+					for (int l=0; l<pkgSize; l++)
+					{
+						read(port,buffer(&c,1));
+						imgPkg[k][l] = c;
+					}
+					
 			}
 		}
 	}
