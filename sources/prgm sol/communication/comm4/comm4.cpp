@@ -41,5 +41,23 @@ int Rnbr(uint8_t descByte)
 	return nbr;	
 }
 
-
+bool checkPkg(char* pkg,unsigned int pkgSize)
+{
+	unsigned long sum=0;
+	for (int k=0;k<pkgSize-2;k++)
+	{
+		sum+=pkg[k];
+	}
+	
+	uint16_t sumLastBytes = sum & 0xFFFF;
+	
+	uint16_t check = pkg[pkgSize-2] + (pkg[pkgSize-3]<<8);
+	
+	if (sumLastBytes == check)
+	{
+		return 1;
+	}
+	
+	return 0;
+}
 

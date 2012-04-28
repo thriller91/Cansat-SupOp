@@ -10,7 +10,7 @@
 
 bool isHeader(char c);
 int Rnbr(uint8_t descByte);
-
+bool checkPkg(char* pkg,unsigned int pkgSize);
 
 #endif
 

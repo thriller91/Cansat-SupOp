@@ -47,14 +47,9 @@ int main(int argc, char * argv[])
 	port.set_option( PARITY );
 	port.set_option( STOP );
 	
-	ofstream TimeAtmAccData("TimeAtmAccData.txt");
-	ofstream GPS("GPS.txt");
-	
-	//if (!TimeAtmAccData) cout<<"Erreur à l'ouverture de TimeAtmAccData.txt"<<endl;
-	//if (!GPS) cout<<"Erreur à l'ouverture de GPS.txt"<<endl;
-	
-	//TimeAtmAccData<<"aaa"<<endl;
-	//GPS<<"aaa"<<endl;
+	ofstream TimeAtmAccData;
+	ofstream GPS;
+	ofstream img;
 	
 	char c;
 	char whichdata;
@@ -67,7 +62,11 @@ int main(int argc, char * argv[])
 	uint16_t nbPkg;
 	
 	uint16_t pkgId;
+	uint8_t pkgIdBytes[2];
 	uint16_t pkgSize;
+	uint8_t pkgSizeBytes[2];
+	
+	string filename;
 
 	char ** imgPkg(0);
 
@@ -85,8 +84,8 @@ int main(int argc, char * argv[])
 			switch (c)
 			{
 				case 0x06:
-					ofstream TimeAtmAccData("TimeAtmAccData.txt",ios::app);
-					ofstream GPS("GPS.txt",ios::app);
+					TimeAtmAccData.open("TimeAtmAccData.txt",ios::app);
+					GPS.open("GPS.txt",ios::app);
 				
 					read(port,buffer(&whichdata,1));
 					nbr_line = Rnbr(whichdata);
@@ -119,6 +118,7 @@ int main(int argc, char * argv[])
 					GPS.close();
 					
 					imgPkg = new char*[nbPkg];
+					break;
 					
 					
 				case 10:
@@ -140,7 +140,7 @@ int main(int argc, char * argv[])
 						temp = c;
 						nbPkg += temp<<(8*i);
 					}
-					
+					break;
 					
 					
 					
@@ -150,32 +150,71 @@ int main(int argc, char * argv[])
 					cam = 0x80 & c;
 					imgId = 0x7F & c;
 					
-					string filename = "img_" + cam + "_" + imgId;
-					ofstream img(filename.c_str(),ios::app | ios::binary);
+					filename = "img_";
+					filename += cam;
+					filename += "_";
+					filename += imgId;
+					img.open(filename.c_str(),ios::app | ios::binary);
 					
 					pkgId = 0;
 					for (int i=0;i<2;i++)
 					{
 						read(port,buffer(&c,1));
-						temp = c;
-						imgId += temp<<(8*i);
+						pkgIdBytes[i] = c;
+						pkgId += pkgIdBytes[i]<<(8*i);
 					}
 					
 					for (int i=0;i<2;i++)
 					{
 						read(port,buffer(&c,1));
-						temp = c;
-						pkgSize += temp<<(8*i);
+						pkgIdBytes[i] = c;
+						pkgSize += pkgIdBytes[i]<<(8*i);
 					}
 					
 					imgPkg[pkgId] = new char[pkgSize];
 					
-					for (int l=0; l<pkgSize; l++)
+					for (int l=0;l<2;l++)
 					{
-						read(port,buffer(&c,1));
-						imgPkg[k][l] = c;
+						imgPkg[pkgId][l]=pkgIdBytes[l];
 					}
 					
+					for (int l=0;l<2;l++)
+					{
+						imgPkg[pkgId][l+2]=pkgIdBytes[l];
+					}
+					
+					for (int l=4; l<pkgSize; l++)
+					{
+						read(port,buffer(&c,1));
+						imgPkg[pkgId][l] = c;
+					}
+					
+					if (checkPkg(imgPkg[pkgId],pkgSize))
+					{
+						cout<<"Package "<<pkgId<<" checked"<<endl;
+					}
+					else
+					{
+						cout<<"Bad checksum on pkg "<<pkgId<<endl;
+					}
+					
+					img.write(imgPkg[pkgId]+2,pkgSize-6);
+					img.close();
+					
+					if (pkgId == nbPkg-1)
+					{
+
+						for (int k=0;k<nbPkg;k++)
+						{
+							delete imgPkg[k];
+						}
+						delete imgPkg;
+					}
+					
+					break;
+					
+				default:
+					cout<<"Bad package type : "<<c<<endl;
 			}
 		}
 	}
