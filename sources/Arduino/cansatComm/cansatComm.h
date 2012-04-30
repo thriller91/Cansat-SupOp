@@ -3,7 +3,6 @@
 
 #include <avr/pgmspace.h>
 #include "Arduino.h"
-#include "new.h"
 #include <inttypes.h>
 
 #define CANSATCOMM_NB_ROW 5

@@ -2,7 +2,6 @@
 #include "cansatComm.h"
 #include "Arduino.h"
 #include "SoftwareSerial.h"
-#include "new.h"
 
 SoftwareSerial commPort(7,6);
 

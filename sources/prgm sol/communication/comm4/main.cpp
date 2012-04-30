@@ -120,7 +120,6 @@ int main(int argc, char * argv[])
 					TimeAtmAccData.close();
 					GPS.close();
 					
-					imgPkg = new char*[nbPkg];
 					break;
 					
 					
@@ -166,7 +165,7 @@ int main(int argc, char * argv[])
 					
 					cout<<static_cast<int>(cam)<<"	"<<static_cast<int>(imgId)<<endl;
 					
-					filename="img_" + lexical_cast<string>(cam) + "_" + lexical_cast<string>(imgId) + ".jpg";
+					filename="img_" + lexical_cast<string>(static_cast<int>(cam)) + "_" + lexical_cast<string>(static_cast<int>(imgId)) + ".jpg";
 
 					
 					cout<<filename<<endl;
@@ -183,7 +182,7 @@ int main(int argc, char * argv[])
 						imgPkg[l] = c;
 					}
 					
-					if (checkPkg(imgPkg[pkgId],pkgSize))
+					if (checkPkg(imgPkg,pkgSize))
 					{
 						cout<<"Package "<<pkgId<<" checked"<<endl;
 					}
@@ -192,16 +191,11 @@ int main(int argc, char * argv[])
 						cout<<"Bad checksum on pkg "<<pkgId<<endl;
 					}
 					
-					img.write(imgPkg+2,pkgSize-6);
+					img.write(imgPkg+4,pkgSize-6);
 					img.close();
 					
 					if (pkgId == nbPkg-1)
 					{
-
-						for (int k=0;k<nbPkg;k++)
-						{
-							delete imgPkg[k];
-						}
 						delete imgPkg;
 					}
 					
