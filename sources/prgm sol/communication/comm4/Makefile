@@ -1,8 +1,8 @@
 all:
 	
-	g++ -O2 -c main.cpp
-	g++ -O2 -c comm4.cpp
-	g++ -o comm4 main.o comm4.o -lboost_system
+	g++ -c main.cpp -g
+	g++ -c comm4.cpp -g
+	g++ -o comm4 main.o comm4.o -lboost_system -g
 	rm main.o comm4.o
 	
 clean:

@@ -1,11 +1,13 @@
 #include <boost/asio.hpp> 
+#include <boost/lexical_cast.hpp>
 using namespace::boost::asio;
+using boost::lexical_cast;
 #include <iostream>
 #include <fstream>
 using namespace std;
 #include <string>
-using std::string;
 #include "comm4.h"
+#include <sstream>
 
 const char *PORT(0);
 
@@ -67,8 +69,9 @@ int main(int argc, char * argv[])
 	uint8_t pkgSizeBytes[2];
 	
 	string filename;
+	stringstream filename0;
 
-	char ** imgPkg(0);
+	char * imgPkg(0);
 
 	while (1)
 	{
@@ -121,11 +124,13 @@ int main(int argc, char * argv[])
 					break;
 					
 					
-				case 10:
+					
+					
+				case 0x10:
 					read(port,buffer(&c,1));
-					cam = 0x80 & c;
+					cam = (0x80 & c)>>7;
 					imgId = 0x7F & c;
-					cout<<"receiving image "<<imgId<<" from camera"<<cam<<endl;
+					cout<<"receiving image "<<static_cast<int>(imgId)<<" from camera"<<static_cast<int>(cam)<<endl;
 					imgDate = 0;
 					for (int i=0;i<4;i++)
 					{
@@ -133,6 +138,7 @@ int main(int argc, char * argv[])
 						temp = c;
 						imgDate += temp<<(8*i);
 					}
+					cout<<"taken at "<<static_cast<unsigned long>(imgDate)<<"ms"<<endl;
 					nbPkg=0;
 					for (int i=0;i<2;i++)
 					{
@@ -140,53 +146,41 @@ int main(int argc, char * argv[])
 						temp = c;
 						nbPkg += temp<<(8*i);
 					}
+					for (int i=0;i<2;i++)
+					{
+						read(port,buffer(&c,1));
+						temp = c;
+						pkgSize += temp<<(8*i);
+					}
+					cout<<static_cast<int>(nbPkg)<<"	"<<static_cast<int>(pkgSize)<<endl;
+					imgPkg= new char[pkgSize];
 					break;
 					
 					
 					
 					
-				case 01:
+				case 0x01:
 					read(port,buffer(&c,1));
-					cam = 0x80 & c;
+					cam = 0x80 & c>>7;
 					imgId = 0x7F & c;
 					
-					filename = "img_";
-					filename += cam;
-					filename += "_";
-					filename += imgId;
+					cout<<static_cast<int>(cam)<<"	"<<static_cast<int>(imgId)<<endl;
+					
+					filename="img_" + lexical_cast<string>(cam) + "_" + lexical_cast<string>(imgId) + ".jpg";
+
+					
+					cout<<filename<<endl;
+					
 					img.open(filename.c_str(),ios::app | ios::binary);
 					
-					pkgId = 0;
-					for (int i=0;i<2;i++)
+					cout<<pkgId<<endl;
+					pkgId=0;
+					pkgSize=64;
+					
+					for (int l=0; l<pkgSize; l++)
 					{
 						read(port,buffer(&c,1));
-						pkgIdBytes[i] = c;
-						pkgId += pkgIdBytes[i]<<(8*i);
-					}
-					
-					for (int i=0;i<2;i++)
-					{
-						read(port,buffer(&c,1));
-						pkgIdBytes[i] = c;
-						pkgSize += pkgIdBytes[i]<<(8*i);
-					}
-					
-					imgPkg[pkgId] = new char[pkgSize];
-					
-					for (int l=0;l<2;l++)
-					{
-						imgPkg[pkgId][l]=pkgIdBytes[l];
-					}
-					
-					for (int l=0;l<2;l++)
-					{
-						imgPkg[pkgId][l+2]=pkgIdBytes[l];
-					}
-					
-					for (int l=4; l<pkgSize; l++)
-					{
-						read(port,buffer(&c,1));
-						imgPkg[pkgId][l] = c;
+						imgPkg[l] = c;
 					}
 					
 					if (checkPkg(imgPkg[pkgId],pkgSize))
@@ -198,7 +192,7 @@ int main(int argc, char * argv[])
 						cout<<"Bad checksum on pkg "<<pkgId<<endl;
 					}
 					
-					img.write(imgPkg[pkgId]+2,pkgSize-6);
+					img.write(imgPkg+2,pkgSize-6);
 					img.close();
 					
 					if (pkgId == nbPkg-1)
@@ -212,6 +206,21 @@ int main(int argc, char * argv[])
 					}
 					
 					break;
+					
+					
+					
+				
+				case 0x02:
+					while (c != '\n')
+					{
+					    read(port,buffer(&c,1));
+					    s+=c;					    
+					}
+					cout<<s;
+					break;					
+					
+					
+					
 					
 				default:
 					cout<<"Bad package type : "<<c<<endl;

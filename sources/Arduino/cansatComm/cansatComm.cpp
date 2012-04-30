@@ -27,6 +27,20 @@ cansatComm::cansatComm(uint8_t id,uint8_t devices)
 
 	_headercam[4] = 0x01;
 	
+	_headercam2[0] = 0x10;
+	_headercam2[1] = 0x65;
+	_headercam2[2] = 0x07;
+	_headercam2[3] = 0xDD;
+
+	_headercam2[4] = 0x10;	
+	
+	_headertext[0] = 0x10;
+	_headertext[1] = 0x65;
+	_headertext[2] = 0x07;
+	_headertext[3] = 0xDD;
+	
+	_headertext[4] = 0x02;
+	
 	_imgid = 0x00;
 	
 	_devices = devices;
@@ -36,7 +50,7 @@ cansatComm::cansatComm(uint8_t id,uint8_t devices)
 
 cansatComm::~cansatComm()
 {
-	//delete _date_millis, _tempBMP085, _pressure, _tempDHT22, _humidity, _xaxis, _yaxis, _zaxis, _NMEAdata;
+	
 }
 
 
@@ -46,55 +60,58 @@ void cansatComm::begin(unsigned long speed,uint8_t nbr_row)
 	
 	
 	_nbr_row=nbr_row;
-	
-	/*//date_millis
-	_date_millis = new unsigned long(nbr_row);
-	
-	//BMP085
-	if ((_devices & 0x08)>0)
-	{
-		_tempBMP085 = new short(nbr_row);
-		_pressure = new long(nbr_row);
-	}
-	
-	//DHT22
-	if ((_devices & 0x04)>0)
-	{
-		_tempDHT22 = new float(nbr_row);
-		_humidity = new float(nbr_row);
-	}
-	
-	//accelerometre
-	if ((_devices & 0x02)>0)
-	{
-		_xaxis = new int16_t(nbr_row);
-		_yaxis = new int16_t(nbr_row);
-		_zaxis = new int16_t(nbr_row);
-	}
-	
-	//GPS
-	if ((_devices & 0x01)>0)
-	{
-		_NMEAdata = new String(nbr_row);
-	}*/
 }
 
 void cansatComm::headerImgPkg()
 {
+	char header[3];
+	header[0] = _imgid;
+	for (int k=0;k<2;k++)
+	{
+		header[k+1] = (_pkgSize>>(8*k)) & 0xFF;
+	}
 	for (int k=0;k<5;k++)
 	{
 		commPort.print(_headercam[k]);
 	}
-	commPort.print(_imgid);
+	for (int k=0;k<3;k++)
+	{
+		commPort.print(header[k]);
+	}
 }
 
 void cansatComm::headerImgDate()
 {
+	char header[9];
+	header[0] = _imgid;
+	for (int k=0;k<4;k++)
+	{
+		header[k+1] = (_lastImgDate>>(8*k)) & 0xFF;
+	}
+	for (int k=0;k<2;k++)
+	{
+		header[k+5] = (_nbrPkg>>(8*k)) & 0xFF;
+	}
+	for (int k=0;k<2;k++)
+	{
+		header[k+7] = (_pkgSize>>(8*k)) & 0xFF;
+	}
 	for (int k=0;k<5;k++)
 	{
-		commPort.print(_headercam[k]);
+		commPort.print(_headercam2[k]);
 	}
-	commPort.print(_lastImgDate);
+	for (int k=0;k<9;k++)
+	{
+		commPort.print(header[k]);
+	}
+}
+
+void cansatComm::SendImgPkg()
+{
+	for (int k=0;k<_pkgSize;k++)
+	{
+		commPort.print(Serial.read());
+	}
 }
 
 void cansatComm::new_datas()
@@ -189,3 +206,60 @@ void cansatComm::sendData()
 	}
 	_currentIndex=0xFF;
 }
+
+
+void cansatComm::sendText(char * text)
+{
+	for (int k=0;k<5;k++)
+	{
+		commPort.print(_headertext[k]);
+	}
+	commPort.println(text);
+}
+
+void cansatComm::sendText(long n)
+{
+	for (int k=0;k<5;k++)
+	{
+		commPort.print(_headertext[k]);
+	}
+	commPort.println(n);
+}
+
+void cansatComm::sendText(long n,int opt)
+{
+	for (int k=0;k<5;k++)
+	{
+		commPort.print(_headertext[k]);
+	}
+	commPort.println(n,opt);
+}
+
+void cansatComm::setPkgSize(uint16_t pkgSize)
+{
+	_pkgSize = pkgSize;
+}
+
+void cansatComm::setnbPkg(uint16_t nbrPkg)
+{
+	_nbrPkg = nbrPkg;
+}
+
+void cansatComm::setimgid(char imgid)
+{
+	_imgid=imgid;
+}
+
+void cansatComm::setImgDate()
+{
+	_lastImgDate = millis();
+}
+
+void cansatComm::sendImgPkg(char * imgPkg,uint16_t length)
+{
+	for (int k=0;k<length;k++)
+	{
+		commPort.print(imgPkg[k]);
+	}
+}
+

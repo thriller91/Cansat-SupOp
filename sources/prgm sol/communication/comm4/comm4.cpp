@@ -49,9 +49,9 @@ bool checkPkg(char* pkg,unsigned int pkgSize)
 		sum+=pkg[k];
 	}
 	
-	uint16_t sumLastBytes = sum & 0xFFFF;
+	uint8_t sumLastBytes = sum & 0xFF;
 	
-	uint16_t check = pkg[pkgSize-2] + (pkg[pkgSize-3]<<8);
+	uint8_t check = pkg[pkgSize-2];
 	
 	if (sumLastBytes == check)
 	{
