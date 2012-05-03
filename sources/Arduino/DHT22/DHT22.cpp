@@ -42,13 +42,13 @@ http://sheepdogguides.com/arduino/ar3ne1humDHT11.htm
 
 #include "DHT22.h"
 #include "pins_arduino.h"
-#include "Arduino.h"
 
-extern "C" {
+//extern "C" {
+#include "Arduino.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
-}
+//}
 
 #define DIRECT_READ(base, mask)		(((*(base)) & (mask)) ? 1 : 0)
 #define DIRECT_MODE_INPUT(base, mask)	((*(base+1)) &= ~(mask))
