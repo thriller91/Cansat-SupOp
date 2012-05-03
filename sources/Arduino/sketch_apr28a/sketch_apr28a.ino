@@ -24,7 +24,7 @@ uint16_t pkgsize=64;
 
 void setup()
 {
-  Serial.begin(57600);
+  Serial.begin(115200);
   comm.begin(111111,5);
   int k=0;
   pinMode(commutCam,OUTPUT);
@@ -35,6 +35,7 @@ void setup()
   char PROGMEM snapshot[6]={ID0,ID_SNAPSHOT,0x00,0x00,0x00,0x00};
   char setpkgsize[6]={ID0,ID_SET_PACKAGE_SIZE,0x08,0x40,0x00,0x00};
   char PROGMEM getpicture[6]={ID0,ID_GET_PICTURE,0x01,0x00,0x00,0x00};
+  char setbaudrate[6]={ID0,ID_SetBaudRate,0x0A,0x02,0x00,0x00};
   delay(1000);
   
   char imgPkg[pkgsize];
@@ -67,6 +68,23 @@ void setup()
   {
     Serial.print(ACK[i]);
   }  
+  
+  delay(400);
+ 
+  //set baud rate 
+  comm.sendText("set baud rate");
+  for (int i=0;i<6;i++)
+  {
+    Serial.print(setbaudrate[i]);
+  }
+    //recup ACK
+  while (Serial.available())
+  {
+    comm.sendText(Serial.read(),HEX);
+    //comm.sendText(" ");
+  }  
+  Serial.end();
+  Serial.begin(111111);
   
   delay(400);
   
@@ -179,19 +197,6 @@ void setup()
     comm.headerImgPkg();
     comm.SendImgPkg();
     
-    /*for (int k=0;k<pkgsize;k++)
-    {
-      imgPkg[k]=cam.read();
-    }
-    
-    uint16_t pkgSize=imgPkg[2] + (imgPkg[3]<<8) +6;
-    
-    comm.sendText(pkgsize);
-    
-    comm.setPkgSize(pkgsize);
-    comm.headerImgPkg();
-    
-    comm.sendImgPkg(imgPkg,pkgsize);*/
   }
 
       

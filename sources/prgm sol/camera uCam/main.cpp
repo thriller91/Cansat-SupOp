@@ -5,13 +5,9 @@ using namespace std;
 #include <ctime>
 
 // These are the values our port needs to connect
-#ifdef _WIN32
-// windows uses com ports, this depends on what com port your cable is plugged in to.
-	const char *PORT = "COM3";
-#else
-// *nix com ports
+
 	const char *PORT(0);
-#endif
+	
 // Note: all the following except BAUD are the exact same as the default values
 
 // what baud rate do we communicate at

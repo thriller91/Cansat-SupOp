@@ -31,6 +31,7 @@ class cansatComm
 		void setimgid(char pkgId);
 		void setImgDate();
 		void sendImgPkg(char * imgPkg,uint16_t length);
+		void headerRawImg();
 
 		
 	private:
@@ -38,6 +39,7 @@ class cansatComm
 		char _headerdat[6];
 		char _headercam[5];
 		char _headercam2[5];
+		char _headerraw[5];
 		char _headertext[5];
 		uint8_t _nbr_row;
 		char _imgid;

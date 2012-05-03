@@ -8,6 +8,8 @@ using namespace std;
 #include <string>
 #include "comm4.h"
 #include <sstream>
+#include <magick/api.h>
+#include <magick/ImageMagick.h>
 
 const char *PORT(0);
 
@@ -68,10 +70,24 @@ int main(int argc, char * argv[])
 	uint16_t pkgSize;
 	uint8_t pkgSizeBytes[2];
 	
+	uint16_t nbRow,nbCol;
+	uint8_t nbbitperpix;
+	uint32_t imgSize;
+	
 	string filename;
 	stringstream filename0;
+	
+	Image *Img(0);
+	ExceptionInfo *exception;
+	ImageInfo *imageinfo(0);
+	
+	exception=AcquireExceptionInfo();
+	imageinfo=CloneImageInfo(NULL);
+	
+	InitializeMagick((char *) NULL);
 
 	char * imgPkg(0);
+
 
 	while (1)
 	{
@@ -214,6 +230,63 @@ int main(int argc, char * argv[])
 					break;					
 					
 					
+				
+				case 0x0A:
+					read(port,buffer(&c,1));
+					cam = 0x80 & c>>7;
+					imgId = 0x7F & c;
+
+					filename = "img_" + lexical_cast<string>(static_cast<int>(cam)) + "_" + lexical_cast<string>(static_cast<int>(imgId)) + ".png";
+					
+					
+					
+					nbRow = 0;
+					for (int k=0;k<2;k++)
+					{
+						read(port,buffer(&c,1));
+						temp = c;
+						nbRow += temp;
+					}
+					
+					nbCol = 0;
+					for (int k=0;k<2;k++)
+					{
+						read(port,buffer(&c,1));
+						temp = c;
+						nbCol += temp;
+					}
+					
+					nbCol=320;
+					nbRow=240;
+					
+					
+					read(port,buffer(&c,1));
+					
+					nbbitperpix = c;
+					
+					imgSize = nbCol*nbRow;
+					
+					imgPkg = new char[imgSize];
+					
+
+					
+					for (int k=0; k<imgSize; k++)
+					{
+						
+						read(port,buffer(&c,1));
+						imgPkg[k] = c;
+						cout<<k<<endl;
+					}
+					
+					Img = ConstituteImage(nbCol,nbRow,"I",CharPixel,imgPkg,exception);
+					
+					cout<<"Image received"<<endl;
+					
+					strcpy(Img->filename,filename.c_str());
+					WriteImage(imageinfo,Img);
+					
+					break;					
+				
 					
 					
 				default:

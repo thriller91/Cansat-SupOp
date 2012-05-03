@@ -26,6 +26,13 @@ cansatComm::cansatComm(uint8_t id,uint8_t devices)
 
 	_headercam[4] = 0x01;
 	
+	_headerraw[0] = 0x10;
+	_headerraw[1] = 0x65;
+	_headerraw[2] = 0x07;
+	_headerraw[3] = 0xDD;
+
+	_headerraw[4] = 0x0A;
+	
 	_headercam2[0] = 0x10;
 	_headercam2[1] = 0x65;
 	_headercam2[2] = 0x07;
@@ -109,6 +116,7 @@ void cansatComm::SendImgPkg()
 {
 	for (int k=0;k<_pkgSize;k++)
 	{
+		while (!Serial.available()){};
 		commPort.print(Serial.read());
 	}
 }
@@ -261,4 +269,26 @@ void cansatComm::sendImgPkg(char * imgPkg,uint16_t length)
 		commPort.print(imgPkg[k]);
 	}
 }
+
+void cansatComm::headerRawImg()
+{
+	char header[6];
+	header[0] = _imgid;
+	
+	header[1] = 0xF0;
+	header[2] = 0x00;
+	header[3] = 0x40;
+	header[4] = 0x01;
+	header[5] = 0x08;
+	
+	for (int k=0;k<5;k++)
+	{
+		commPort.print(_headerraw[k]);
+	}
+	for (int k=0;k<6;k++)
+	{
+		commPort.print(header[k]);
+	}
+}
+
 
