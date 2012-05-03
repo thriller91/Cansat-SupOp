@@ -1,4 +1,4 @@
-#include "DHT22.h"
+#include <DHT22.h>
 
 // Data wire is plugged into port 7 on the Arduino
 // Connect a 4.7K resistor between VCC and the data pin (strong pullup)

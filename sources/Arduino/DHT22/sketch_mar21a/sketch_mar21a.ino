@@ -2,7 +2,7 @@
 
 #include <TinyGPS.h>
 
-#include <DHT22.h>
+#include "DHT22.h"
 
 /* This sample code demonstrates the normal use of a TinyGPS object.
    It requires the use of SoftwareSerial, and assumes that you have a
