@@ -1,0 +1,29 @@
+Temperature: 27.80deg C
+Pressure: 99490 Pa
+Standard Atmosphere: 0.9819
+Altitude: 153.88 M
+
+Temperature: 27.90deg C
+Pressure: 99493 Pa
+Standard Atmosphere: 0.9819
+Altitude: 153.63 M
+
+Temperature: 28.00deg C
+Pressure: 99493 Pa
+Standard Atmosphere: 0.9819
+Altitude: 153.63 M
+
+Temperature: 27.90deg C
+Pressure: 99496 Pa
+Standard Atmosphere: 0.9819
+Altitude: 153.38 M
+
+Temperature: 27.80deg C
+Pressure: 99493 Pa
+Standard Atmosphere: 0.9819
+Altitude: 153.63 M
+
+Temperature: 27.80deg C
+Pressure: 99499 Pa
+Standard Atmosphere: 0.9820
+Altitude: 153.12 M
