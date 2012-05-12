@@ -14,6 +14,10 @@ bool isHeader(char c)
 	{
 		a++;
 	}
+	else
+	{
+		a = 0;
+	}
 	
 	if (a == 4)
 	{

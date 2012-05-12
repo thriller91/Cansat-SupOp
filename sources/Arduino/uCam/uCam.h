@@ -1,3 +1,13 @@
+/* 2012 test version
+Written by Denis Savoie.
+
+This library allows to use a 4dsystems' µCam camera whith an Arduino card.
+Works whith Arduino 1.0, and currently tested on Arduino mini V4.
+
+free to use and redistribute.
+*/
+
+
 #ifndef uCAM_h
 #define uCAM_h
 
@@ -82,14 +92,14 @@ class uCam
 			
 		bool _softserial;
 		unsigned long _speed;
-		char _resolution;
-		char _colorType;
-		char _snapshotType;
-		char _skipFrame[2];
+		unsigned char _resolution;
+		unsigned char _colorType;
+		unsigned char _snapshotType;
+		unsigned char _skipFrame[2];
 		uint16_t _packageSize;
-		char _command[6];
+		unsigned char _command[6];
 		char _response[6];
-		unsigned long _pictureLength;
+		unsigned unsigned long _pictureLength;
 		uint16_t _nbPkg;
 		uint16_t _currentPkg;
 		String _errorStr;

@@ -1,6 +1,7 @@
-#include <boost/asio.hpp> // include boost
-using namespace::boost::asio;  // save tons of typing
+#include <boost/asio.hpp>
+using namespace::boost::asio;
 #include <iostream>
+#include <fstream>
 using namespace std;
 #include <ctime>
 
@@ -31,6 +32,8 @@ int main(int argc, char * argv[])
 	unsigned int pkgSizeIm;
 	unsigned int pkgId;
 	
+	unsigned int nbpkg;
+	
 	int k;
 
 	uint8_t ims;
@@ -59,6 +62,7 @@ int main(int argc, char * argv[])
 	port.set_option( PARITY );
 	port.set_option( STOP );
 
+	//Command identifiers bytes
 	unsigned char ID0=0xAA;
 	unsigned char ID_INITIAL=0x01;
 	unsigned char ID_GET_PICTURE=0x04;
@@ -72,6 +76,7 @@ int main(int argc, char * argv[])
 	unsigned char ID_NAK=0x0F;
 	unsigned char ID_LIGHT=0x13;
 	
+	//commands
 	unsigned char sync[6]={ID0,ID_SYNC,0x00,0x00,0x00,0x00};
 	unsigned char init[6]={ID0, ID_INITIAL,0x00, 0x07, 0x09, 0x05};
 	unsigned char ACK[6]={ID0,ID_ACK,0x00,0x00,0x00,0x00};
@@ -81,9 +86,9 @@ int main(int argc, char * argv[])
 	
 	time_t date;
 	
-	write( port, buffer( sync, 6 ) );
+	write( port, buffer( sync, 6 ) );	//sends sync packet to the camera
 	
-	for (k=0;k<12;k++)
+;	for (k=0;k<12;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
 	{
 		read(port, buffer( &c,1 ) );
 		r=c;
@@ -92,14 +97,14 @@ int main(int argc, char * argv[])
 	//cout<<endl;
 	
 	
-	write( port, buffer( ACK, 6 ) );
+	write( port, buffer( ACK, 6 ) );	//sends aknowledgement command once response has been received
 	
 	date = time(NULL);
-	while (time(NULL)-date < 1){}
+	while (time(NULL)-date < 1){}	//waits 1 second before continuing
 	
-	write( port, buffer( init, 6) );
+	write( port, buffer( init, 6) );	//sends initialization command.
 	
-	for (k=0;k<6;k++)
+	for (k=0;k<6;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
 	{
 		read(port, buffer( &c,1 ) );
 		r=c;
@@ -108,9 +113,9 @@ int main(int argc, char * argv[])
 	//cout<<endl;
 	
 	date = time(NULL);
-	while (time(NULL)-date < 2){}
+	while (time(NULL)-date < 2){}	//waits 2 seconds
 	
-	write( port, buffer( snapshot,6 ) );
+	write( port, buffer( snapshot,6 ) );	//sends snapshot command
 	for (k=0;k<6;k++)
 	{
 		read(port, buffer( &c,1 ) );
@@ -119,7 +124,7 @@ int main(int argc, char * argv[])
 	}
 	//cout<<endl;
 	
-	write( port, buffer( setpkgsize,6 ) );
+	write( port, buffer( setpkgsize,6 ) );	//sends setpkgsize command
 	for (k=0;k<6;k++)
 	{
 		read(port, buffer( &c,1 ) );
@@ -128,14 +133,14 @@ int main(int argc, char * argv[])
 	}
 	//cout<<endl;
 	
-	write( port, buffer( getpicture,6 ) );
-	for (k=0;k<6;k++)
+	write( port, buffer( getpicture,6 ) );	//set get picture command
+	for (k=0;k<6;k++)	//recovers serial ACK from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
 	{
 		read(port, buffer( &c,1 ) );
 		r=c;
 		//cout<<hex<<r<<" ";
 	}
-	for (k=0;k<6;k++)
+	for (k=0;k<6;k++)	//recovers data package form the camera and saves it. Dos not check if it is a valid package though.
 	{
 		read(port, buffer( &c,1 ) );
 		response[k] = c;
@@ -144,10 +149,9 @@ int main(int argc, char * argv[])
 	}
 	//cout<<endl;
 	
-	//unsigned int imgSize = (response[3]&0xFF) + (response[4]&0xFF)<<8 + (response[5]&0xFF)<<16;
 	
 	unsigned int imgSize=0;
-	for (k=0;k<3;k++)
+	for (k=0;k<3;k++)	//reads package size thanks to the data package
 	{
 		ims=response[k+3];
 		imgSize+=ims<<(8*k);
@@ -155,24 +159,24 @@ int main(int argc, char * argv[])
 	
 	//cout<<"Image size : "<<dec<<imgSize;
 	
-	unsigned int nbpkg = ceil(static_cast<float>(imgSize)/194);
+	unsigned int nbpkg = ceil(static_cast<float>(imgSize)/194);	//computes number of package to receive.
 	
 	//cout<<" , number of package : "<<nbpkg<<endl;
 	
 	date = time(NULL);
-	while (time(NULL)-date < 1){}
+	while (time(NULL)-date < 1){}	//waits 1 second
 	
-	ACK[2] = ID_DATA;
+	ACK[2] = ID_DATA;	//sets ACK package to ask image package to the camera.
 	
 	
 	for (k=0;k<nbpkg;k++)
 	{
-		ACK[4]=k;//(k&0xFF);
+		ACK[4]=k;//(k&0xFF);	//id of the package to recover. Here we assume there i sless than 255 packages.
 		r=ACK[4];
 		//cout<<r<<endl;
 		//ACK[5]=(k>>8)&0xFF;
 		write( port, buffer( ACK,6 ) );
-		for (int i=0;i<4;i++)
+		for (int i=0;i<4;i++)	//saves the 4 first bytes of the package which contain the id and the image data size
 		{
 			read(port, buffer( &c,1 ) );
 			r=c;
@@ -190,7 +194,7 @@ int main(int argc, char * argv[])
 		pkgSizeIm += ims<<8;
 		
 		//cout<<dec<<"	"<<pkgId<<"	"<<pkgSizeIm<<endl;
-		for (int i=0;i<pkgSizeIm;i++)
+		for (int i=0;i<pkgSizeIm;i++)	//reads the image data bytes and sends it to the standard output.
 		{
 			read(port, buffer( &c,1 ) );
 			r=c;

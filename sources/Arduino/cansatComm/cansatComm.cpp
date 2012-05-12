@@ -6,6 +6,8 @@
 SoftwareSerial commPort(7,6);
 
 
+//constructeur
+//initialise les en-têtes.
 cansatComm::cansatComm(uint8_t id,uint8_t devices)
 {
 	_headerdat[0] = 0x10;
@@ -54,12 +56,15 @@ cansatComm::cansatComm(uint8_t id,uint8_t devices)
 	_currentIndex=0xFF;
 }
 
+//destructeur
 cansatComm::~cansatComm()
 {
 	
 }
 
-
+//commence la communication en utlisant un port SoftwareSerial.
+//speed : vitesse de la liaison serie
+//nbr_row : nombre de series de mesures maximal que peut prendre le buffer.
 void cansatComm::begin(unsigned long speed,uint8_t nbr_row)
 {
 	commPort.begin(speed);
@@ -68,6 +73,7 @@ void cansatComm::begin(unsigned long speed,uint8_t nbr_row)
 	_nbr_row=nbr_row;
 }
 
+//envoie un en-tête pour les paquets d'image. 
 void cansatComm::headerImgPkg()
 {
 	char header[3];
@@ -86,6 +92,7 @@ void cansatComm::headerImgPkg()
 	}
 }
 
+//envoie la taille des paquets, le nombre de paquets, la durée écoulée depuis la mise sous tension ou le dernier redemarage pour la dernière photo prise. 
 void cansatComm::headerImgDate()
 {
 	char header[9];
@@ -112,6 +119,7 @@ void cansatComm::headerImgDate()
 	}
 }
 
+//envoie un nombre d'octets lus sur la camera égal a _pkgSize. Peut etre utilise a envoyer un paquet d'image.
 void cansatComm::SendImgPkg()
 {
 	for (int k=0;k<_pkgSize;k++)
@@ -121,6 +129,8 @@ void cansatComm::SendImgPkg()
 	}
 }
 
+//A appeler juste avant de commencer une nouvelle serie d'acquisition de donnees.
+//Permet de les dater par rapport au dernier redemarage, et de passer a la serie de donnees suivante en buffer
 void cansatComm::new_datas()
 {
 	if (_currentIndex<_nbr_row-1)
@@ -134,18 +144,28 @@ void cansatComm::new_datas()
 	_date_millis[_currentIndex] = millis();
 }
 
+//Stocke les donnees acquises avec le BMP085
+//temperature : temperature, short integer
+//pressure : pression, long integer
 void cansatComm::storeBMP085(short temperature,long pressure)
 {
 	_tempBMP085[_currentIndex] = temperature;
 	_pressure[_currentIndex] = pressure;
 }
 
+//Stocke les donnees acquises avec le DHT22
+//temperature : temperature, float
+//pressure : pression, float
 void cansatComm::storeDHT22(float temperature,float humidity)
 {
 	_tempDHT22[_currentIndex] = temperature;
 	_humidity[_currentIndex] = humidity;
 }
 
+//Stocke les donnees acquises avec le DHT22
+//x : valeur pour l'axe x
+//y : valeur pour l'axe y
+//z : valeur pour l'axe z
 void cansatComm::storeAccelerometer(int16_t x,int16_t y,int16_t z)
 {
 	_xaxis[_currentIndex] = x;
@@ -153,11 +173,14 @@ void cansatComm::storeAccelerometer(int16_t x,int16_t y,int16_t z)
 	_zaxis[_currentIndex] = z;
 }
 
+//Stocke les donnees acquises avec le GPS
+//NMEAdata : chaine de caractere contenant les donnees GPS sous forme de texte
 void cansatComm::storeNMEAdata(String NMEAdata)
 {
 	_NMEAdata[_currentIndex] = NMEAdata;
 }
 
+//envoie toutes les donnees en buffer
 void cansatComm::sendData()
 {
 	for (int k=0;k<=_currentIndex;k++)
@@ -214,7 +237,8 @@ void cansatComm::sendData()
 	_currentIndex=0xFF;
 }
 
-
+//envoie une ligne de texte avec l'en-tete approprie
+//text : chaine de caractere a envoyer
 void cansatComm::sendText(char * text)
 {
 	for (int k=0;k<5;k++)
@@ -224,6 +248,8 @@ void cansatComm::sendText(char * text)
 	commPort.println(text);
 }
 
+//envoie un nombre sous forme d'une ligne de texte avec l'en-tete approprie
+//n : nombre a envoyer
 void cansatComm::sendText(long n)
 {
 	for (int k=0;k<5;k++)
@@ -233,6 +259,9 @@ void cansatComm::sendText(long n)
 	commPort.println(n);
 }
 
+//envoie un nombre sous forme d'une ligne de texte avec l'en-tete approprie
+//n : nombre a envoyer
+//opt : parametre optionnel de SoftwareSerial::print.
 void cansatComm::sendText(long n,int opt)
 {
 	for (int k=0;k<5;k++)
@@ -262,6 +291,7 @@ void cansatComm::setImgDate()
 	_lastImgDate = millis();
 }
 
+/*
 void cansatComm::sendImgPkg(char * imgPkg,uint16_t length)
 {
 	for (int k=0;k<length;k++)
@@ -269,6 +299,7 @@ void cansatComm::sendImgPkg(char * imgPkg,uint16_t length)
 		commPort.print(imgPkg[k]);
 	}
 }
+
 
 void cansatComm::headerRawImg()
 {
@@ -291,4 +322,4 @@ void cansatComm::headerRawImg()
 	}
 }
 
-
+*/

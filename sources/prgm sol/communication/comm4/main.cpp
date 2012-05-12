@@ -1,5 +1,5 @@
-#include <boost/asio.hpp> 
-#include <boost/lexical_cast.hpp>
+#include <boost/asio.hpp> 	//librairie servant a la communication serie
+#include <boost/lexical_cast.hpp>	//librairie permettant d'ajouter un nombre a un string c++
 using namespace::boost::asio;
 using boost::lexical_cast;
 #include <iostream>
@@ -92,27 +92,29 @@ int main(int argc, char * argv[])
 	while (1)
 	{
 		read(port,buffer(&c,1));
-		if(!isHeader(c))
+		if(!isHeader(c))	//attends la réception d'un identificateur d'en-tete complet
 		{
 		
 		}
 		else
 		{
-			cout<<"Nouveau paquet"<<endl;
-			read(port,buffer(&c,1));
+			//cout<<"Nouveau paquet"<<endl;
+			read(port,buffer(&c,1));	//lecture de l'indicatif du type de paquet
 			switch (c)
 			{
+				//0x06 : Données au format texte
 				case 0x06:
+					//ouverture de deux fichiers pour enregistrer les donnees
 					TimeAtmAccData.open("TimeAtmAccData.txt",ios::app);
 					GPS.open("GPS.txt",ios::app);
 				
-					read(port,buffer(&whichdata,1));
-					nbr_line = Rnbr(whichdata);
+					read(port,buffer(&whichdata,1));	//lecture du bit indiquant les donnees transmises
+					nbr_line = Rnbr(whichdata);	//nombre de fichiers dans lequel on doit enregistrer des donnees
 				
 					if (nbr_line > 0)
 					{
 						cout<<"Données numériques"<<endl;
-						do
+						do	//enregistre une ligne de texte correspondant aux donnees des capteurs.
 						{
 						    read(port,buffer(&c,1));
 						    s+=c;					    
@@ -124,7 +126,7 @@ int main(int argc, char * argv[])
 					if (nbr_line > 1)
 					{
 						cout<<"Données GPS"<<endl;
-						do
+						do	//enregistre une ligne de texte correspondant aux donnees du GPS.
 						{
 						    read(port,buffer(&c,1));
 						    s+=c;					    
@@ -140,14 +142,14 @@ int main(int argc, char * argv[])
 					
 					
 					
-					
+				//0x10 : paquet d'information sur une image a recevoir
 				case 0x10:
 					read(port,buffer(&c,1));
-					cam = (0x80 & c)>>7;
-					imgId = 0x7F & c;
+					cam = (0x80 & c)>>7;	//id de la camera
+					imgId = 0x7F & c;	//id de l'image
 					cout<<"receiving image "<<static_cast<int>(imgId)<<" from camera"<<static_cast<int>(cam)<<endl;
 					imgDate = 0;
-					for (int i=0;i<4;i++)
+					for (int i=0;i<4;i++)	//lecture du temps entre la mise sous tension et la prise
 					{
 						read(port,buffer(&c,1));
 						temp = c;
@@ -155,13 +157,13 @@ int main(int argc, char * argv[])
 					}
 					cout<<"taken at "<<static_cast<unsigned long>(imgDate)<<"ms"<<endl;
 					nbPkg=0;
-					for (int i=0;i<2;i++)
+					for (int i=0;i<2;i++)	//lecture du nombre de paquet constituant l'image
 					{
 						read(port,buffer(&c,1));
 						temp = c;
 						nbPkg += temp<<(8*i);
 					}
-					for (int i=0;i<2;i++)
+					for (int i=0;i<2;i++)	//lecture de la taille des paquets
 					{
 						read(port,buffer(&c,1));
 						temp = c;
@@ -173,11 +175,11 @@ int main(int argc, char * argv[])
 					
 					
 					
-					
+				//0x01 : paquet image
 				case 0x01:
 					read(port,buffer(&c,1));
-					cam = 0x80 & c>>7;
-					imgId = 0x7F & c;
+					cam = 0x80 & c>>7;	//lecture de l'identifiant de camera
+					imgId = 0x7F & c;	//lecture de l'identifiant de l'image
 					
 					cout<<static_cast<int>(cam)<<"	"<<static_cast<int>(imgId)<<endl;
 					
@@ -186,11 +188,11 @@ int main(int argc, char * argv[])
 					
 					cout<<filename<<endl;
 					
-					img.open(filename.c_str(),ios::app | ios::binary);
+					img.open(filename.c_str(),ios::app | ios::binary);	//ouverture du fichier JPEG a completer
 					
 					cout<<pkgId<<endl;
-					pkgId=0;
-					pkgSize=64;
+					pkgId=0;	//....
+					pkgSize=64;	//....
 					
 					for (int l=0; l<pkgSize; l++)
 					{
@@ -198,7 +200,7 @@ int main(int argc, char * argv[])
 						imgPkg[l] = c;
 					}
 					
-					if (checkPkg(imgPkg,pkgSize))
+					if (checkPkg(imgPkg,pkgSize))	//verification de la somme de controle du paquet
 					{
 						cout<<"Package "<<pkgId<<" checked"<<endl;
 					}
@@ -207,7 +209,7 @@ int main(int argc, char * argv[])
 						cout<<"Bad checksum on pkg "<<pkgId<<endl;
 					}
 					
-					img.write(imgPkg+4,pkgSize-6);
+					img.write(imgPkg+4,pkgSize-6);	//ecriture de l'image 
 					img.close();
 					
 					if (pkgId == nbPkg-1)
@@ -219,7 +221,7 @@ int main(int argc, char * argv[])
 					
 					
 					
-				
+				//0x02 : lecture d'une ligne de texte
 				case 0x02:
 					while (c != '\n')
 					{
@@ -230,7 +232,7 @@ int main(int argc, char * argv[])
 					break;					
 					
 					
-				
+				/*
 				case 0x0A:
 					read(port,buffer(&c,1));
 					cam = 0x80 & c>>7;
@@ -286,7 +288,7 @@ int main(int argc, char * argv[])
 					WriteImage(imageinfo,Img);
 					
 					break;					
-				
+				*/
 					
 					
 				default:

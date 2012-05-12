@@ -30,8 +30,8 @@ class cansatComm
 		void setnbPkg(uint16_t nbPkg);
 		void setimgid(char pkgId);
 		void setImgDate();
-		void sendImgPkg(char * imgPkg,uint16_t length);
-		void headerRawImg();
+		//void sendImgPkg(char * imgPkg,uint16_t length);
+		//void headerRawImg();
 
 		
 	private:
