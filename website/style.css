@@ -406,9 +406,9 @@ ul.polaroids a {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
     color: #333333;
     float: left;
-    font-family: courrier;
+    font-family: "Marker Felt",sans-serif;
     font-size: 18px;
-    margin: 0 0 4rem 4rem;
+    margin: 0 0 3rem 3rem;
     padding: 1rem 1rem 1rem 1.5rem;
     text-align: center;
     text-decoration: none;

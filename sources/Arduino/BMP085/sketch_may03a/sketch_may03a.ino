@@ -1,7 +1,10 @@
 /*
-ce programme marche sur la Uno sans translateur de niveau
-il ne marche pas sur Uno avec translateur
-le test n'est pas concluant sur la mini
+Ce programme marche sur la Mini (sans translateur de niveau)
+Branchement:
+SDA -> AD4
+SCL -> AD5
+GND -> GND (alim stab)
+VCC -> 3.3V (alim stab)
 */
 
 //Arduino 1.0+ Only
@@ -39,8 +42,11 @@ long b5;
 void setup(){
   Serial.begin(9600);
   Wire.begin();
+  Serial.println("BMP085...");
+  Serial.print("Calibration...");
 
   bmp085Calibration();
+  Serial.println(" ...done");
 }
 
 void loop()
