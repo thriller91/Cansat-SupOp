@@ -1,0 +1,521 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+
+	<title>L'électronique embarquée</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="Arduino, Arduino Mini, cansat, 2012, Supop, Institut d'Optique">
+	<meta name="author" content="Zubair Iftikhar">
+
+	<!-- Mobile viewport optimized: j.mp/bplateviewport -->
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+	<!-- CSS: implied media=all -->
+	<!-- CSS concatenated and minified via ant build script-->
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+	<!-- end CSS-->
+	<link rel="icon" href="http://arduino.cc/en/favicon.png" type="image/x-icon" />
+	<!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+	<link href='http://fonts.googleapis.com/css?family=Bangers|Audiowide|Philosopher:700|Salsa&amp;subset=latin-ext' rel='stylesheet' type='text/css'>
+	<!-- Inclusion de thickbox.js pour afficher les images -->
+	<link rel="stylesheet" href="js/thickbox.css" type="text/css" media="screen" />
+	<script src="js/libs/modernizr-custom.min.js"></script>
+</head>
+<body>
+	<header>
+		<nav id="topNav">
+			<ul>
+				<li><a id="lk-home" href="/">accueil</a></li>
+				<li><a id="lk-but">l'objectif</a></li>
+				<li><a id="lk-nom">nomenclature</a></li>
+				<li><a href="">composants</a>
+          <ul>  
+            <li><a id="lk-mini">Arduino Mini</a></li>
+            <li><a id="lk-alim">Alimentation</a></li>
+            <li><a id="lk-pt">Pression-Température</a></li>
+            <li><a id="lk-ht">Humidité-Température</a></li>
+            <li><a id="lk-a">Accéléromètre</a></li>
+            <li><a id="lk-gps">Module GPS</a></li>
+            <li><a id="lk-cam">Caméras JPEG</a></li>
+            <li><a id="lk-xbee">Module XBee</a></li>
+          </ul>  
+        </li>
+        <li><a id="lk-glob">l'ensemble</a></li>
+				<li><a id="lk-contact">contact</a></li>
+			</ul>
+		</nav>
+    <div class=centrage><img src="images/logo-small240.png" alt="Cansat"/></div>
+	</header>
+	<section id="but" class="main">
+		<h2>l'objectif <a class="top">↑</a></h2>
+
+		<p>Notre Cansat embarquera beaucoup d'électronique dans sa charge utile. Tous les composants que nous utilisons  sont assez volumineux puisqu'il s'agit de modèle <em>breakout</em>, <em>i.e.</em> de petites cartes électroniques sur lesquelles ont été soudées les puces.
+		</p>
+		<p>Notre défi est d'interfacer tous les capteurs (pression, température, humidité, accélération, GPS) avec nos micro-contrôleurs Arduino, de parvenir à faire des prises de vue quasi-simultanée avec deux caméras et ... de faire tenir le tout dans une canette!
+		</p>
+	</section>
+  
+	<section id="nom" class="main">
+		<h2>nomenclature <a class="top">↑</a></h2>
+    
+		<p>Le tableau suivant rassemble des informations sur l'ensemble des composants électroniques que nous avons utilisés pour fabriquer notre Cansat. Les composants que nous avons effectivement fait acheter au service des TPs de l'école sont un peu différents puisque l'école en avait déjà certain en stocks, voilà pour quoi le total précisé dans ce tableau n'est pas le même que celui des figures suivantes.
+		</p>
+    <table>
+      <tr>
+        <td>Nom</td>
+        <td>Quantité</td>
+        <td>Prix unitaire</td>
+        <td>Description</td>
+      </tr>
+      
+      <tr>
+        <td><a href="http://shop.snootlab.com/lang-en/arduino/72-arduino-mini-light.html">Arduino Mini V04</a></td>
+        <td>2</td>
+        <td>17€10</td>
+        <td>Micro-contrôleur open-hardware, avec la version Light il faut souder les broches soi-même. <a href="http://arduino.cc/en/Main/ArduinoBoardMini">Doc</a></td>
+      </tr>
+      <tr>
+        <td><a href="http://shop.snootlab.com/arduino/73-adaptateur-usb-arduino-mini.html">Adaptateur Mini-USB</a></td>
+        <td>1</td>
+        <td>15€00</td>
+        <td>La Arduino Mini de dispose pas de port USB, il faut utiliser ses broches série TX-RX. <a href="http://arduino.cc/en/Main/MiniUSB">Doc</a></td>
+      </tr>
+      <tr>
+        <td><a href="http://www.lextronic.fr/P19202-platine-capteur-de-pression-barometrique.html">BMP085</a></td>
+        <td>1</td>
+        <td>18€50</td>
+        <td>Capteur de pression et de température. <a href="http://www.sparkfun.com/products/9694">Doc</a></td>
+      </tr>
+      <tr>
+        <td><a href="http://www.lextronic.fr/P19987-capteur-dhumidite-et-temperature.html">RHT22</a></td>
+        <td>1</td>
+        <td>15€00</td>
+        <td>Capteur d'humidité et de température. <a href="http://www.sparkfun.com/products/10167">Doc</a></td>
+      </tr>
+      <tr>
+        <td><a href="http://www.lextronic.fr/P5722-module-accelerometre-3-axes.html">ADXL335</a></td>
+        <td>1</td>
+        <td>22€46</td>
+        <td>Accéléromètre analogique, nous avons choisi ce modèle parce que l'école en avait en stock. <a href="http://www.sparkfun.com/products/9269">Doc</a></td>
+      </tr>
+      <tr>
+        <td><a href="http://www.lextronic.fr/P1400-recepteur-gps-oem-em-406a.html">GPS</a></td>
+        <td>1</td>
+        <td>28€00</td>
+        <td>Module GPS qui débite des trames de coordonnées de façon autonome. <a href="http://www.sparkfun.com/products/465">Doc</a></td>
+      </tr>
+      <tr>
+        <td><a href="http://radiospares-fr.rs-online.com/web/p/zigbee-ieee-802154/0436581/">XBee Pro</a></td>
+        <td>2</td>
+        <td>35€76</td>
+        <td>Module de communication série sans fil basé sur la norme IEEE 802.15.4, qui est plus simple et moins cher que le Bluetooth. <a href="http://docs-europe.electrocomponents.com/webdocs/0b05/0900766b80b05338.pdf">Doc</a></td>
+      </tr>
+      <tr>
+        <td><a href="http://www.lextronic.fr/P2901-platine-dinterface-usb-pour-modules-xbee.html">XBee Dongle USB</a></td>
+        <td>1</td>
+        <td>20€58</td>
+        <td>Carte permettant de connecter un module XBee à un ordinateur <em>via</em> USB.</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Sous-total</td>
+        <td></td>
+        <td><b>225€26</b></td>
+        <td>Total T.T.C. sans les caméras</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a href="http://www.lextronic.fr/P5733-camera-miniature-numerique-a-sortie-jpeg.html">µCAM</a></td>
+        <td>2</td>
+        <td>56€21</td>
+        <td>Caméra avec sortie JPEG série, ne nécessite donc pas de driver (d'où son prix élevé, par rapport à sa qualité). <a href="http://www.4dsystems.com.au/downloads/micro-CAM/Docs/uCAM-DS-rev7.pdf">Doc</a></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><b>TOTAL</b></td>
+        <td></td>
+        <td><b>337€68</b></td>
+        <td><b>Total T.T.C. caméras incluses</b></td>
+      </tr>
+    </table>
+    <p>Ces différents éléments vont former un ensemble comme le symbolise le schéma suivant:
+    </p>
+    <div class=figure><img src="images/plots/Structure_elec.png" alt="Diagramme résumant les composants mis en jeu"/></div>
+    <p>Le coût effectif des composants électronique est schématisé dans le diagramme suivant:
+    </p>
+    <div class=figure><img src="images/plots/elec_cost.png" alt="Diagramme camembert du coût des composants électroniques"/></div>
+    <p>La partie électonique du projet est assez importante, et du point de vue financier, on voit sur le diagramme suivant que l'électronique a la part la plus importante du budget prévisionnel total:
+    </p>
+    <div class=figure><img src="images/plots/Budget_total.png" alt="Diagramme camembert du coût total prévisionnel"/></div>
+    <p>Les diagrammes précédents montrent les coûts relatifs des différents composant. Nous pouvons aussi comparer les composants par rapport à leurs consomation électrique. Cela sera utile par la suite pour choisir la bonne batterie a embarquer dans la sonde. Jusqu'à présent, nous avons fait quasiment tous nos essais avec un bloc d'aliementation fait-maison branché en 9V sur le secteur à l'aide d'un transformateur (que Denis a retrouvé dans son grenier).
+    </p>
+    <div class=figure><img src="images/plots/op_voltage.png" alt="Histogramme des consomations électriques"/></div>
+    <div class=figure><img src="images/plots/temp.png" alt="Diagramme camembert des consomations électriques maximales"/></div>
+	</section>
+  
+	<section id="comp" class="main">
+		<h2 id="mini">Arduino Mini V04 <a class="top">↑</a></h2>
+    <p>Il s'agit du premier composant dont nous avons fait l'acquisition; et avec les µCAM, c'est sans doute celui qui nous a donné le plus de fils à retordre (au sens propre comme au figuré).
+    </p>
+    <p>La particularité des micro-contrôleurs Arduino (ce qui fait qu'il sont de plus en plus <em>à la mode</em> dans <a href="http://www.semageek.com/category/electronique/arduino-electronique/">les projets open-sources</a>, les PME ou les écoles) tient au fait qu'ils sont livré avec un <em>bootloader</em>. Il s'agit d'un programme qui se lance au démarrage du micro-contrôleur, et qui vérifie si l'utilisateur est entrain de lui envoyer un programme. Si c'est le cas, le <em>bootloader</em> permet l'écriture du programme dans la mémoire du micro-contrôleur. Ainsi, l'utilisateur n'a plus besoin de programmeur (souvent très onéreux) pour programmer son micro-contôleur, il lui suffit d'exporter son code au moment opportun, c'est-à-dire juste après un <em>reset</em>.
+    </p>
+    <p>Pour vérifier que votre Arduino fonctionne correctement, il existe un programme de test appellé "Blink". Ce programme fera clignoter une LED branchée sur la broche n°13 de la Arduino (cette broche est munie d'une résistance justement pour cette application). Nous disposons donc d'une Arduino Mini V04, d'un adapdateur mini-USB et d'une LED. On commence par <a href="http://arduino.cc/en/Main/Software">télécharger le logiciel Arduino</a> (il s'agit en fait d'un IDE: un environement de développement) et on ouvre le programme "Blink" qui se trouve dans les exemples. On réalise ensuite le circuit suivant:
+    </p>
+    <p>Il suffit alors de faire un <em>reset</em> en faisant rapidement passer la broche RESET de la Arduino à la masse, et de cliquer sur upload du logiciel. Chez nous le logiciel (version 1.0) indique une erreur de signature. Nous utilisons alors l'option -F d'avrdude qui permet de forcer l'upload.
+    </p>
+    <p>Pour nous faciliter la tâche, nous avons fabriqué une carte de programmation qui comporte l'adaptateur mini-USB, une LED et un bouton poussoir pour faire le <em>reset</em>.
+    </p>
+    <div class=figure><img src="images/elec/prog.png" alt="Schéma électrique de la carte de programmation"/></div>
+    <br/>
+    <br/>
+    
+    
+    <h2 id="alim">Alimentation <a class="top">↑</a></h2>
+    <p>Certain de nos composants fonctionnent en 3,3V alors que d'autres fonctionnent en 5V. Et nos micro-contrôleurs fonctionnent en 5V, il faudra donc adapter les niveaux logiques. Nous devons donc fabriquer une carte sur laquelle on placera un translateur de niveaux Maxim3001. Cette carte n'est pas conçue pour l'alimentation, il faurdra alors faire une autre carte comportant des régulateur de niveau de tension 3,3V et 5V.
+    </p>
+    <p>Voici d'abord le <b>bloc d'alimentation</b>. Il délivre les deux tensions stabilisées nécessaires dans l’ensemble du système à partir de la batterie. Il est calibré pour délivrer la puissance nécessaire pour les deux tensions d’alimentation. Un radiateur peut être fixé entre les deux composants de puissance. Des cavaliers jouent les rôles d’interrupteur (obligatoire pour le concours).
+    </p>
+    <div class=figure><img src="images/elec/alim-schema.png" alt="Schéma électrique de la carte d'alimentation"/></div>
+    <div class=figure><img src="images/elec/alim-photo.png" alt="Photographie de la carte d'alimentation"/></div>
+    <p>Nous avons prévu la consommation suivante:
+    </p>
+    <div class=figure><img src="images/plots/max_pow_camembert.png" alt="Diagramme camembert des consomations électriques maximales"/></div>
+    <div class=figure><img src="images/plots/max_cons_camembert.png" alt="Diagramme camembert des consomations électriques maximales"/></div>
+    <p>Et voilà ensuite le <b>bloc d’adaptation de niveau</b>. Ce bloc nous permet de faire communiquer nos composants qui parlent en 5V avec ceux qui parlent en 3.3V et vice-versa. Composant essentiel dans notre structure. Protège les composants. Le même bloc est présent directement sur une de nos cartes à micro-contrôleur au plus près des composants à gérer.
+    </p>
+    <p>On notera la petitesse des soudures et le travail derrière… (merci à Cédric L. et Thierry A. du service des TPs)
+    </p>
+    <div class=figure><img src="images/elec/translation-schema.png" alt="Schéma électrique de la carte de translation de niveaux logiques"/></div>
+    <div class=figure><img src="images/elec/translation-photo.png" alt="Photographie de la carte de translation de niveaux logiques"/></div>
+    <br/>
+    <br/>
+    
+    
+    <h2 id="pt">Pression-Température <a class="top">↑</a></h2>
+    <p>Le BMP085 est un capteur de pression et température. Il s'agit d'un composant obéissant au protocol I²C. Pour brancher ce type de composant sur une Arduino, il faut utiliser les broches analogiques n°4 et n°5, et il faut penser à inclure la bibliothèque "Wire.h":
+    <div class="code">
+      <pre class="brush: cpp">
+/*
+Ce programme marche sur la Mini (sans translateur de niveau)
+Branchement:
+SDA -> AD4
+SCL -> AD5
+GND -> GND (alim stab)
+VCC -> 3.3V (alim stab)
+*/
+
+#include &lt;Wire.h>
+      </pre>
+    </div>
+    <p>Le programme d'exemple complet est disponible dans <a href="https://github.com/thriller91/Cansat-SupOp">notre répertoire Github</a>, il s'agit du fichier <a href="https://raw.github.com/thriller91/Cansat-SupOp/master/sources/Arduino/BMP085/sketch_may03a/sketch_may03a.ino">sketch_may03a.ino</a>. Ce programme revoit la sortie suivante:
+    </p>
+    <div class="code">
+      <pre class="brush: plain">
+Temperature: 27.80deg C
+Pressure: 99490 Pa
+Standard Atmosphere: 0.9819
+Altitude: 153.88 M
+
+Temperature: 27.90deg C
+Pressure: 99493 Pa
+Standard Atmosphere: 0.9819
+Altitude: 153.63 M
+
+Temperature: 28.00deg C
+Pressure: 99493 Pa
+Standard Atmosphere: 0.9819
+Altitude: 153.63 M
+
+Temperature: 27.90deg C
+Pressure: 99496 Pa
+Standard Atmosphere: 0.9819
+Altitude: 153.38 M
+
+Temperature: 27.80deg C
+Pressure: 99493 Pa
+Standard Atmosphere: 0.9819
+Altitude: 153.63 M
+
+Temperature: 27.80deg C
+Pressure: 99499 Pa
+Standard Atmosphere: 0.9820
+Altitude: 153.12 M
+      </pre>
+    </div>
+    <br/>
+    <br/>
+    
+    
+    <h2 id="ht">Humidité-Température <a class="top">↑</a></h2>
+    <p>Pour mesurer l'hygrométrie, nous utilisons un RHT22. Ce capteur donne aussi la température, nous pourrons alors comparer cette valeur avec cette donnée par le BMP085. Ce composant doit être alimenté en 5V. Il a un fonctionnement assez élégant, puisqu'il n'a qu'une seule patte de communication, cette patte lui permet de répondre par une trame lorsqu'on le questionne. Un exemple de code est donné avec <a href="https://raw.github.com/thriller91/Cansat-SupOp/master/sources/Arduino/DHT22/DHTtester/DHTtester.pde">DHTtester.pde</a>.
+    </p>
+    <br/>
+    <br/>
+    
+    
+    <h2 id="a">Accéléromètre <a class="top">↑</a></h2>
+    <p>Nous avons décidé d'utiliser un accéléromètre analogique de l'école. Il s'agit de l'ADXL335, il doit être alimenté en 3,3V. On branche sa broche <em>Self-Test</em> à la masse, et on lit les valeurs des accélération sur les trois directions en branchant chaque broche sur les entrées analogiques de la Arduino. On utilise alors le programme <a href="https://raw.github.com/thriller91/Cansat-SupOp/master/sources/Arduino/ADXL335/test_ino/test_ino.ino">test_ino.ino</a>. Ce programme revoit par exemple:
+    </p>
+    <div class="code">
+      <pre class="brush: plain">
+266;313;337
+266;312;339
+266;293;339
+265;312;337
+274;304;325
+260;334;338
+262;335;315
+325;297;282
+347;310;270
+345;375;278
+316;313;272
+271;319;319
+229;417;315
+273;267;334
+325;118;370
+208;342;338
+182;454;321
+172;523;292
+284;318;322
+275;313;318
+268;312;325
+270;308;321
+      </pre>
+    </div>
+    <p>Nous n'avons pas encore étalonné ce composant, pour le faire, il suffit de le fixer quelque part et de mesurer la valeur de <em>g</em> qui sera lue sur l'axe <em>z</em> et du zéro qui sera lue sur les deux autres axes. On peut aussi utiliser le <em>Self-Test</em> qui sort -1,08<em>g</em> sur <em>x</em>, +1,08<em>g</em> sur <em>y</em> et +1,83<em>g</em> sur <em>z</em>.
+    </p>
+    <br/>
+    <br/>
+    
+    
+    <h2 id="gps">Module GPS <a class="top">↑</a></h2>
+    <p>"Dame! Pourquoi mettre un module GPS dans une cannette?" me demanderiez-vous. Nous avons voulu voir plus loin que le simple cadre du concours Cansat. Tout d'abord, nous n'avons pas tous les jours l'occasion de manipuler des composants électroniques aussi excitant que des antennes GPS. Et on ne veut pas vraiment que la retraite du tetrapharmakos se passe dans un placard au fond du grenier de Denis. On veut pouvoir le faire voyager dans le monde entier, et c'est pourquoi nous avons décidé d'y ajouter ce module. Il sera de plus très utile pour observer le comportement de la chute de la sonde.
+    </p>
+    <p>Ce module est très simple d'utilisation, il se synchronise tout seul, et débite ses trames GPS en continu. Ces trames sont à la norme <a href="http://fr.wikipedia.org/wiki/NMEA">NMEA</a>. Elle ont typiquement l'allure suivante:
+    </p>
+    <div class="code">
+      <pre class="brush: plain">
+$GPRMC,070417.000,A,4842.3637,N,00212.6558,E,0.08,145.06,020512,,,A*65
+$GPGGA,070418.000,4842.3638,N,00212.6558,E,1,07,1.4,82.6,M,47.3,M,,0000*63
+$GPGSA,A,3,13,23,17,04,20,32,10,,,,,,2.4,1.4,1.9*3A
+$GPRMC,070418.000,A,4842.3638,N,00212.6558,E,0.07,139.72,020512,,,A*62
+$GPGGA,070419.000,4842.3638,N,00212.6558,E,1,07,1.4,82.6,M,47.3,M,,0000*62
+$GPGSA,A,3,13,23,17,04,20,32,10,,,,,,2.4,1.4,1.9*3A
+$GPRMC,070419.000,A,4842.3638,N,00212.6558,E,0.07,131.97,020512,,,A*60
+$GPGGA,070420.000,4842.3638,N,00212.6558,E,1,07,1.4,82.5,M,47.3,M,,0000*6B
+$GPGSA,A,3,13,23,17,04,20,32,10,,,,,,2.4,1.4,1.9*3A
+$GPRMC,070420.000,A,4842.3638,N,00212.6558,E,0.09,156.15,020512,,,A*6F
+$GPGGA,070421.000,4842.3638,N,00212.6558,E,1,07,1.4,82.5,M,47.3,M,,0000*6A
+$GPGSA,A,3,13,23,17,04,20,32,10,,,,,,2.4,1.4,1.9*3A
+$GPGSV,3,1,11,23,79,118,36,13,55,204,31,20,52,086,30,04,46,299,34*74
+$GPGSV,3,2,11,10,27,276,32,17,26,230,32,32,25,084,31,01,17,145,28*79
+$GPGSV,3,3,11,31,12,032,,02,11,312,,07,03,170,*49
+$GPRMC,070421.000,A,4842.3638,N,00212.6558,E,0.08,136.11,020512,,,A*6D
+$GPGGA,070422.000,4842.3638,N,00212.6558,E,1,07,1.4,82.5,M,47.3,M,,0000*69
+$GPGSA,A,3,13,23,17,04,20,32,10,,,,,,2.4,1.4,1.9*3A
+$GPRMC,070422.000,A,4842.3638,N,00212.6558,E,0.08,157.38,020512,,,A*62
+$GPGGA,070423.000,4842.3638,N,00212.6558,E,1,07,1.4,82.4,M,47.3,M,,0000*69
+$GPGSA,A,3,13,23,17,04,20,32,10,,,,,,2.4,1.4,1.9*3A
+$GPRMC,070423.000,A,4842.3638,N,00212.6558,E,0.09,146.72,020512,,,A*6C
+$GPGGA,070424.000,4842.3638,N,00212.6558,E,1,07,1.4,82.4,M,47.3,M,,0000*6E
+$GPGSA,A,3,13,23,17,04,20,32,10,,,,,,2.4,1.4,1.9*3A
+$GPRMC,070424.000,A,4842.3638,N,00212.6558,E,0.07,151.64,020512,,,A*64
+$GPGGA,070425.000,4842.3639,N,00212.6558,E,1,07,1.4,82.4,M,47.3,M,,0000*6E
+$GPGSA,A,3,13,23,17,04,20,32,10,,,,,,2.4,1.4,1.9*3A
+$GPRMC,070425.000,A,4842.3639,N,00212.6558,E,0.09,146.96,020512,,,A*61
+$GPGGA,070426.000,4842.3639,N,00212.6558,E,1,07,1.4,82.4,M,47.3,M,,0000*6D
+      </pre>
+    </div>
+    <p>Ces trames ont été relevées à l'aide du GPS branché en série, et de l'utilisation du programme <a href="https://github.com/thriller91/Cansat-SupOp/tree/master/sources/prgm%20sol/communication/commGPS">commGPS</a>, qui est une ébauche modifiée de notre programme pour la station au sol.
+    </p>
+    <br/>
+    <br/>
+    
+    
+    <h2 id="cam">Caméra JPEG <a class="top">↑</a></h2>
+    <p>Notre mission libre consiste à mesurer l'<a href="http://en.wikipedia.org/wiki/Normalized_Difference_Vegetation_Index">indice de végétation</a>. Nous avons donc besoin de prendre des photos pendant la chute de notre Cansat. Il n'existe pas beacoup de caméras simples d'utilisation pour des projets d'électronique embarquée comme le notre. Nous avons décidé de prendre la caméra que tous les amateurs de robotique utilisent: la µCAM. Les deux caméras vont être montées sur un cube contenant l'optique nécessaire à la mission.
+    </p>
+    <div class=figure><img src="images/elec/ccd.png" alt="Photo de la CCD de la µCAM vue à travers une binoculaire"/></div>
+    <div class=figure><img src="images/elec/cube.png" alt="Photo d'une µCAM montée sur le cube"/></div>
+    <p>Ces caméras ont demandées beacoup de travail pour être commandées par notre micro-contrôleur. L'utilisation de la mémoire du micro-contrôleur ne s'est pas avérée judcieuse, et les nouveaux programmes que nous élaborons tendent à transmettre directemment l'image mise en cache dans la mémoire des µCAM.
+    </p>
+    <p>Nous devons aussi contrôler des commutateurs et interrupteurs pour pouvoir choisir quelle Arduino maitrise le module de communication avec la station au sol. Les programmes cherchant à faire fonctionner les µCAM sont disponibles dans notre <a href="https://github.com/thriller91/Cansat-SupOp/tree/master/sources/Arduino/uCam">répertoire Github</a>.
+    </p>
+    <br/>
+    <br/>
+    
+    
+    <h2 id="xbee">Module XBee <a class="top">↑</a></h2>
+    <p>Le plus simple pour communiquer avec la station au sol, c'est d'utiliser un module XBee. Lorsque le module d'emission et celui de réception sont configurés, tout ce qui ce passe entre eux peut être oublié. On communique alors avec la station au sol comme si on utilisait un véritable câble série.
+    </p>
+    <p><em>Nota Bene</em>: les XBee que nous avons fait acheter sont des XBee Pro S1. Elles supportent EXTRÊMEMENT mal les surtensions. Ce composant doit être alimenté en 3,3V. Nous avons eu le malheur de griller un module à la suite d'une courte surtension (le module s'est mis à chauffer, et maintenant est brûlant et non-fonctionnel même lorsqu'on le branche correctement). Soyez très prudent avec ce composant.
+    </p>
+    <p>La vitesse de communication de la XBee que nous utilisons n'est pas prise en charge nativement par la Arduino Mini. Denis a donc <em>hacké</em> dans les sources des bibliothèques Arduino pour nos programmes, tout ceci est documenté dans nos sources.
+    </p>
+	</section>	
+
+	<section id="glob" class="main">
+		<h2>l'ensemble <a class="top">↑</a></h2>
+		
+		<p>Tous les composants décrits ci-dessous doivent être assemblés pour livrer à la station au sol toutes les informations nécessaires à la réussite des missions. Ces composants doivent en outre entrer dans le volume de la canette. Cet agencement doit être fait à la fois de façon mécanique, électronique et logiciel. Nous avons essayé de séparer la mission NDVI des deux autre. Le fatras auquel ça risque de ressembler est le suivant (partie optique uniquement):
+		</p>
+    <div class=figure><img src="images/elec/fatras.png" alt="Photo de l'ensemble à peu près ordonné des composants"/></div>
+    <p>Cette structure n'est pas figée aujourd'hui. Nous réorganisons souvent les composants entre eux. Par exemple, nous avons récemment remarqué qu'il serait plus judicieux d'utiliser une µCAM par Arduino plutôt que de dédier une Arduino aux caméras comme nous l'avions imaginé au début. Nous avions l'idée élégante d'un cube d'opto-électronique quasi-autonome. Mais les cartes électroniques que nous avions réalisées ne sont pas idéales à cause de la remarque précédente et du fait que la vitesse d'écriture sur la carte SD est la même que celle de la transmission au sol. Ces cartes vont donc être légèrement modifiées pour en tenir compte. Pour l'instant, elle ressemblent à ceci:
+    </p>
+    <div class=figure><img src="images/elec/cube-elec.png" alt="Schéma de la carte électronique pour le cube"/></div>
+    <div class=figure><img src="images/elec/cube-cartes.png" alt="Photo de la carte électronique du cube"/></div>
+	</section>
+  
+	<section id="contact" class="main">
+		<h2>Contact <a class="top">↑</a></h2>
+		
+		<p>Pour plus d'informations n'hésitez pas nous contacter à l'adresse <a class="contact-link" href="mailto:cansat2012@supop.fr">cansat2012@supop.fr</a>.
+		</p>
+		<p>Vous pouvez croire que ce site n'est pas très esthétique. C'est sans doute vrai, mais essayez tout de même d'utiliser un navigateur tel que <a href="http://www.mozilla-europe.org/fr/">Mozilla Firefox</a>. En effet, ce site a été réalisé avec les dernières technologie du web, et il nécessite un navigateur récent.
+		</p>
+	</section>
+	
+	<footer>
+  <ul>
+    <li><b><a href="/#about">à propos du projet</a></b></li>
+    <li><a href="/parachute.html">parachute</a></li>
+    <li><a href="/elec.html">électronique</a></li>    
+  </ul>
+  <ul>
+    <li><b><a href="/#team">l'équipe</a></b></li>
+    <li>photos</li>
+  </ul>
+  <ul>
+    <li><b><a href="/#mission">missions</a></b></li>
+    <li>indice de végétation</li>
+    <li>données météo</li> 
+    <li>paramètres de vol</li>
+  </ul>
+  <ul>
+    <li><b><a href="/#agenda">agenda</a></b></li>
+    <li>Convension</li>
+    <li>Soutenance</li>    
+  </ul>
+	<ul>
+    <li><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" /></a></li>
+    <li><a href="http://validator.w3.org/check?uri=http%3A%2F%2Fcansat2012.supop.fr%2F"><img alt="I heart validator" style="border-width:0" src="http://www.w3.org/QA/Tools/I_heart_validator" /></a></li>
+    <!--logo supop-->
+  </ul>
+  <br style="clear: both;"/>
+  <p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</p>
+	</footer>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!-- Inclusion de thickbox.js pour afficher les images -->
+	<script type="text/javascript" src="js/thickbox.js"></script>
+  <!-- Inclusion de SyntaxHighlighter pour afficher le code -->
+  <script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+  <script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shBrushCpp.js"></script>
+  <script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shBrushPlain.js"></script>
+  <link href="js/syntaxhighlighter_3.0.83/styles/shCore.css" rel="stylesheet" type="text/css" />
+  <link href="js/syntaxhighlighter_3.0.83/styles/shThemeMidnight.css" rel="stylesheet" type="text/css" />
+  
+	<script type="text/javascript">
+		var documentBody = (($.browser.chrome)||($.browser.safari)) ? document.body : document.documentElement;
+	  
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-27825146-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	  	
+	  	var temps=1000;
+		$('#lk-but').click(function() {
+			$(documentBody).animate({scrollTop: $('#but').offset().top}, temps);
+		});
+		$('#lk-nom').click(function() {
+			$(documentBody).animate({scrollTop: $('#nom').offset().top}, temps);
+		});
+		$('#lk-mini').click(function() {
+			$(documentBody).animate({scrollTop: $('#mini').offset().top}, 3*temps);
+		});
+		$('#lk-alim').click(function() {
+			$(documentBody).animate({scrollTop: $('#alim').offset().top}, 3*temps);
+		});
+		$('#lk-pt').click(function() {
+			$(documentBody).animate({scrollTop: $('#pt').offset().top}, 4*temps);
+		});
+		$('#lk-ht').click(function() {
+			$(documentBody).animate({scrollTop: $('#ht').offset().top}, 4*temps);
+		});
+		$('#lk-a').click(function() {
+			$(documentBody).animate({scrollTop: $('#a').offset().top}, 5*temps);
+		});
+		$('#lk-gps').click(function() {
+			$(documentBody).animate({scrollTop: $('#gps').offset().top}, 5*temps);
+		});
+		$('#lk-cam').click(function() {
+			$(documentBody).animate({scrollTop: $('#cam').offset().top}, 5*temps);
+		});
+		$('#lk-xbee').click(function() {
+			$(documentBody).animate({scrollTop: $('#xbee').offset().top}, 5*temps);
+		});
+		$('#lk-glob').click(function() {
+			$(documentBody).animate({scrollTop: $('#glob').offset().top}, 6*temps);
+		});
+		$('#lk-contact').click(function() {
+			$(documentBody).animate({scrollTop: $('#contact').offset().top}, 6*temps);
+		});
+		
+		$('.top').click(function() {
+			$(documentBody).animate({scrollTop: $('#lk-home').offset().top}, temps);
+		});
+    
+    SyntaxHighlighter.all();
+    
+    (function($){
+				
+				//cache nav
+				var nav = $("#topNav");
+				
+				//add indicator and hovers to submenu parents
+				nav.find("li").each(function() {
+					if ($(this).find("ul").length > 0) {
+						$("<span>").text(" ↓").appendTo($(this).children(":first"));
+
+						//show subnav on hover
+						$(this).mouseenter(function() {
+							$(this).find("ul").stop(true, true).slideDown();
+						});
+						
+						//hide submenus on exit
+						$(this).mouseleave(function() {
+							$(this).find("ul").stop(true, true).slideUp();
+						});
+					}
+				});
+			})(jQuery);
+	</script>
+  
+</body>
+</html>

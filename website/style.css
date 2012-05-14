@@ -56,6 +56,10 @@ body, button, input, select, textarea { font-family: sans-serif; color: #222; }
 /* =============================================================================
    Mes inspirations
    ========================================================================== */
+/*	background: rgba(4, 13, 22, 0.4);font-size: 1.5rem;
+  	font-family: 'Audiowide', cursive;
+	color: #4e86a6; */
+/*
 header nav {
   background: none repeat scroll 0 0 rgba(4, 13, 22, 0.4);
   overflow: hidden;
@@ -67,16 +71,14 @@ header nav {
 
 header nav ul li {
 	list-style-type: none;
+  position:relative;
 }
 
 header nav ul li a,header nav ul li a:visited,header nav ul li a:active{
-	background: #04101c;
-	background: rgba(4, 13, 22, 0.4);
-	color: #4e86a6; /* Blue */
+
 	display: block;
 	float: left;
-	font-size: 1.8rem;
-  	font-family: 'Audiowide', cursive;;
+	
 	text-decoration: none;
 	text-transform: lowercase;
 	padding: 1rem 1.2rem;
@@ -87,6 +89,27 @@ header nav ul li a:hover
   color: #FFFFFF;
   text-decoration:overline underline;
 }
+
+header nav ul:after { content:"."; display:block; height:0; clear:both; visibility:hidden; } 
+header nav li:first-child a { border-left:none; }  
+header nav li.last a { border-right:none; }  
+header nav ul ul { display:none; width:100%; position:absolute; left:0; }
+header nav ul ul li a { float:none; }
+*/
+
+nav { display:block; position:relative; background: rgba(4, 13, 22, 0.4);}
+nav ul { padding:0; margin:0; }
+nav li { position:relative; float:left; list-style-type:none; }
+nav ul:after { content:"."; display:block; height:0; clear:both; visibility:hidden; }
+nav li a, nav li a:visited, nav li a:active  { display:block; font-size: 1.5rem;font-family: 'Audiowide', cursive; color: #4e86a6;padding:1rem 1rem; color: #4e86a6; text-decoration:none; }
+nav li a:focus { outline:none; text-decoration:underline; }
+nav li:first-child a { border-left:none; }
+nav li.last a { border-right:none; }
+nav a span { display:block; float:right; margin-left:5px; }
+nav ul ul { display:none; width:100%; position:absolute; left:0;}
+nav ul ul li { float:none; }
+nav ul ul a { padding:5px 10px; border-left:none; border-right:none; font-size:14px;background: rgba(4, 13, 22, 0.4);  }
+nav li a:hover{color: #FFFFFF; text-decoration:overline underline;}
 
 section.bienvenue {
   background: rgba(4, 13, 22, 0.4);
@@ -102,13 +125,21 @@ header a.logo {
 }
 
 div.centrage {
-	text-align: center;
-	margin: 5rem 0;
+	margin: 5rem auto;
+}
+
+div.figure img{
+  margin: 2rem auto;
+  width: 50rem;
 }
 
 div.equ img {
 	background-color: rgba(255, 255, 255, 0.50);
 	height: 6rem;
+}
+
+div.code{
+  margin: 2rem 6rem;
 }
 
 
@@ -160,9 +191,16 @@ section.main {
 }
 
 footer {
-  margin-left: 8rem;
-  margin-right: 8rem;
+  background-color: rgba(0, 0, 0, 0.45);
+  font-family: 'Salsa','Georgia', serif;
+  color: #FFFFFF;
+  text-align: justify;
+  border-radius: 0.5rem;
+  padding: 0rem 8rem;
 }
+
+footer ul{list-style-type:none; display:block; float:left; margin: 2rem;}
+  
 
 /* =============================================================================
    Links
@@ -213,6 +251,7 @@ p.event {color: #fff;
 h2 {
   font-family: 'Bangers','Arial', cursive;
   color: #FFFFFF;
+  margin:1rem;
   font-size: 2.1rem;
 }
 
@@ -285,7 +324,7 @@ nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0
  * 2. Remove the gap between images and borders on image containers: h5bp.com/e 
  */
 
-img { 
+header img, section img { 
 	background-color: rgba(4, 13, 22, 0.75);
 	margin: 0 auto; padding: 0.5rem;
 	border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle;
@@ -382,8 +421,13 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
    Tables
    ========================================================================== */
 
-table { border-collapse: collapse; border-spacing: 0; }
-td { vertical-align: top; }
+table { border-collapse: collapse; border-spacing: 0; 
+  background-color: rgba(0, 0, 0, 0.45);
+  font-family: 'Salsa','Georgia', serif;
+  color: #FFFFFF;
+  margin: 2rem 6rem;
+}
+td { padding: 0.3rem; vertical-align: top;border: 1px solid white; }
 
 
 /* ==|== primary styles =====================================================
