@@ -268,8 +268,43 @@ Altitude: 153.12 M
     
     
     <h2 id="ht">Humidité-Température <a class="top">↑</a></h2>
-    <p>Pour mesurer l'hygrométrie, nous utilisons un RHT22. Ce capteur donne aussi la température, nous pourrons alors comparer cette valeur avec cette donnée par le BMP085. Ce composant doit être alimenté en 5V. Il a un fonctionnement assez élégant, puisqu'il n'a qu'une seule patte de communication, cette patte lui permet de répondre par une trame lorsqu'on le questionne. Un exemple de code est donné avec <a href="https://raw.github.com/thriller91/Cansat-SupOp/master/sources/Arduino/DHT22/DHTtester/DHTtester.pde">DHTtester.pde</a>.
+    <p>Pour mesurer l'hygrométrie, nous utilisons un RHT22. Ce capteur donne aussi la température, nous pourrons alors comparer cette valeur avec cette donnée par le BMP085. Ce composant doit être alimenté en 5V. Il a un fonctionnement assez élégant, puisqu'il n'a qu'une seule patte de communication, cette patte lui permet de répondre par une trame lorsqu'on le questionne. Un exemple de code est donné avec <a href="https://raw.github.com/thriller91/Cansat-SupOp/master/sources/Arduino/DHT22/DHTtester/DHTtester.pde">DHTtester.pde</a>. Ce code retourne une sortie de ce type:
     </p>
+
+    <div class="code">
+      <pre class="brush: plain">
+Humidity: 24.70 %	Temperature: 23.80 *C
+Humidity: 24.70 %	Temperature: 23.80 *C
+Humidity: 24.70 %	Temperature: 23.80 *C
+Humidity: 25.30 %	Temperature: 23.80 *C
+Humidity: 25.30 %	Temperature: 23.80 *C
+Humidity: 25.30 %	Temperature: 23.80 *C
+Humidity: 25.30 %	Temperature: 23.80 *C
+Humidity: 27.10 %	Temperature: 23.80 *C
+Humidity: 27.10 %	Temperature: 23.80 *C
+Humidity: 27.10 %	Temperature: 23.80 *C
+Humidity: 27.10 %	Temperature: 23.80 *C
+Humidity: 29.40 %	Temperature: 23.80 *C
+Humidity: 29.40 %	Temperature: 23.80 *C
+Humidity: 29.40 %	Temperature: 23.80 *C
+Humidity: 29.40 %	Temperature: 23.80 *C
+Humidity: 32.40 %	Temperature: 23.90 *C
+Humidity: 32.40 %	Temperature: 23.90 *C
+Humidity: 32.40 %	Temperature: 23.90 *C
+Humidity: 32.40 %	Temperature: 23.90 *C
+Humidity: 35.30 %	Temperature: 24.10 *C
+Humidity: 35.30 %	Temperature: 24.10 *C
+Humidity: 35.30 %	Temperature: 24.10 *C
+Humidity: 35.30 %	Temperature: 24.10 *C
+Humidity: 38.00 %	Temperature: 24.30 *C
+Humidity: 38.00 %	Temperature: 24.30 *C
+Humidity: 38.00 %	Temperature: 24.30 *C
+Humidity: 38.00 %	Temperature: 24.30 *C
+Humidity: 40.20 %	Temperature: 24.60 *C
+Humidity: 40.20 %	Temperature: 24.60 *C
+Humidity: 40.20 %	Temperature: 24.60 *C
+      </pre>
+    </div>
     <br/>
     <br/>
     
@@ -385,6 +420,13 @@ $GPGGA,070426.000,4842.3639,N,00212.6558,E,1,07,1.4,82.4,M,47.3,M,,0000*6D
     </p>
     <div class=figure><img src="images/elec/cube-elec.png" alt="Schéma de la carte électronique pour le cube"/></div>
     <div class=figure><img src="images/elec/cube-cartes.png" alt="Photo de la carte électronique du cube"/></div>
+    <p>La nouvelle structure est donc basée sur deux ensembles: {Arduino1, µCAM1, BMP085, RHT22} et {Arduino2, µCAM2, ADXL335, GPS}. Le diagramme suivant montre comment les deux Arduino vont s'échanger les informations pour prendre deux images simultanées.
+    </p>
+    <div class=figure><img src="images/elec/schema-1-2-struct-logi.png" alt="Schéma de la carte électronique pour le cube"/></div>
+    <div class=figure><img src="images/elec/schema-1-struct-logi.png" alt="Schéma de la carte électronique pour le cube"/></div>
+    <p>Pour que les données envoyées par le cansat à la station au sol soient interprétables, nous avons mis au point une signature spécifique à chaque type de données. Ces signatures sont rassemblées dans les tableaux ci-dessous:
+    </p>
+    <div class=figure><img src="images/elec/cansat-header.png" alt="Schéma de la carte électronique pour le cube"/></div>
 	</section>
   
 	<section id="contact" class="main">
