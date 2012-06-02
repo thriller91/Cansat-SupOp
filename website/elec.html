@@ -50,7 +50,7 @@
 				<li><a id="lk-contact">contact</a></li>
 			</ul>
 		</nav>
-    <div class=centrage><img src="images/logo-small240.png" alt="Cansat"/></div>
+    <div class="centrage"><img src="images/logo-small240.png" alt="Cansat"/></div>
 	</header>
 	<section id="but" class="main">
 		<h2>l'objectif <a class="top">↑</a></h2>
@@ -161,17 +161,17 @@
     </table>
     <p>Ces différents éléments vont former un ensemble comme le symbolise le schéma suivant:
     </p>
-    <div class=figure><img src="images/plots/Structure_elec.png" alt="Diagramme résumant les composants mis en jeu"/></div>
+    <div class="figure"><img src="images/plots/Structure_elec.png" alt="Diagramme résumant les composants mis en jeu"/></div>
     <p>Le coût effectif des composants électronique est schématisé dans le diagramme suivant:
     </p>
-    <div class=figure><img src="images/plots/elec_cost.png" alt="Diagramme camembert du coût des composants électroniques"/></div>
+    <div class="figure"><img src="images/plots/elec_cost.png" alt="Diagramme camembert du coût des composants électroniques"/></div>
     <p>La partie électonique du projet est assez importante, et du point de vue financier, on voit sur le diagramme suivant que l'électronique a la part la plus importante du budget prévisionnel total:
     </p>
-    <div class=figure><img src="images/plots/Budget_total.png" alt="Diagramme camembert du coût total prévisionnel"/></div>
+    <div class="figure"><img src="images/plots/Budget_total.png" alt="Diagramme camembert du coût total prévisionnel"/></div>
     <p>Les diagrammes précédents montrent les coûts relatifs des différents composant. Nous pouvons aussi comparer les composants par rapport à leurs consomation électrique. Cela sera utile par la suite pour choisir la bonne batterie a embarquer dans la sonde. Jusqu'à présent, nous avons fait quasiment tous nos essais avec un bloc d'aliementation fait-maison branché en 9V sur le secteur à l'aide d'un transformateur (que Denis a retrouvé dans son grenier).
     </p>
-    <div class=figure><img src="images/plots/op_voltage.png" alt="Histogramme des consomations électriques"/></div>
-    <div class=figure><img src="images/plots/temp.png" alt="Diagramme camembert des consomations électriques maximales"/></div>
+    <div class="figure"><img src="images/plots/op_voltage.png" alt="Histogramme des consomations électriques"/></div>
+    <div class="figure"><img src="images/plots/temp.png" alt="Diagramme camembert des consomations électriques maximales"/></div>
 	</section>
   
 	<section id="comp" class="main">
@@ -186,7 +186,7 @@
     </p>
     <p>Pour nous faciliter la tâche, nous avons fabriqué une carte de programmation qui comporte l'adaptateur mini-USB, une LED et un bouton poussoir pour faire le <em>reset</em>.
     </p>
-    <div class=figure><img src="images/elec/prog.png" alt="Schéma électrique de la carte de programmation"/></div>
+    <div class="figure"><img src="images/elec/prog.png" alt="Schéma électrique de la carte de programmation"/></div>
     <br/>
     <br/>
     
@@ -196,18 +196,18 @@
     </p>
     <p>Voici d'abord le <b>bloc d'alimentation</b>. Il délivre les deux tensions stabilisées nécessaires dans l’ensemble du système à partir de la batterie. Il est calibré pour délivrer la puissance nécessaire pour les deux tensions d’alimentation. Un radiateur peut être fixé entre les deux composants de puissance. Des cavaliers jouent les rôles d’interrupteur (obligatoire pour le concours).
     </p>
-    <div class=figure><img src="images/elec/alim-schema.png" alt="Schéma électrique de la carte d'alimentation"/></div>
-    <div class=figure><img src="images/elec/alim-photo.png" alt="Photographie de la carte d'alimentation"/></div>
+    <div class="figure"><img src="images/elec/alim-schema.png" alt="Schéma électrique de la carte d'alimentation"/></div>
+    <div class="figure"><img src="images/elec/alim-photo.png" alt="Photographie de la carte d'alimentation"/></div>
     <p>Nous avons prévu la consommation suivante:
     </p>
-    <div class=figure><img src="images/plots/max_pow_camembert.png" alt="Diagramme camembert des consomations électriques maximales"/></div>
-    <div class=figure><img src="images/plots/max_cons_camembert.png" alt="Diagramme camembert des consomations électriques maximales"/></div>
+    <div class="figure"><img src="images/plots/max_pow_camembert.png" alt="Diagramme camembert des consomations électriques maximales"/></div>
+    <div class="figure"><img src="images/plots/max_cons_camembert.png" alt="Diagramme camembert des consomations électriques maximales"/></div>
     <p>Et voilà ensuite le <b>bloc d’adaptation de niveau</b>. Ce bloc nous permet de faire communiquer nos composants qui parlent en 5V avec ceux qui parlent en 3.3V et vice-versa. Composant essentiel dans notre structure. Protège les composants. Le même bloc est présent directement sur une de nos cartes à micro-contrôleur au plus près des composants à gérer.
     </p>
     <p>On notera la petitesse des soudures et le travail derrière… (merci à Cédric L. et Thierry A. du service des TPs)
     </p>
-    <div class=figure><img src="images/elec/translation-schema.png" alt="Schéma électrique de la carte de translation de niveaux logiques"/></div>
-    <div class=figure><img src="images/elec/translation-photo.png" alt="Photographie de la carte de translation de niveaux logiques"/></div>
+    <div class="figure"><img src="images/elec/translation-schema.png" alt="Schéma électrique de la carte de translation de niveaux logiques"/></div>
+    <div class="figure"><img src="images/elec/translation-photo.png" alt="Photographie de la carte de translation de niveaux logiques"/></div>
     <br/>
     <br/>
     
@@ -268,9 +268,8 @@ Altitude: 153.12 M
     
     
     <h2 id="ht">Humidité-Température <a class="top">↑</a></h2>
-    <p>Pour mesurer l'hygrométrie, nous utilisons un RHT22. Ce capteur donne aussi la température, nous pourrons alors comparer cette valeur avec cette donnée par le BMP085. Ce composant doit être alimenté en 5V. Il a un fonctionnement assez élégant, puisqu'il n'a qu'une seule patte de communication, cette patte lui permet de répondre par une trame lorsqu'on le questionne. Un exemple de code est donné avec <a href="https://raw.github.com/thriller91/Cansat-SupOp/master/sources/Arduino/DHT22/DHTtester/DHTtester.pde">DHTtester.pde</a>. Ce code retourne une sortie de ce type:
+    <p>Pour mesurer l'hygrométrie, nous utilisons un RHT22. Ce capteur donne aussi la température, nous pourrons alors comparer cette valeur avec cette donnée par le BMP085. Ce composant doit être alimenté en 5V. Il a un fonctionnement assez élégant, puisqu'il n'a qu'une seule patte de communication, cette patte lui permet de répondre par une trame lorsqu'on le questionne. Un exemple de code est donné avec <a href="https://raw.github.com/thriller91/Cansat-SupOp/master/sources/Arduino/DHT22/DHTtester/DHTtester.pde">DHTtester.pde</a>. Ce code retourne une sortie de ce type lorsqu'on place le capteur entre ces mains:
     </p>
-
     <div class="code">
       <pre class="brush: plain">
 Humidity: 24.70 %	Temperature: 23.80 *C
@@ -391,8 +390,8 @@ $GPGGA,070426.000,4842.3639,N,00212.6558,E,1,07,1.4,82.4,M,47.3,M,,0000*6D
     <h2 id="cam">Caméra JPEG <a class="top">↑</a></h2>
     <p>Notre mission libre consiste à mesurer l'<a href="http://en.wikipedia.org/wiki/Normalized_Difference_Vegetation_Index">indice de végétation</a>. Nous avons donc besoin de prendre des photos pendant la chute de notre Cansat. Il n'existe pas beacoup de caméras simples d'utilisation pour des projets d'électronique embarquée comme le notre. Nous avons décidé de prendre la caméra que tous les amateurs de robotique utilisent: la µCAM. Les deux caméras vont être montées sur un cube contenant l'optique nécessaire à la mission.
     </p>
-    <div class=figure><img src="images/elec/ccd.png" alt="Photo de la CCD de la µCAM vue à travers une binoculaire"/></div>
-    <div class=figure><img src="images/elec/cube.png" alt="Photo d'une µCAM montée sur le cube"/></div>
+    <div class="figure"><img src="images/elec/ccd.png" alt="Photo de la CCD de la µCAM vue à travers une binoculaire"/></div>
+    <div class="figure"><img src="images/elec/cube.png" alt="Photo d'une µCAM montée sur le cube"/></div>
     <p>Ces caméras ont demandées beacoup de travail pour être commandées par notre micro-contrôleur. L'utilisation de la mémoire du micro-contrôleur ne s'est pas avérée judcieuse, et les nouveaux programmes que nous élaborons tendent à transmettre directemment l'image mise en cache dans la mémoire des µCAM.
     </p>
     <p>Nous devons aussi contrôler des commutateurs et interrupteurs pour pouvoir choisir quelle Arduino maitrise le module de communication avec la station au sol. Les programmes cherchant à faire fonctionner les µCAM sont disponibles dans notre <a href="https://github.com/thriller91/Cansat-SupOp/tree/master/sources/Arduino/uCam">répertoire Github</a>.
@@ -415,18 +414,18 @@ $GPGGA,070426.000,4842.3639,N,00212.6558,E,1,07,1.4,82.4,M,47.3,M,,0000*6D
 		
 		<p>Tous les composants décrits ci-dessous doivent être assemblés pour livrer à la station au sol toutes les informations nécessaires à la réussite des missions. Ces composants doivent en outre entrer dans le volume de la canette. Cet agencement doit être fait à la fois de façon mécanique, électronique et logiciel. Nous avons essayé de séparer la mission NDVI des deux autre. Le fatras auquel ça risque de ressembler est le suivant (partie optique uniquement):
 		</p>
-    <div class=figure><img src="images/elec/fatras.png" alt="Photo de l'ensemble à peu près ordonné des composants"/></div>
+    <div class="figure"><img src="images/elec/fatras.png" alt="Photo de l'ensemble à peu près ordonné des composants"/></div>
     <p>Cette structure n'est pas figée aujourd'hui. Nous réorganisons souvent les composants entre eux. Par exemple, nous avons récemment remarqué qu'il serait plus judicieux d'utiliser une µCAM par Arduino plutôt que de dédier une Arduino aux caméras comme nous l'avions imaginé au début. Nous avions l'idée élégante d'un cube d'opto-électronique quasi-autonome. Mais les cartes électroniques que nous avions réalisées ne sont pas idéales à cause de la remarque précédente et du fait que la vitesse d'écriture sur la carte SD est la même que celle de la transmission au sol. Ces cartes vont donc être légèrement modifiées pour en tenir compte. Pour l'instant, elle ressemblent à ceci:
     </p>
-    <div class=figure><img src="images/elec/cube-elec.png" alt="Schéma de la carte électronique pour le cube"/></div>
-    <div class=figure><img src="images/elec/cube-cartes.png" alt="Photo de la carte électronique du cube"/></div>
+    <div class="figure"><img src="images/elec/cube-elec.png" alt="Schéma de la carte électronique pour le cube"/></div>
+    <div class="figure"><img src="images/elec/cube-cartes.png" alt="Photo de la carte électronique du cube"/></div>
     <p>La nouvelle structure est donc basée sur deux ensembles: {Arduino1, µCAM1, BMP085, RHT22} et {Arduino2, µCAM2, ADXL335, GPS}. Le diagramme suivant montre comment les deux Arduino vont s'échanger les informations pour prendre deux images simultanées.
     </p>
-    <div class=figure><img src="images/elec/schema-1-2-struct-logi.png" alt="Schéma de la carte électronique pour le cube"/></div>
-    <div class=figure><img src="images/elec/schema-1-struct-logi.png" alt="Schéma de la carte électronique pour le cube"/></div>
+    <div class="figure"><img src="images/elec/schema-1-2-struct-logi.png" alt="Schéma de la carte électronique pour le cube"/></div>
+    <div class="figure"><img src="images/elec/schema-1-struct-logi.png" alt="Schéma de la carte électronique pour le cube"/></div>
     <p>Pour que les données envoyées par le cansat à la station au sol soient interprétables, nous avons mis au point une signature spécifique à chaque type de données. Ces signatures sont rassemblées dans les tableaux ci-dessous:
     </p>
-    <div class=figure><img src="images/elec/cansat-header.png" alt="Schéma de la carte électronique pour le cube"/></div>
+    <div class="figure"><img src="images/elec/cansat-header.png" alt="Schéma de la carte électronique pour le cube"/></div>
 	</section>
   
 	<section id="contact" class="main">
@@ -478,6 +477,7 @@ $GPGGA,070426.000,4842.3639,N,00212.6558,E,1,07,1.4,82.4,M,47.3,M,,0000*6D
   <link href="js/syntaxhighlighter_3.0.83/styles/shCore.css" rel="stylesheet" type="text/css" />
   <link href="js/syntaxhighlighter_3.0.83/styles/shThemeMidnight.css" rel="stylesheet" type="text/css" />
   
+  
 	<script type="text/javascript">
 		var documentBody = (($.browser.chrome)||($.browser.safari)) ? document.body : document.documentElement;
 	  
@@ -490,7 +490,8 @@ $GPGGA,070426.000,4842.3639,N,00212.6558,E,1,07,1.4,82.4,M,47.3,M,,0000*6D
 			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		})();
-	  	
+      
+      
 	  	var temps=1000;
 		$('#lk-but').click(function() {
 			$(documentBody).animate({scrollTop: $('#but').offset().top}, temps);
