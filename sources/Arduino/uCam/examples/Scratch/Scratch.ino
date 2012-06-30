@@ -4,59 +4,69 @@ Programme de capture d'image et de transfet via software-serial, traduit du prog
 
 #include <SoftwareSerial.h>
 
+//Command identifiers bytes
+#define ID0 0xAA
+#define ID_INITIAL 0x01
+#define ID_GET_PICTURE 0x04
+#define ID_SNAPSHOT 0x05
+#define ID_SET_PACKAGE_SIZE 0x06
+#define ID_RESET 0x08
+#define ID_DATA 0x0A
+#define ID_SYNC 0x0D
+#define ID_ACK 0x0E
+#define ID_NAK 0x0F
+#define ID_LIGHT 0x13
+
+
+
 SoftwareSerial mySerial(7,8);
 
 void setup(){
 	Serial.begin(115200);
-	mySerial.begin(4800);
-	mySerial.print("debut");
-	unsigned char response[6];
-	unsigned char c;
-	unsigned char r; // peut-etre un short
-	unsigned char headerimgpkg[4];
+	mySerial.begin(115200);
+	mySerial.println("debut");
+	uint8_t response[6];
+	uint8_t c;
+	uint8_t r=255;
+	uint8_t headerimgpkg[4];
 	unsigned int pkgSizeIm;
 	unsigned int pkgId;
 
+	int i=0;
 	int k;
 
 	char * pEnd;
 	uint8_t ims;
 
-	//Command identifiers bytes
-	unsigned char ID0=0xAA;
-	unsigned char ID_INITIAL=0x01;
-	unsigned char ID_GET_PICTURE=0x04;
-	unsigned char ID_SNAPSHOT=0x05;
-	unsigned char ID_SET_PACKAGE_SIZE=0x06;
-	unsigned char ID_SetBaudRate=0x07;
-	unsigned char ID_RESET=0x08;
-	unsigned char ID_DATA=0x0A;
-	unsigned char ID_SYNC=0x0D;
-	unsigned char ID_ACK=0x0E;
-	unsigned char ID_NAK=0x0F;
-	unsigned char ID_LIGHT=0x13;
-
 	//commands
-	unsigned char sync[6]={ID0,ID_SYNC,0x00,0x00,0x00,0x00};
-	unsigned char init[6]={ID0, ID_INITIAL,0x00, 0x07, 0x09, 0x05};
-	unsigned char ACK[6]={ID0,ID_ACK,0x00,0x00,0x00,0x00};
-	unsigned char snapshot[6]={ID0,ID_SNAPSHOT,0x00,0x00,0x00,0x00};
-	unsigned char setpkgsize[6]={ID0,ID_SET_PACKAGE_SIZE,0x08,0xC8,0x00,0x00};
-	unsigned char getpicture[6]={ID0,ID_GET_PICTURE,0x01,0x00,0x00,0x00};
-	unsigned char reset[6]={ID0,ID_RESET,0x00,0x00,0x00,0xFF};
+	uint8_t sync[6]={ID0,ID_SYNC,0x00,0x00,0x00,0x00};
+	uint8_t init[6]={ID0, ID_INITIAL,0x00, 0x07, 0x09, 0x05};
+	uint8_t ACK[6]={ID0,ID_ACK,0x00,0x00,0x00,0x00};
+	uint8_t snapshot[6]={ID0,ID_SNAPSHOT,0x00,0x00,0x00,0x00};
+	uint8_t setpkgsize[6]={ID0,ID_SET_PACKAGE_SIZE,0x08,0xC8,0x00,0x00};
+	uint8_t getpicture[6]={ID0,ID_GET_PICTURE,0x01,0x00,0x00,0x00};
+	uint8_t reset[6]={ID0,ID_RESET,0x00,0x00,0x00,0xFF};
 
+
+	delay(3000);
 
 	// Syncronisation
-	mySerial.println("Sync");
-	Serial.write((char*)sync);
-
-	for (k=0;k<12;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
+	while(r==255 && i<500)
 	{
-		c=Serial.read();
-		r=c;
-		//mySerial.print(r);
+		mySerial.print("Sync" );
+		Serial.write(sync,6);
+
+		for (k=0;k<12;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
+		{
+			c=Serial.read();
+			r=c;
+			mySerial.print(r,HEX);
+		}
+		mySerial.println(i);
+		delay(100);
+		i++;
 	}
-	Serial.write((char*)ACK);
+	Serial.write(ACK,6);
 
 	delay(1000);
 
@@ -70,7 +80,7 @@ void setup(){
 	delay(2000);
 
 	mySerial.println("Snap");
-	Serial.write((char*)snapshot);
+	Serial.write(snapshot,6);
 	for (k=0;k<6;k++)
 	{
 		c=Serial.read();
@@ -78,7 +88,7 @@ void setup(){
 		//mySerial.print(r);
 	}
 
-	Serial.write((char*)setpkgsize);
+	Serial.write(setpkgsize,6);
 	for (k=0;k<6;k++)
 	{
 		c=Serial.read();
@@ -86,13 +96,23 @@ void setup(){
 		//mySerial.print(r);
 	}
 
-	Serial.write((char*)getpicture);
-	for (k=0;k<12;k++)
+	Serial.write(getpicture,6);
+	for (k=0;k<6;k++)
 	{
 		c=Serial.read();
 		r=c;
 		//mySerial.print(r);
 	}
+
+	mySerial.println("Size");
+	for (k=0;k<6;k++)	//recovers data package form the camera and saves it. Dos not check if it is a valid package though.
+	{
+		c=Serial.read();
+		response[k] = c;
+		r=c;
+		mySerial.print(r,HEX);
+	}
+
 
 	unsigned int imgSize=0;
 	for (k=0;k<3;k++)	//reads package size thanks to the data package
@@ -107,13 +127,17 @@ void setup(){
 
 	ACK[2] = ID_DATA;	//sets ACK package to ask image package to the camera.
 
+	mySerial.print("Image size: ");
+	mySerial.print(imgSize,DEC);
+	mySerial.print(" , number of package: ");
+	mySerial.println(nbpkg);
 	for (k=0;k<nbpkg;k++)
 	{
 		ACK[4]=k;//(k&0xFF);	//id of the package to recover. Here we assume there i sless than 255 packages.
 		r=ACK[4];
 		//cout<<r<<endl;
 		//ACK[5]=(k>>8)&0xFF;
-		Serial.write((char*)ACK);
+		Serial.write(ACK,6);
 		for (int i=0;i<4;i++)	//saves the 4 first bytes of the package which contain the id and the image data size
 		{
 			c=Serial.read();
@@ -131,24 +155,28 @@ void setup(){
 		ims = headerimgpkg[3];
 		pkgSizeIm += ims<<8;
 
+		mySerial.print("pkgId: ");
+		mySerial.print(pkgId,DEC);
+		mySerial.print("    ");
+		mySerial.println(pkgSizeIm);
 		//cout<<dec<<"	"<<pkgId<<"	"<<pkgSizeIm<<endl;
 		for (int i=0;i<pkgSizeIm;i++)	//reads the image data bytes and sends it to the standard output.
 		{
 			c=Serial.read();
 			r=c;
 			//cout<<hex<<r<<" ";
-			mySerial.print(c);
+			//mySerial.print(c);
 		}
-		mySerial.println("Fin du packet");
+		//Serial.println("Fin du packet");
 		c=Serial.read();
 		c=Serial.read();
 	}
 
-	Serial.write((char*)reset);
+	Serial.write(reset,6);
 }
 
 void loop(){
 	mySerial.println("fin");
-	delay(10);
+	delay(1000);
 }
 
