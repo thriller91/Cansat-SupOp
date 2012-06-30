@@ -7,8 +7,8 @@ using namespace std;
 
 // These are the values our port needs to connect
 
-	const char *PORT(0);
-	
+const char *PORT(0);
+
 // Note: all the following except BAUD are the exact same as the default values
 
 // what baud rate do we communicate at
@@ -27,13 +27,12 @@ int main(int argc, char * argv[])
 
 	unsigned char response[6];
 	unsigned char c;
-	unsigned short r;
 	unsigned char headerimgpkg[4];
+	//unsigned short r;
+	unsigned char r;
 	unsigned int pkgSizeIm;
 	unsigned int pkgId;
-	
-	unsigned int nbpkg;
-	
+
 	int k;
 
 	uint8_t ims;
@@ -47,8 +46,8 @@ int main(int argc, char * argv[])
 	{
 		return 1;
 	}
-	
-	
+
+
 	// create the I/O service that talks to the serial device
 	io_service io;
 	// create the serial device, note it takes the io service and the port name
@@ -75,7 +74,7 @@ int main(int argc, char * argv[])
 	unsigned char ID_ACK=0x0E;
 	unsigned char ID_NAK=0x0F;
 	unsigned char ID_LIGHT=0x13;
-	
+
 	//commands
 	unsigned char sync[6]={ID0,ID_SYNC,0x00,0x00,0x00,0x00};
 	unsigned char init[6]={ID0, ID_INITIAL,0x00, 0x07, 0x09, 0x05};
@@ -83,27 +82,34 @@ int main(int argc, char * argv[])
 	unsigned char snapshot[6]={ID0,ID_SNAPSHOT,0x00,0x00,0x00,0x00};
 	unsigned char setpkgsize[6]={ID0,ID_SET_PACKAGE_SIZE,0x08,0xC8,0x00,0x00};
 	unsigned char getpicture[6]={ID0,ID_GET_PICTURE,0x01,0x00,0x00,0x00};
-	
+	unsigned char reset[6]={ID0,ID_RESET,0x00,0x00,0x00,0xFF};
+
 	time_t date;
-	
+
+	//cout<<"Sync ...";
 	write( port, buffer( sync, 6 ) );	//sends sync packet to the camera
-	
-;	for (k=0;k<12;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
+	//printf("%d",sync);
+	//cout<<" OK"<<endl;
+
+
+	for (k=0;k<12;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
 	{
+		//cout<<"Read ... "<<endl;
 		read(port, buffer( &c,1 ) );
+		//cout<<"OK"<<endl;
 		r=c;
-		//cout<<hex<<r<<" ";
+		//cout<<r<<" ";
 	}
 	//cout<<endl;
-	
-	
+
+	//cout<<endl;
 	write( port, buffer( ACK, 6 ) );	//sends aknowledgement command once response has been received
-	
+
 	date = time(NULL);
 	while (time(NULL)-date < 1){}	//waits 1 second before continuing
-	
+
 	write( port, buffer( init, 6) );	//sends initialization command.
-	
+
 	for (k=0;k<6;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
 	{
 		read(port, buffer( &c,1 ) );
@@ -111,10 +117,10 @@ int main(int argc, char * argv[])
 		//cout<<hex<<r<<" ";
 	}
 	//cout<<endl;
-	
+
 	date = time(NULL);
 	while (time(NULL)-date < 2){}	//waits 2 seconds
-	
+
 	write( port, buffer( snapshot,6 ) );	//sends snapshot command
 	for (k=0;k<6;k++)
 	{
@@ -123,7 +129,7 @@ int main(int argc, char * argv[])
 		//cout<<hex<<r<<" ";
 	}
 	//cout<<endl;
-	
+
 	write( port, buffer( setpkgsize,6 ) );	//sends setpkgsize command
 	for (k=0;k<6;k++)
 	{
@@ -132,7 +138,7 @@ int main(int argc, char * argv[])
 		//cout<<hex<<r<<" ";
 	}
 	//cout<<endl;
-	
+
 	write( port, buffer( getpicture,6 ) );	//set get picture command
 	for (k=0;k<6;k++)	//recovers serial ACK from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
 	{
@@ -148,27 +154,27 @@ int main(int argc, char * argv[])
 		//cout<<hex<<r<<" ";
 	}
 	//cout<<endl;
-	
-	
+
+
 	unsigned int imgSize=0;
 	for (k=0;k<3;k++)	//reads package size thanks to the data package
 	{
 		ims=response[k+3];
 		imgSize+=ims<<(8*k);
 	}
-	
+
 	//cout<<"Image size : "<<dec<<imgSize;
-	
+
 	unsigned int nbpkg = ceil(static_cast<float>(imgSize)/194);	//computes number of package to receive.
-	
+
 	//cout<<" , number of package : "<<nbpkg<<endl;
-	
+
 	date = time(NULL);
 	while (time(NULL)-date < 1){}	//waits 1 second
-	
+
 	ACK[2] = ID_DATA;	//sets ACK package to ask image package to the camera.
-	
-	
+
+
 	for (k=0;k<nbpkg;k++)
 	{
 		ACK[4]=k;//(k&0xFF);	//id of the package to recover. Here we assume there i sless than 255 packages.
@@ -183,7 +189,7 @@ int main(int argc, char * argv[])
 			headerimgpkg[i]=c;
 			//cout<<hex<<r<<" ";
 		}
-		
+
 		ims = headerimgpkg[0];
 		pkgId = ims;
 		ims = headerimgpkg[1];
@@ -192,20 +198,22 @@ int main(int argc, char * argv[])
 		pkgSizeIm = ims;
 		ims = headerimgpkg[3];
 		pkgSizeIm += ims<<8;
-		
+
 		//cout<<dec<<"	"<<pkgId<<"	"<<pkgSizeIm<<endl;
 		for (int i=0;i<pkgSizeIm;i++)	//reads the image data bytes and sends it to the standard output.
 		{
 			read(port, buffer( &c,1 ) );
 			r=c;
 			//cout<<hex<<r<<" ";
-			cout<<c;
+			//cout<<c;
 		}
 		read(port, buffer( &c,1 ) );
 		read(port, buffer( &c,1 ) );
-		
+
 	}
-	
-	
+
+	write( port, buffer( reset,6 ) );
+	//cout<<endl;
+
 	return 0;
 }

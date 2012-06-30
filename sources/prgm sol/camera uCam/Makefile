@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-W -Wall
+CFLAGS=-W -Wall -g
 LDFLAGS=-I/usr/include/boost -lboost_system
 
 all: camera
