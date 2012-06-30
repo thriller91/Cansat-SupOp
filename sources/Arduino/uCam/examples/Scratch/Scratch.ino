@@ -17,6 +17,7 @@ Programme de capture d'image et de transfet via software-serial, traduit du prog
 #define ID_NAK 0x0F
 #define ID_LIGHT 0x13
 
+uint8_t check_sync[3]={ID0,0x0E,0x0D};
 
 
 SoftwareSerial mySerial(7,8);
@@ -25,7 +26,7 @@ void setup(){
 	Serial.begin(115200);
 	mySerial.begin(115200);
 	mySerial.println("debut");
-	uint8_t response[6];
+	uint8_t response[6]={0,0,0,0,0,0};
 	uint8_t c;
 	uint8_t r=255;
 	uint8_t headerimgpkg[4];
@@ -51,20 +52,31 @@ void setup(){
 	delay(3000);
 
 	// Syncronisation
-	while(r==255 && i<500)
+	while (!(chk_sync(response)))
 	{
-		mySerial.print("Sync" );
+		mySerial.print("Sync " );
 		Serial.write(sync,6);
 
-		for (k=0;k<12;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
+		for (k=0;k<6;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
 		{
 			c=Serial.read();
+			response[k]=c;
 			r=c;
-			mySerial.print(r,HEX);
+			mySerial.print(c,HEX);
 		}
 		mySerial.println(i);
 		delay(100);
 		i++;
+	}
+
+	mySerial.print("Good answer (ACK!): XXX");
+	mySerial.write(response,6);
+	mySerial.print("Sync answer: XXX");
+	for (k=0;k<6;k++)
+	{
+		c=Serial.read();
+		r=c;
+		mySerial.write(&r,1);
 	}
 	Serial.write(ACK,6);
 
@@ -180,3 +192,13 @@ void loop(){
 	delay(1000);
 }
 
+bool chk_sync(uint8_t response[6]){
+	int k;
+	bool check=true;
+
+	for (k=0;k<3;k++){
+		if (check_sync[k]!=response[k])
+			check=check*0;
+	}
+	return check;
+}
