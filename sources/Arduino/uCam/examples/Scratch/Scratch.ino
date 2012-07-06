@@ -17,8 +17,9 @@ Programme de capture d'image et de transfet via software-serial, traduit du prog
 #define ID_NAK 0x0F
 #define ID_LIGHT 0x13
 
-uint8_t check_sync[3]={ID0,0x0E,0x0D};
-
+uint8_t ack_sync[6]={ID0,0x0E,0x0D,0x00,0x00,0x00};
+uint8_t response[6]={0,0,0,0,0,0};
+uint8_t c;
 
 SoftwareSerial mySerial(7,8);
 
@@ -26,8 +27,6 @@ void setup(){
 	Serial.begin(115200);
 	mySerial.begin(115200);
 	mySerial.println("debut");
-	uint8_t response[6]={0,0,0,0,0,0};
-	uint8_t c;
 	uint8_t r=255;
 	uint8_t headerimgpkg[4];
 	unsigned int pkgSizeIm;
@@ -41,7 +40,8 @@ void setup(){
 
 	//commands
 	uint8_t sync[6]={ID0,ID_SYNC,0x00,0x00,0x00,0x00};
-	uint8_t init[6]={ID0, ID_INITIAL,0x00, 0x07, 0x09, 0x05};
+	uint8_t init[6]={ID0, ID_INITIAL,0x00, 0x07, 0x07, 0x07};
+	uint8_t ACK_SYNC[6]={ID0,ID_ACK,0x0D,0x00,0x00,0x00};
 	uint8_t ACK[6]={ID0,ID_ACK,0x00,0x00,0x00,0x00};
 	uint8_t snapshot[6]={ID0,ID_SNAPSHOT,0x00,0x00,0x00,0x00};
 	uint8_t setpkgsize[6]={ID0,ID_SET_PACKAGE_SIZE,0x08,0xC8,0x00,0x00};
@@ -52,33 +52,27 @@ void setup(){
 	delay(3000);
 
 	// Syncronisation
-	while (!(chk_sync(response)))
+	mySerial.print("Sync:");
+	Serial.write(sync,6);
+	while (!(chk_ack(ack_sync)))
 	{
-		//mySerial.print("Sync " );
+		mySerial.println("Send sync command");
 		Serial.write(sync,6);
-
-		for (k=0;k<6;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
-		{
-			c=Serial.read();
-			response[k]=c;
-			r=c;
-			//mySerial.print(c,HEX);
-		}
-		//mySerial.println(i);
-		delay(100);
-		i++;
+		delay(10);
 	}
 
 	mySerial.print("Good answer (ACK!):");
 	mySerial.write(response,6);
+
+	while (!Serial.available());
 	mySerial.print("Sync answer:");
-	for (k=0;k<6;k++)
+	for (k=0;k<12;k++)
 	{
 		c=Serial.read();
 		r=c;
 		mySerial.write(&r,1);
 	}
-	Serial.write(ACK,6);
+	Serial.write(ACK_SYNC,6);
 
 	delay(1000);
 
@@ -101,7 +95,7 @@ void setup(){
 	}
 	delay(2000);
 
-	mySerial.println("Snap:");
+	mySerial.print("Snap:");
 	Serial.write(snapshot,6);
 	for (k=0;k<6;k++)
 	{
@@ -195,13 +189,36 @@ void loop(){
 	delay(1000);
 }
 
-bool chk_sync(uint8_t response[6]){
-	int k;
-	bool check=true;
+bool chk_ack(uint8_t ack[6]){
+	int k=0;
+	bool check=false;
 
-	for (k=0;k<3;k++){
-		if (check_sync[k]!=response[k])
-			check=check*0;
+	//mySerial.print("Waiting for ACK...:");
+	while (!Serial.available());
+	//mySerial.print("ACK recu:");
+
+	while (Serial.available())
+	{
+		c=Serial.read();
+		response[k]=c;
+		//mySerial.write(&c,1);
+
+		if (ack[k]==response[k] && k==0)
+			k++;
+		if (ack[k]==response[k] && k==1)
+			k++;
+		if (ack[k]==response[k] && k==2)
+			k++;
+		if (k==3)
+			k++;
+		if (ack[k]==response[k] && k==4)
+			k++;
+		if (ack[k]==response[k] && k==5)
+		{
+			k++;
+			check=true;
+			break;
+		}
 	}
 	return check;
 }
