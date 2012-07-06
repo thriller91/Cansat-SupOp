@@ -17,7 +17,8 @@ Programme de capture d'image et de transfet via software-serial, traduit du prog
 #define ID_NAK 0x0F
 #define ID_LIGHT 0x13
 
-uint8_t ack_sync[6]={ID0,0x0E,0x0D,0x00,0x00,0x00};
+uint8_t ack_sync[6]={ID0,ID_ACK,0x0D,0x00,0x00,0x00};
+uint8_t ack_init[6]={ID0,ID_ACK,0x01,0x00,0x00,0x00};
 uint8_t response[6]={0,0,0,0,0,0};
 uint8_t c;
 
@@ -56,7 +57,7 @@ void setup(){
 	Serial.write(sync,6);
 	while (!(chk_ack(ack_sync)))
 	{
-		mySerial.println("Send sync command");
+		mySerial.println("Send new sync command");
 		Serial.write(sync,6);
 		delay(10);
 	}
@@ -76,14 +77,16 @@ void setup(){
 
 	delay(1000);
 
+	//Initialisation
 	mySerial.print("Init:");
 	Serial.write(init,6);
-	for (k=0;k<6;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
+	while (!(chk_ack(ack_init)))
 	{
-		c=Serial.read();
-		r=c;
-		mySerial.write(&r,1);
+		mySerial.println("Send new init command");
+		Serial.write(sync,6);
+		delay(10);
 	}
+
 
 	mySerial.print("SetPkgSize:");
 	Serial.write(setpkgsize,6);
