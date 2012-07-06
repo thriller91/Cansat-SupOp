@@ -54,7 +54,7 @@ void setup(){
 	// Syncronisation
 	while (!(chk_sync(response)))
 	{
-		mySerial.print("Sync " );
+		//mySerial.print("Sync " );
 		Serial.write(sync,6);
 
 		for (k=0;k<6;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
@@ -62,16 +62,16 @@ void setup(){
 			c=Serial.read();
 			response[k]=c;
 			r=c;
-			mySerial.print(c,HEX);
+			//mySerial.print(c,HEX);
 		}
-		mySerial.println(i);
+		//mySerial.println(i);
 		delay(100);
 		i++;
 	}
 
-	mySerial.print("Good answer (ACK!): XXX");
+	mySerial.print("Good answer (ACK!):");
 	mySerial.write(response,6);
-	mySerial.print("Sync answer: XXX");
+	mySerial.print("Sync answer:");
 	for (k=0;k<6;k++)
 	{
 		c=Serial.read();
@@ -82,24 +82,16 @@ void setup(){
 
 	delay(1000);
 
+	mySerial.print("Init:");
+	Serial.write(init,6);
 	for (k=0;k<6;k++)	//recovers serial bytes from the camera. Does not check it, simply empties buffer and waits for all the bytes to be received.
 	{
 		c=Serial.read();
 		r=c;
-		//mySerial.print(r);
+		mySerial.write(&r,1);
 	}
 
-	delay(2000);
-
-	mySerial.println("Snap");
-	Serial.write(snapshot,6);
-	for (k=0;k<6;k++)
-	{
-		c=Serial.read();
-		r=c;
-		//mySerial.print(r);
-	}
-
+	mySerial.print("SetPkgSize:");
 	Serial.write(setpkgsize,6);
 	for (k=0;k<6;k++)
 	{
@@ -107,13 +99,24 @@ void setup(){
 		r=c;
 		//mySerial.print(r);
 	}
+	delay(2000);
 
+	mySerial.println("Snap:");
+	Serial.write(snapshot,6);
+	for (k=0;k<6;k++)
+	{
+		c=Serial.read();
+		r=c;
+		mySerial.write(&r,1);
+	}
+
+	mySerial.print("Getpicture");
 	Serial.write(getpicture,6);
 	for (k=0;k<6;k++)
 	{
 		c=Serial.read();
 		r=c;
-		//mySerial.print(r);
+		mySerial.write(&r,1);
 	}
 
 	mySerial.println("Size");
@@ -122,7 +125,7 @@ void setup(){
 		c=Serial.read();
 		response[k] = c;
 		r=c;
-		mySerial.print(r,HEX);
+		mySerial.write(&r,1);
 	}
 
 
@@ -177,7 +180,7 @@ void setup(){
 			c=Serial.read();
 			r=c;
 			//cout<<hex<<r<<" ";
-			//mySerial.print(c);
+			//mySerial.write(&c,1);
 		}
 		//Serial.println("Fin du packet");
 		c=Serial.read();
