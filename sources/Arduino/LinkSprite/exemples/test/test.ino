@@ -21,9 +21,9 @@ void StopTakePhotoCmd();
 
 void setup()
 {
-	Seriol.begin(38400);
-	Serial.begin(115200);
-        //Serial.println("debut");
+	Serial.begin(38400);
+	Seriol.begin(115200);
+    //Seriol.println("debut");
 
 	//pinMode(10, OUTPUT);        // make sure that the default chip select pin is set to output, even if you don't use it
 
@@ -43,11 +43,11 @@ void loop()
 	SendResetCmd();                  // Reset the Camera
 	delay(3000);                     //After reset, wait 2-3 second to send take picture command 
 
-        //Serial.println("Snap");
+    //Seriol.println("Snap");
 	SendTakePhotoCmd();
 	while(Seriol.available()>0)
 	{
-		incomingbyte=Seriol.read();
+		incomingbyte=Serial.read();
 	}
 
 	while(!EndFlag)
@@ -58,22 +58,22 @@ void loop()
 		SendReadDataCmd();
 		delay(15);
 
-		while(Seriol.available()>0)
+		while(Serial.available()>0)
 		{
-			incomingbyte=Seriol.read();
+			incomingbyte=Serial.read();
 			k++;
 			if((k>5)&&(j<32)&&(!EndFlag))
 			{
 				a[j]=incomingbyte;
 				if((a[j-1]==0xFF)&&(a[j]==0xD9))      //Check if the picture is over
 					EndFlag=1;
-				Serial.write((uint8_t *)incomingbyte,1);
+				Seriol.write((uint8_t *)incomingbyte,1);
 				j++;
 			}
 		}
 	}
 	//logfile.close();
-        //Serial.println("fin");
+    //Seriol.println("fin");
 	digitalWrite(13, HIGH);                        // Turn LED on to indicate the end of image transfer
 	while(1);
 }
@@ -83,57 +83,57 @@ void loop()
 //Send Reset command
 void SendResetCmd()
 {
-      Seriol.write(0x56);
-      Seriol.write(byte(0x00));
-      Seriol.write(0x26);
-      Seriol.write(byte(0x00));
+      Serial.write(0x56);
+      Serial.write(byte(0x00));
+      Serial.write(0x26);
+      Serial.write(byte(0x00));
 }
 
 // Send image size command, image size is returned
 void ReadImageSizeCmd()
 {
-      Seriol.write(0x56);
-      Seriol.write(byte(0x00));
-      Seriol.write(0x34);
-      Seriol.write(0x01);
-      Seriol.write(byte(0x00));
+      Serial.write(0x56);
+      Serial.write(byte(0x00));
+      Serial.write(0x34);
+      Serial.write(0x01);
+      Serial.write(byte(0x00));
 }
 
 // Set image size
 void SetImageSizeCmd()
 {
-      Seriol.write(0x56);
-      Seriol.write(byte(0x00));
-      Seriol.write(0x31);
-      Seriol.write(0x05);
-      Seriol.write(0x04);
-      Seriol.write(0x01);
-      Seriol.write(byte(0x00));
-      Seriol.write(0x19);
-      Seriol.write(0x22);
+      Serial.write(0x56);
+      Serial.write(byte(0x00));
+      Serial.write(0x31);
+      Serial.write(0x05);
+      Serial.write(0x04);
+      Serial.write(0x01);
+      Serial.write(byte(0x00));
+      Serial.write(0x19);
+      Serial.write(0x22);
 }
 
 //Set up the Baud Rate of the camera
 void SetBaudRateCmd()
 {
-      Seriol.write(0x56);
-      Seriol.write(byte(0x00));
-      Seriol.write(0x24);
-      Seriol.write(0x03);
-      Seriol.write(0x01);
-      Seriol.write(0xAE);
-      Seriol.write(0xC8);
+      Serial.write(0x56);
+      Serial.write(byte(0x00));
+      Serial.write(0x24);
+      Serial.write(0x03);
+      Serial.write(0x01);
+      Serial.write(0xAE);
+      Serial.write(0xC8);
 
 }
 
 //Send take picture command
 void SendTakePhotoCmd()
 {
-      Seriol.write(0x56);
-      Seriol.write(byte(0x00));
-      Seriol.write(0x36);
-      Seriol.write(0x01);
-      Seriol.write(byte(0x00));  
+      Serial.write(0x56);
+      Serial.write(byte(0x00));
+      Serial.write(0x36);
+      Serial.write(0x01);
+      Serial.write(byte(0x00));  
 }
 
 //Read data
@@ -142,31 +142,31 @@ void SendReadDataCmd()
 
       MH=x/0x100;
       ML=x%0x100; 
-      Seriol.write(0x56);
-      Seriol.write(byte(0x00));
-      Seriol.write(0x32);
-      Seriol.write(0x0c);
-      Seriol.write(byte(0x00)); 
-      Seriol.write(0x0a);
-      Seriol.write(byte(0x00));
-      Seriol.write(byte(0x00));
-      Seriol.write(MH);
-      Seriol.write(ML);  
-      Seriol.write(byte(0x00));
-      Seriol.write(byte(0x00));
-      Seriol.write(byte(0x00));
-      Seriol.write(0x20);
-      Seriol.write(byte(0x00));  
-      Seriol.write(0x0a);
+      Serial.write(0x56);
+      Serial.write(byte(0x00));
+      Serial.write(0x32);
+      Serial.write(0x0c);
+      Serial.write(byte(0x00)); 
+      Serial.write(0x0a);
+      Serial.write(byte(0x00));
+      Serial.write(byte(0x00));
+      Serial.write(MH);
+      Serial.write(ML);  
+      Serial.write(byte(0x00));
+      Serial.write(byte(0x00));
+      Serial.write(byte(0x00));
+      Serial.write(0x20);
+      Serial.write(byte(0x00));  
+      Serial.write(0x0a);
       x+=0x20;                            //address increases 32£¬set according to buffer size
 }
 
 //Stop taking a picture
 void StopTakePhotoCmd()
 {
-      Seriol.write(0x56);
-      Seriol.write(byte(0x00));
-      Seriol.write(0x36);
-      Seriol.write(0x01);
-      Seriol.write(0x03);        
+      Serial.write(0x56);
+      Serial.write(byte(0x00));
+      Serial.write(0x36);
+      Serial.write(0x01);
+      Serial.write(0x03);        
 }

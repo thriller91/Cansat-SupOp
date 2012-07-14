@@ -435,13 +435,16 @@ td { padding: 0.3rem; vertical-align: top;border: 1px solid white; }
    ========================================================================== */
 
 
+
 ul.polaroids {
 	list-style: none outside none;
 }
-ul.polaroids.img {
+ul.polaroids img {
 	display: block;
     margin-bottom: 12px;
     width: 190px;
+    padding: 0 !important;
+	box-shadow: 1px 1px 10px #000; 
 }
 
 ul.polaroids a {
@@ -450,8 +453,8 @@ ul.polaroids a {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
     color: #333333;
     float: left;
-    font-family: "Marker Felt",sans-serif;
-    font-size: 18px;
+    font-family: monospace;
+    font-size: 1rem;
     margin: 0 0 3rem 3rem;
     padding: 1rem 1rem 1rem 1.5rem;
     text-align: center;
@@ -459,6 +462,7 @@ ul.polaroids a {
 }
 ul.polaroids a:after {
     content: attr(title);
+    text-shadow: 1px 1px 3px #aaa;
 }
 ul.polaroids li:nth-child(2n) a {
     -moz-transform: rotate(2deg);
@@ -495,6 +499,9 @@ ul.polaroids li a:hover {
     z-index: 5;
 }
 
+ul.polaroids li {
+	box-shadow: 1px 1px 10px #000; 
+}
 
 
 
