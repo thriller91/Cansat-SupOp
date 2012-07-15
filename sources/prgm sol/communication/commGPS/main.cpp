@@ -7,13 +7,13 @@ using boost::lexical_cast;
 using namespace std;
 #include <string>
 #include "commGPS.h"
-#include "TinyGPS.h"
+//#include "TinyGPS.h"
 #include <sstream>
 
 const char *PORT(0);
 
 // what baud rate do we communicate at
-serial_port_base::baud_rate BAUD(4800);
+serial_port_base::baud_rate BAUD(9600);
 
 
 // how big is each "packet" of data (default is 8 bits)

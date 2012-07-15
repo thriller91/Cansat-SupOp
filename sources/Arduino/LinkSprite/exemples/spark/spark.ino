@@ -5,7 +5,7 @@ byte a[32];                            //Array to store image chuncks to be read
 int x=0x0000,j=0,k=0;                  //Read Starting address   
 uint8_t MH=0x00,ML=0x00;
 boolean EndFlag=0;
-int chipSelect = 8;                    //Required when using Sparkfun SD shield
+int chipSelect = 10;                    //Required when using Sparkfun SD shield
 File logfile;
 
 void SendResetCmd();
@@ -24,15 +24,15 @@ void setup()
 	
 	pinMode(10, OUTPUT);        // make sure that the default chip select pin is set to output, even if you don't use it
   
-	pinMode(13, OUTPUT);        // LED pin to show that photo has been taken.
-	digitalWrite(13, LOW);
+	//pinMode(13, OUTPUT);        // LED pin to show that photo has been taken.
+	//digitalWrite(13, LOW);
   
 	SD.begin(chipSelect);
 }
   
 void loop() 
 {
-	//OpenFile();              // Function to create a new file (IMGXX.jpeg)
+	OpenFile();              // Function to create a new file (IMGXX.jpeg)
 	x=0x0000;
 	x-=0x20;
 	EndFlag=0;
@@ -63,13 +63,13 @@ void loop()
 				a[j]=incomingbyte;
 				if((a[j-1]==0xFF)&&(a[j]==0xD9))      //Check if the picture is over
 					EndFlag=1; 
-				//logfile.print((char)incomingbyte);                  
+				logfile.print((char)incomingbyte);                  
 				j++;
 			}
 		}      
 	}
-	//logfile.close();  
-	digitalWrite(13, HIGH);                        // Turn LED on to indicate the end of image transfer
+	logfile.close();  
+	//digitalWrite(13, HIGH);                        // Turn LED on to indicate the end of image transfer
 	while(1);
 }
 
