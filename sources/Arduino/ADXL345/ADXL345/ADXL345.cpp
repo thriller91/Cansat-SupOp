@@ -83,7 +83,7 @@ int ADXL345::SetRange(int range, bool fullResolution)
 
 	// By default (range 2) or FullResolution = true, scale is 2G.
 	m_Scale = ScaleFor2G;
-	
+
 	// Set the range bits.
 	switch(range)
 	{
@@ -115,7 +115,7 @@ int ADXL345::SetRange(int range, bool fullResolution)
 uint8_t ADXL345::EnsureConnected()
 {
 	uint8_t data = Read(0x00, 1)[0];
-	
+
 	if(data == 0xE5)
 		IsConnected = true;
 	else
@@ -144,7 +144,7 @@ uint8_t* ADXL345::Read(int address, int length)
 	Wire.beginTransmission(m_Address);
 	Wire.write(address);
 	Wire.endTransmission();
-  
+ 
 	Wire.beginTransmission(m_Address);
 	Wire.requestFrom(m_Address, length);
 
@@ -165,6 +165,6 @@ char* ADXL345::GetErrorText(int errorCode)
 {
 	if(ErrorCode_1_Num == 1)
 		return ErrorCode_1;
-	
+
 	return "Error not defined.";
 }

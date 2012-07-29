@@ -63,7 +63,7 @@ class ADXL345
 
 	  AccelerometerRaw ReadRawAxis();
 	  AccelerometerScaled ReadScaledAxis();
-  
+ 
 	  int SetRange(int range, bool fullResolution);
 	  int EnableMeasurements();
 
