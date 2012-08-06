@@ -1,13 +1,13 @@
 /*
-Programme à embarquer sur l'Arduino n°1 du τετραφάρμακος.
+Programme à embarquer sur l'Arduino Mini n°1 du τετραφάρμακος.
 TODO
--ajouter la µCAM n°1
--ajouter les headers définis par Denis pour signer chaque type de données et faciliter la lecture;
--ajouter la commutation du module XBee avec la Arduino n°2.
+-ajouter la LinkSprite n°1;
+-ajouter le support de la carte SD;
+-ajouter la commutation du module XBee;
+-gérer la communication avec l'Arduino Mini n°2.
 */
 
 #include <Wire.h>
-#include <SoftwareSerial.h>
 #include "BMP085.h"
 #include "DHT.h"
 
@@ -19,12 +19,12 @@ DHT dht(DHTPIN, DHTTYPE);
 
 void setup(){
   Serial.begin(115200);
-  
+
   //BMP085
   Serial.println("BMP085");
   Wire.begin();
   bmp085Calibration();
-  
+
   //RHT03
   Serial.println("RHT03");
   dht.begin();
@@ -54,10 +54,10 @@ void loop(){
     Serial.println("Failed to read from DHT");
   }
   else {
-    Serial.print("RHT03: \t Humidity: "); 
+    Serial.print("RHT03: \t Humidity: ");
     Serial.print(h);
     Serial.print(" %\t");
-    Serial.print("Temperature: "); 
+    Serial.print("Temperature: ");
     Serial.print(t);
     Serial.println(" *C");
   }

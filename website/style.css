@@ -101,7 +101,7 @@ nav { display:block; position:relative; background: rgba(4, 13, 22, 0.4);}
 nav ul { padding:0; margin:0; }
 nav li { position:relative; float:left; list-style-type:none; }
 nav ul:after { content:"."; display:block; height:0; clear:both; visibility:hidden; }
-nav li a, nav li a:visited, nav li a:active  { display:block; font-size: 1.5rem;font-family: 'Audiowide', cursive; color: #4e86a6;padding:1rem 1rem; color: #4e86a6; text-decoration:none; }
+nav li a, nav li a:visited, nav li a:active  { display:block; font-size: 1.5rem;cursor: pointer; font-family: 'Audiowide', cursive; color: #4e86a6;padding:1rem 1rem; color: #4e86a6; text-decoration:none; }
 nav li a:focus { outline:none; text-decoration:underline; }
 nav li:first-child a { border-left:none; }
 nav li.last a { border-right:none; }
@@ -175,6 +175,17 @@ section.main {
   margin: 5rem 8rem 5rem 8rem;
 }
 
+#btn_up {
+	position: fixed;
+	display: none;
+	font-size: 5rem;
+	color: white;
+	background-color: rgba(0, 0, 0, 0.45);
+	top: 5rem;
+	left: 2rem;
+	cursor: pointer;
+}
+
 .main ul {
   margin: 0 1rem 0 5rem;
   color: white;
@@ -198,9 +209,14 @@ footer {
   border-radius: 0.5rem;
   padding: 0rem 8rem;
 }
+footer section{
+	display: inline-block;
+	text-align: center;
+	padding-top: 2rem;
+}
 
-footer ul{list-style-type:none; display:block; float:left; margin: 2rem;}
-  
+footer section ul{list-style-type:none; display:block; float:left; margin: 2rem;}
+
 
 /* =============================================================================
    Links
