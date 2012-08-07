@@ -1,6 +1,10 @@
 #ifndef utils_h
 #define utils_h
 
+#define XBEE_RX 7
+#define XBEE_TX 6
+
+
 #include <Arduino.h>
 #include <SD.h>
 
