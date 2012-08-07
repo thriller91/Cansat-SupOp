@@ -26,11 +26,15 @@ DHT dht(DHTPIN, DHTTYPE);
 
 
 void setup(){
+	// Communication
 	Serial.begin(115200);
 	XBee.begin(9600);
 	Serial.println("Debut");
 	XBee.println("Debut");
-
+	pinMode(SWITCH_A1,OUTPUT);
+	pinMode(SWITCH_A2,OUTPUT);
+	digitalWrite(SWITCH_A1,HIGH);
+	digitalWrite(SWITCH_A2,HIGH);
 
 	//BMP085
 	Serial.println("BMP085");
