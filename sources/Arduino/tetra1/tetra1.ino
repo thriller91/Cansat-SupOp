@@ -8,10 +8,18 @@ TODO
 */
 
 #include <Wire.h>
+#include <SD.h>
+
+#include "utils.h"
+
 #include "BMP085.h"
 #include "DHT.h"
 
-//RHT03
+// Ouverture des fichiers, pour l'Arduino n°1
+OpenFiles Files(0);
+int k=0;
+
+// RHT03
 #define DHTPIN 2
 #define DHTTYPE DHT22 
 DHT dht(DHTPIN, DHTTYPE);
@@ -19,6 +27,7 @@ DHT dht(DHTPIN, DHTTYPE);
 
 void setup(){
   Serial.begin(115200);
+  Serial.println("Debut");
 
   //BMP085
   Serial.println("BMP085");
@@ -28,21 +37,22 @@ void setup(){
   //RHT03
   Serial.println("RHT03");
   dht.begin();
+
 }
 
 void loop(){
-
+while (k<20){
   /*
   Sortie série de la pression et de la température du capteur BMP085
   */
   float temperature = bmp085GetTemperature(bmp085ReadUT()); //MUST be called first
   float pressure = bmp085GetPressure(bmp085ReadUP());
-  Serial.print("BMP085: \t T: ");
-  Serial.print(temperature, 2); //display 2 decimal places
-  Serial.print(" deg C\t");
-  Serial.print("P: ");
-  Serial.print(pressure, 0); //whole number only.
-  Serial.println(" Pa");
+  Files.PTH_File.print("BMP085: \t T: ");
+  Files.PTH_File.print(temperature, 2); //display 2 decimal places
+  Files.PTH_File.print(" deg C\t");
+  Files.PTH_File.print("P: ");
+  Files.PTH_File.print(pressure, 0); //whole number only.
+  Files.PTH_File.println(" Pa");
 
   /*
   Sortie série de l'humidité et de la température du capteur DH22
@@ -51,14 +61,20 @@ void loop(){
   float t = dht.readTemperature();
   // check if returns are valid, if they are NaN (not a number) then something went wrong!
   if (isnan(t) || isnan(h)) {
-    Serial.println("Failed to read from DHT");
+    Files.PTH_File.println("Failed to read from DHT");
   }
   else {
-    Serial.print("RHT03: \t Humidity: ");
-    Serial.print(h);
-    Serial.print(" %\t");
-    Serial.print("Temperature: ");
-    Serial.print(t);
-    Serial.println(" *C");
+    Files.PTH_File.print("RHT03: \t Humidity: ");
+    Files.PTH_File.print(h);
+    Files.PTH_File.print(" %\t");
+    Files.PTH_File.print("Temperature: ");
+    Files.PTH_File.print(t);
+    Files.PTH_File.println(" *C");
+Serial.println(k);
   }
+k++;
+}
+Files.PTH_File.close();
+Serial.println("Fin");
+delay(1000);
 }
