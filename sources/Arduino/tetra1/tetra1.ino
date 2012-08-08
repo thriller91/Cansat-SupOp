@@ -1,7 +1,6 @@
 /*
 Programme à embarquer sur l'Arduino Mini n°1 du τετραφάρμακος.
 TODO
--ajouter la LinkSprite n°1;
 -gérer la communication avec l'Arduino Mini n°2.
 */
 
@@ -11,7 +10,7 @@ TODO
 
 #include "utils.h"
 
-//#include "LinkSprite.h"
+#include "LinkSprite.h"
 #include "BMP085.h"
 #include "DHT.h"
 
@@ -20,12 +19,8 @@ SoftwareSerial XBee(XBEE_RX,XBEE_TX);
 OpenFiles Files(0);
 int i=0;
 
-// LinkSprite
-byte incomingbyte;
-byte a[32];                            //Array to store image chuncks to be read off the camera
-int x=0x0000,j=0,k=0;                  //Read Starting address   
-uint8_t MH=0x00,ML=0x00;
-boolean EndFlag=0;
+// LinkSprite Jpeg Camera
+LinkSprite Cam;
 
 
 // RHT03
@@ -54,42 +49,9 @@ void setup(){
 	Serial.println("RHT03");
 	dht.begin();
 
-	// LinkSprite (simple prise de vue, pour tester la longueur du code)
-	x=0x0000;
-	x-=0x20;
-	EndFlag=0;
-	SendResetCmd();                  // Reset the Camera
-	delay(3000);                     //After reset, wait 2-3 second to send take picture command 
-
-	SendTakePhotoCmd(); 
-	while(Serial.available()>0)
-	{
-		incomingbyte=Serial.read();
-	}
-
-	while(!EndFlag)
-	{
-		j=0;
-		k=0;
-
-		SendReadDataCmd();
-		delay(15);
-
-		while(Serial.available()>0)
-		{
-			incomingbyte=Serial.read();
-			k++;
-			if((k>5)&&(j<32)&&(!EndFlag))
-			{
-				a[j]=incomingbyte;
-				if((a[j-1]==0xFF)&&(a[j]==0xD9))      //Check if the picture is over
-					EndFlag=1;
-				Files.Cam_File.print((char)incomingbyte);
-				j++;
-			}
-		}
-	}
-	Files.Cam_File.close();
+	// LinkSprite
+	Cam.Snap();
+	Cam.Save(Files.Cam_File);
 }
 
 void loop(){
@@ -125,7 +87,7 @@ void loop(){
 			Files.PTH_File.print("Temperature: ");
 			Files.PTH_File.print(t);
 			Files.PTH_File.println(" *C");
-			Serial.println(k);
+			Serial.println(i);
 		}
 		i++;
 	}
@@ -140,95 +102,3 @@ void loop(){
 
 
 
-//Camera functions
-
-//Send Reset command
-void SendResetCmd()
-{
-      Serial.write(0x56);
-      Serial.write(byte(0x00));
-      Serial.write(0x26);
-      Serial.write(byte(0x00));
-}
-
-// Send image size command, image size is returned
-void ReadImageSizeCmd()
-{
-      Serial.write(0x56);
-      Serial.write(byte(0x00));
-      Serial.write(0x34);
-      Serial.write(0x01);
-      Serial.write(byte(0x00));
-}
-
-// Set image size
-void SetImageSizeCmd()
-{
-      Serial.write(0x56);
-      Serial.write(byte(0x00));
-      Serial.write(0x31);
-      Serial.write(0x05);
-      Serial.write(0x04);
-      Serial.write(0x01);
-      Serial.write(byte(0x00));
-      Serial.write(0x19);
-      Serial.write(0x22);
-}
-
-//Set up the Baud Rate of the camera
-void SetBaudRateCmd()
-{
-      Serial.write(0x56);
-      Serial.write(byte(0x00));
-      Serial.write(0x24);
-      Serial.write(0x03);
-      Serial.write(0x01);
-      Serial.write(0xAE);
-      Serial.write(0xC8);
-
-}
-
-//Send take picture command
-void SendTakePhotoCmd()
-{
-      Serial.write(0x56);
-      Serial.write(byte(0x00));
-      Serial.write(0x36);
-      Serial.write(0x01);
-      Serial.write(byte(0x00));  
-}
-
-//Read data
-void SendReadDataCmd()
-{
-
-      MH=x/0x100;
-      ML=x%0x100; 
-      Serial.write(0x56);
-      Serial.write(byte(0x00));
-      Serial.write(0x32);
-      Serial.write(0x0c);
-      Serial.write(byte(0x00)); 
-      Serial.write(0x0a);
-      Serial.write(byte(0x00));
-      Serial.write(byte(0x00));
-      Serial.write(MH);
-      Serial.write(ML);  
-      Serial.write(byte(0x00));
-      Serial.write(byte(0x00));
-      Serial.write(byte(0x00));
-      Serial.write(0x20);
-      Serial.write(byte(0x00));  
-      Serial.write(0x0a);
-      x+=0x20;                            //address increases 32£¬set according to buffer size
-}
-
-//Stop taking a picture
-void StopTakePhotoCmd()
-{
-      Serial.write(0x56);
-      Serial.write(byte(0x00));
-      Serial.write(0x36);
-      Serial.write(0x01);
-      Serial.write(0x03);        
-}
