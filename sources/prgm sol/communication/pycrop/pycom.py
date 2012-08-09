@@ -12,6 +12,8 @@ Licence: Librement copiable et modifiable.
 from serial import *
 import sys, threading, re
 
+NUM_ETAPE = 1
+
 
 if len(sys.argv)>2:
 		PORT = sys.argv[1]
@@ -26,28 +28,29 @@ else:
 
 def RX(ser):
 		buffer = ''
-		last_match = 0
+		#last_match = 0
+		etape = NUM_ETAPE
 
 		while True:
 				buffer += ser.read(ser.inWaiting())
 
-				if '*[%END%]*' in buffer:
-						file.write(buffer+'\nFermeture du fichier\n')
-						file.close()
-						print "\n\n\t***Fin de la reception, tapper sur Q pour quitter***"
-						break
+				k = NUM_ETAPE
+				while k >= 1 :
+						if etape == k:
+								if '*[%'+str(etape)+'%]*' in buffer:
+										print 'ETAPE:\t'+str(etape)
+										file.write(buffer)
+										buffer = ''
+										etape -= 1
+										break
+						k -=1
 
-				m=p.match(buffer)
-
-				if m:
-						matching=p.findall(buffer)
-						if len(matching) > last_match:
-								print 'RX:\t'+matching[-1]
-								last_match = len(matching)
-								file.write(buffer)
-								buffer = ''
-								last_match = 0
-
+				if etape == 0:
+						if '*[%FIN%]*' in buffer:
+								file.write(buffer+'\nFermeture du fichier\n')
+								file.close()
+								print "\n\n\t***Fin de la reception, tapper sur Q pour quitter***"
+								break
 
 def TX(ser):
 		ser.write('TX:plop\n')
@@ -56,7 +59,7 @@ def TX(ser):
 
 if __name__ ==  '__main__':
 
-		p = re.compile('\*\[%[A-Z0-9_]*%\]\*')
+		#p = re.compile('\*\[%[A-Z0-9_]*%\]\*')
 		print "Debut du programme"
 		print "PORT choisi: "+PORT
 
