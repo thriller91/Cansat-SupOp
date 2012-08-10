@@ -10,14 +10,15 @@ Licence: Librement copiable et modifiable.
 '''
 
 from serial import *
-import sys, threading, re
+import sys, threading, os, time
 
 NUM_ETAPE = 1
+TX_PATH = 'tx.cmd'
 
 
 if len(sys.argv)>2:
 		PORT = sys.argv[1]
-		file = open(sys.argv[2],'w')
+		file = open(sys.argv[2],'wb')
 		file.write('Ouverture du fichier\n')
 else:
 		print "USAGE: ./pycom PORT reception.dat"
@@ -28,7 +29,6 @@ else:
 
 def RX(ser):
 		buffer = ''
-		#last_match = 0
 		etape = NUM_ETAPE
 
 		while True:
@@ -49,17 +49,40 @@ def RX(ser):
 						if '*[%FIN%]*' in buffer:
 								file.write(buffer+'\nFermeture du fichier\n')
 								file.close()
-								print "\n\n\t***Fin de la reception, tapper sur Q pour quitter***"
 								break
 
 def TX(ser):
-		ser.write('TX:plop\n')
+		ser.write('plop\n')
+		while True:
+				time.sleep(1)
+				if os.path.isfile(TX_PATH):
+						tx = open(TX_PATH,'r')
+						tx_cmd = tx.readline()
+						tx.close()
+						os.remove(TX_PATH)
+						if '*[%FIN%]*' in tx_cmd:
+								break
+						else:
+								ser.write(tx_cmd)
+								print 'TX:\t'+tx_cmd
 
+class myThread (threading.Thread):
+		def __init__(self, name, serial):
+				threading.Thread.__init__(self)
+				self.name = name
+				self.serial = serial
+		def run(self):
+				print "Starting " + self.name
+				if self.name == 'RX':
+						RX(self.serial)
+				elif self.name == 'TX':
+						TX(self.serial)
+				self.serial.close()
+				print "Exiting " + self.name
 
 
 if __name__ ==  '__main__':
 
-		#p = re.compile('\*\[%[A-Z0-9_]*%\]\*')
 		print "Debut du programme"
 		print "PORT choisi: "+PORT
 
@@ -76,11 +99,15 @@ if __name__ ==  '__main__':
 		)
 
 
-		threading.Thread(target=RX, args=(ser,)).start()
-		threading.Thread(target=TX, args=(ser,)).start()
+		#threading.Thread(target=RX, args=(ser,)).start()
+		#threading.Thread(target=TX, args=(ser,)).start()
 
-		while True:
-				commande = raw_input()
+		# Fabrication des threads
+		thread_RX = myThread('RX',ser)
+		thread_TX = myThread('TX',ser)
 
-				if commande == 'Q':
-						sys.exit(0)
+		# Lancement des threads
+		thread_TX.start()
+		thread_RX.start()
+
+		quit()
