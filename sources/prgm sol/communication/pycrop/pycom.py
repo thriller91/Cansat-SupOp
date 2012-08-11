@@ -61,7 +61,9 @@ def TX(ser):
 						tx.close()
 						os.remove(TX_PATH)
 						if '*[%FIN%]*' in tx_cmd:
-								break
+								if not thread_RX.isAlive():
+										ser.close()
+										break
 						else:
 								ser.write(tx_cmd)
 								print 'TX:\t'+tx_cmd
@@ -77,7 +79,6 @@ class myThread (threading.Thread):
 						RX(self.serial)
 				elif self.name == 'TX':
 						TX(self.serial)
-				self.serial.close()
 				print "Exiting " + self.name
 
 
@@ -110,4 +111,5 @@ if __name__ ==  '__main__':
 		thread_TX.start()
 		thread_RX.start()
 
+		#ser.close()
 		quit()
