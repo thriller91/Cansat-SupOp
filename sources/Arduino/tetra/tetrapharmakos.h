@@ -1,10 +1,8 @@
-#ifndef utils_h
-#define utils_h
+#ifndef tetrapharmakos_h
+#define tetrapharmakos_h
 
 #define XBEE_RX 8
 #define XBEE_TX 9
-#define SWITCH_A1 3
-#define SWITCH_A2 4
 
 #include <Arduino.h>
 #include <SD.h>

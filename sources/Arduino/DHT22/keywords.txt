@@ -1,4 +1,0 @@
-DHT22	KEYWORD1
-getHumidity	KEYWORD2
-getTemperatureC	KEYWORD2
-clockReset	KEYWORD2

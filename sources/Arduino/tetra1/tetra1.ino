@@ -8,7 +8,7 @@ TODO
 #include <SD.h>
 #include <SoftwareSerial.h>
 
-#include "utils.h"
+#include "tetrapharmakos.h"
 
 #include "LinkSprite.h"
 #include "BMP085.h"
@@ -31,30 +31,29 @@ DHT dht(DHTPIN, DHTTYPE);
 
 void setup(){
 	// Communication
-	Serial.begin(115200);
+	Serial.begin(38400);
 	XBee.begin(9600);
-	Serial.println("Debut");
 	XBee.println("Debut");
-	pinMode(SWITCH_A1,OUTPUT);
-	pinMode(SWITCH_A2,OUTPUT);
-	digitalWrite(SWITCH_A1,LOW);
-	digitalWrite(SWITCH_A2,LOW);
 
 	//BMP085
-	Serial.println("BMP085");
 	Wire.begin();
 	bmp085Calibration();
 
 	//RHT03
-	Serial.println("RHT03");
 	dht.begin();
+
+	///////////////////////////////////////////// ETAPE 3
+	XBee.println("*[%3%]*");
 
 	// LinkSprite
 	Cam.Snap();
-	Cam.Save(Files.Cam_File);
-}
+	///////////////////////////////////////////// ETAPE 2
+	XBee.println("*[%2%]*");
 
-void loop(){
+	Cam.Save(Files.Cam_File);
+
+	///////////////////////////////////////////// ETAPE 1
+	XBee.println("*[%1%]*");
 
 	while (i<20){
 		/*
@@ -87,15 +86,18 @@ void loop(){
 			Files.PTH_File.print("Temperature: ");
 			Files.PTH_File.print(t);
 			Files.PTH_File.println(" *C");
-			Serial.println(i);
 		}
 		i++;
 	}
 	Files.PTH_File.close();
 
-	XBee.println("Fin");
-	Serial.println("Fin");
-	delay(1000);
+}
+
+void loop(){
+
+	///////////////////////////////////////////// ETAPE 0
+	XBee.println("*[%0%]*");
+	delay(10000);
 
 
 }

@@ -12,7 +12,7 @@ Licence: Librement copiable et modifiable.
 from serial import *
 import sys, threading, os, time
 
-NUM_ETAPE = 1
+NUM_ETAPE = 3
 TX_PATH = 'tx.cmd'
 
 
@@ -46,7 +46,7 @@ def RX(ser):
 						k -=1
 
 				if etape == 0:
-						if '*[%FIN%]*' in buffer:
+						if '*[%0%]*' in buffer:
 								file.write(buffer+'\nFermeture du fichier\n')
 								file.close()
 								break
@@ -89,7 +89,7 @@ if __name__ ==  '__main__':
 
 		ser = Serial(
 				port=PORT,
-				baudrate=115200,
+				baudrate=9600,
 				bytesize=EIGHTBITS,
 				parity=PARITY_NONE,
 				stopbits=STOPBITS_ONE,
