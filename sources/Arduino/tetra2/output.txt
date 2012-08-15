@@ -1,0 +1,150 @@
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99507 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99522 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99510 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99507 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99507 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.10 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99498 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99504 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.10 deg C	P: 99507 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99516 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.10 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99507 Pa
+RHT03: 	 Humidity: 29.10 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.10 deg C	P: 99519 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.10 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99516 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.10 deg C	P: 99519 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.00 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.00 *C
+BMP085: 	 T: 23.10 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.00 *C
+BMP085: 	 T: 23.10 deg C	P: 99510 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.00 *C
+BMP085: 	 T: 23.00 deg C	P: 99510 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.00 *C
+BMP085: 	 T: 23.10 deg C	P: 99498 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.20 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 23.70 deg C	P: 99512 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 24.20 deg C	P: 99500 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 24.50 deg C	P: 99512 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 24.70 deg C	P: 99499 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 24.90 deg C	P: 99499 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.00 deg C	P: 99511 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.00 deg C	P: 99508 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.10 deg C	P: 99514 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.20 deg C	P: 99514 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.30 deg C	P: 99517 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.40 deg C	P: 99549 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.50 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.60 deg C	P: 99505 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.70 deg C	P: 99510 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.70 deg C	P: 99522 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.80 deg C	P: 99507 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.90 deg C	P: 99519 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 25.90 deg C	P: 99507 Pa
+RHT03: 	 Humidity: 29.00 %	Temperature: 22.10 *C
+BMP085: 	 T: 26.00 deg C	P: 99510 Pa
+RHT03: 	 Humidity: 32.60 %	Temperature: 22.10 *C
+BMP085: 	 T: 26.00 deg C	P: 99501 Pa
+RHT03: 	 Humidity: 32.60 %	Temperature: 22.10 *C
+BMP085: 	 T: 26.10 deg C	P: 99519 Pa
+RHT03: 	 Humidity: 32.60 %	Temperature: 22.10 *C
+BMP085: 	 T: 26.20 deg C	P: 99516 Pa
+RHT03: 	 Humidity: 32.60 %	Temperature: 22.10 *C
+BMP085: 	 T: 26.20 deg C	P: 99510 Pa
+RHT03: 	 Humidity: 40.10 %	Temperature: 22.20 *C
+BMP085: 	 T: 26.20 deg C	P: 99507 Pa
+RHT03: 	 Humidity: 40.10 %	Temperature: 22.20 *C
+BMP085: 	 T: 26.30 deg C	P: 99519 Pa
+RHT03: 	 Humidity: 40.10 %	Temperature: 22.20 *C
+BMP085: 	 T: 26.30 deg C	P: 99519 Pa
+RHT03: 	 Humidity: 40.10 %	Temperature: 22.20 *C
+BMP085: 	 T: 26.30 deg C	P: 99504 Pa
+RHT03: 	 Humidity: 47.10 %	Temperature: 22.30 *C
+BMP085: 	 T: 26.40 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 47.10 %	Temperature: 22.30 *C
+BMP085: 	 T: 26.40 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 47.10 %	Temperature: 22.30 *C
+BMP085: 	 T: 26.50 deg C	P: 99501 Pa
+RHT03: 	 Humidity: 47.10 %	Temperature: 22.30 *C
+BMP085: 	 T: 26.40 deg C	P: 99515 Pa
+RHT03: 	 Humidity: 52.70 %	Temperature: 22.50 *C
+BMP085: 	 T: 26.40 deg C	P: 99518 Pa
+RHT03: 	 Humidity: 52.70 %	Temperature: 22.50 *C
+BMP085: 	 T: 26.40 deg C	P: 99516 Pa
+RHT03: 	 Humidity: 52.70 %	Temperature: 22.50 *C
+BMP085: 	 T: 26.40 deg C	P: 99516 Pa
+RHT03: 	 Humidity: 52.70 %	Temperature: 22.50 *C
+BMP085: 	 T: 26.40 deg C	P: 99504 Pa
+RHT03: 	 Humidity: 57.50 %	Temperature: 22.70 *C
+BMP085: 	 T: 26.40 deg C	P: 99501 Pa
+RHT03: 	 Humidity: 57.50 %	Temperature: 22.70 *C
+BMP085: 	 T: 26.20 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 57.50 %	Temperature: 22.70 *C
+BMP085: 	 T: 26.10 deg C	P: 99519 Pa
+RHT03: 	 Humidity: 57.50 %	Temperature: 22.70 *C
+BMP085: 	 T: 26.00 deg C	P: 99507 Pa
+RHT03: 	 Humidity: 61.10 %	Temperature: 23.00 *C
+BMP085: 	 T: 25.90 deg C	P: 99525 Pa
+RHT03: 	 Humidity: 61.10 %	Temperature: 23.00 *C
+BMP085: 	 T: 25.80 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 61.10 %	Temperature: 23.00 *C
+BMP085: 	 T: 25.80 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 61.10 %	Temperature: 23.00 *C
+BMP085: 	 T: 25.70 deg C	P: 99510 Pa
+RHT03: 	 Humidity: 63.60 %	Temperature: 23.20 *C
+BMP085: 	 T: 25.60 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 63.60 %	Temperature: 23.20 *C
+BMP085: 	 T: 25.60 deg C	P: 99513 Pa
+RHT03: 	 Humidity: 63.60 %	Temperature: 23.20 *C
+BMP085: 	 T: 25.50 deg C	P: 99508 Pa
+RHT03: 	 Humidity: 63.60 %	Temperature: 23.20 *C
+BMP085: 	 T: 25.50 deg C	P: 99522 Pa
+RHT03: 	 Humidity: 63.10 %	Temperature: 23.20 *C
+BMP085: 	 T: 25.50 deg C	P: 99505 Pa
+RHT03: 	 Humidity: 63.10 %	Temperature: 23.20 *C
+BMP085: 	 T: 25.40 deg C	P: 99519 Pa
+RHT03: 	 Humidity: 63.10 %	Temperature: 23.20 *C
+BMP085: 	 T: 25.40 deg C	P: 99517 Pa
+RHT03: 	 Humidity: 63.10 %	Temperature: 23.20 *C
+BMP085: 	 T: 25.40 deg C	P: 99522 Pa
+RHT03: 	 Humidity: 60.80 %	Temperature: 23.10 *C
+BMP085: 	 T: 25.30 deg C	P: 99508 Pa
