@@ -33,32 +33,32 @@ void setup() {
 	pinMode(4, INPUT);
 	digitalWrite(5, LOW);
 
-	if(SD.exists("SAVE.JPG")) {
+	if(SD.exists("SAVE.TXT")) {
 		Serial.println("rm");
-		SD.remove("SAVE.JPG");
+		SD.remove("SAVE.TXT");
 	}
 
-	File saveFile = SD.open("SAVE.JPG", FILE_WRITE);
+	File saveFile = SD.open("SAVE.TXT", FILE_WRITE);
 
 	while(digitalRead(4) == LOW) {
 	}
 	Serial.println("Fin d'attente");
 	digitalWrite(5, HIGH);
 
-	if(saveFile) {
+	if (saveFile) {
 		while (digitalRead(4) == HIGH) {
-			saveFile.print(InterArduino.read());
-			//Serial.println("X");
+			if (InterArduino.available())
+				saveFile.write(InterArduino.read());
 		}
 		saveFile.close();
 	}
 	else
-		Serial.println("Echec d'ouverture de SAVE.JPG");
+		Serial.println("Echec d'ouverture de SAVE.TXT");
 
   // re-open the file for reading:
-  saveFile = SD.open("SAVE.JPG");
+  saveFile = SD.open("SAVE.TXT");
   if (saveFile) {
-    Serial.println("SAVE.JPG:");
+    Serial.println("SAVE.TXT:");
     // read from the file until there's nothing else in it:
     while (saveFile.available()) {
         Serial.write(saveFile.read());
@@ -69,7 +69,7 @@ void setup() {
     saveFile.close();
   } else {
     // if the file didn't open, print an error:
-    Serial.println("error opening SAVE.JPG for reading");
+    Serial.println("error opening SAVE.TXT for reading");
   }
 	delay(2000);
 	digitalWrite(5, LOW);

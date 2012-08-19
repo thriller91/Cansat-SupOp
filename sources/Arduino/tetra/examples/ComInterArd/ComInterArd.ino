@@ -32,7 +32,7 @@ void setup() {
 	}
 	Serial.println("card initialized.");
 
-	File dataFile = SD.open("IMG01.JPG");
+	File dataFile = SD.open("PTH18.TXT");
 
 	delay(5000);
 	digitalWrite(4, HIGH);
