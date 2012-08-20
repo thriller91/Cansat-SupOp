@@ -5,6 +5,7 @@ Il y a 4 fils connectés entre les 2 Arduinos.
 Il faut embarquer le programme ComInterArd.ino sur l'autre Arduino.
 
 Le résultat n'est pas terrible (erreurs fréquentes et lenteur). Il faut sûrement lire des packets d'octets avant de les envoyer.
+On peut aussi essayer en diminuant le Baudrate de la connection SoftwareSerial.
 */
 
 #include <SD.h>
@@ -28,21 +29,20 @@ void setup() {
 	}
 	Serial.println("card initialized.");
 
-	InterArduino.begin(9600);
+	InterArduino.begin(4800);
 	pinMode(5, OUTPUT);
 	pinMode(4, INPUT);
 	digitalWrite(5, LOW);
 
-	if(SD.exists("SAVE.TXT")) {
+	if(SD.exists("SAVE.JPG")) {
 		Serial.println("rm");
-		SD.remove("SAVE.TXT");
+		SD.remove("SAVE.JPG");
 	}
 
-	File saveFile = SD.open("SAVE.TXT", FILE_WRITE);
+	File saveFile = SD.open("SAVE.JPG", FILE_WRITE);
 
 	while(digitalRead(4) == LOW) {
 	}
-	Serial.println("Fin d'attente");
 	digitalWrite(5, HIGH);
 
 	if (saveFile) {
@@ -53,12 +53,12 @@ void setup() {
 		saveFile.close();
 	}
 	else
-		Serial.println("Echec d'ouverture de SAVE.TXT");
+		Serial.println("Echec d'ouverture de SAVE.JPG");
 
   // re-open the file for reading:
-  saveFile = SD.open("SAVE.TXT");
+  saveFile = SD.open("SAVE.JPG");
   if (saveFile) {
-    Serial.println("SAVE.TXT:");
+    Serial.println("SAVE.JPG:");
     // read from the file until there's nothing else in it:
     while (saveFile.available()) {
         Serial.write(saveFile.read());
@@ -69,7 +69,7 @@ void setup() {
     saveFile.close();
   } else {
     // if the file didn't open, print an error:
-    Serial.println("error opening SAVE.TXT for reading");
+    Serial.println("error opening SAVE.JPG for reading");
   }
 	delay(2000);
 	digitalWrite(5, LOW);

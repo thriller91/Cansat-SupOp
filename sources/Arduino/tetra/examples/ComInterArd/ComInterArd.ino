@@ -5,6 +5,7 @@ Il y a 4 fils connectés entre les 2 Arduinos.
 Il faut embarquer le programme ComInterArd2.ino sur l'autre Arduino.
 
 Le résultat n'est pas terrible (erreurs fréquentes et lenteur). Il faut sûrement lire des packets d'octets avant de les envoyer.
+On peut aussi essayer en diminuant le Baudrate de la connection SoftwareSerial.
 */
 
 #include <SD.h>
@@ -18,7 +19,7 @@ void setup() {
 	Serial.begin(9600);
 	Serial.println("Debut");
 
-	InterArduino.begin(9600);
+	InterArduino.begin(4800);
 	pinMode(4, OUTPUT);
 	pinMode(5, INPUT);
 	digitalWrite(4, LOW);
@@ -32,10 +33,11 @@ void setup() {
 	}
 	Serial.println("card initialized.");
 
-	File dataFile = SD.open("PTH18.TXT");
+	File dataFile = SD.open("IMG01.JPG");
 
 	delay(5000);
 	digitalWrite(4, HIGH);
+	delay(100);
 	if (dataFile) {
 		while (dataFile.available())
 			InterArduino.write(dataFile.read());
