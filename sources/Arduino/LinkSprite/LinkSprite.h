@@ -8,7 +8,7 @@
 /* Camera Jpeg LinkSprite */
 
 void CamStart();
-void SaveToFile();
+void SaveToFile(File f);
 
 void SendResetCmd();
 void ReadImageSizeCmd();

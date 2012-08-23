@@ -21,12 +21,21 @@ void CamStart() {
 	EndFlag=0;
 
 	Seriol.begin(38400);
-	Serial.println("Cam Seriol OK!");
+	SetImageSizeCmd();
+	SendResetCmd();
+	delay(3000);
+
+	SetBaudRateCmd();
+	Seriol.end();
+	delay(10);
+	Seriol.begin(9600);
 }
 
-void SaveToFile() {
-	File logfile;
-	logfile = SD.open("IMG01.JPG", FILE_WRITE);
+void SaveToFile(File f) {
+	while(Seriol.available()>0)	{
+		incomingbyte=Seriol.read();
+	}
+
 	while(!EndFlag)	{
 		j=0;
 		k=0;
@@ -35,19 +44,17 @@ void SaveToFile() {
 		delay(15);
 
 		while(Seriol.available()>0)	{
-			Serial.println("X");
 			incomingbyte=Seriol.read();
 			k++;
 			if((k>5)&&(j<32)&&(!EndFlag)) {
 				a[j]=incomingbyte;
 				if((a[j-1]==0xFF)&&(a[j]==0xD9))      //Check if the picture is over
 					EndFlag=1;
-				logfile.print((char)incomingbyte);
+				f.print((char)incomingbyte);
 				j++;
 			}
 		}
 	}
-	logfile.close();
 }
 
 
@@ -69,13 +76,15 @@ void ReadImageSizeCmd() {
 void SetImageSizeCmd() {
 	Seriol.write(0x56);
 	Seriol.write(byte(0x00));
-	Seriol.write(0x31);
-	Seriol.write(0x05);
-	Seriol.write(0x04);
+	//Seriol.write(0x31);
+	//Seriol.write(0x05);
+	//Seriol.write(0x04);
+	//Seriol.write(0x01);
+	//Seriol.write(byte(0x00));
+	//Seriol.write(0x19);
+	Seriol.write(0x54);
 	Seriol.write(0x01);
-	Seriol.write(byte(0x00));
-	Seriol.write(0x19);
-	Seriol.write(0x22);
+	Seriol.write(byte(0x00)); // 640x480px
 }
 
 void SetBaudRateCmd() {
@@ -97,8 +106,8 @@ void SendTakePhotoCmd() {
 	Seriol.write(byte(0x00));
 
 	delay(10);
-	//while(Seriol.available()>0)
-	//		Seriol.read();
+	while(Seriol.available()>0)
+			Seriol.read();
 }
 
 void SendReadDataCmd() {

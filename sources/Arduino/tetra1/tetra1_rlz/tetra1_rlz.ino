@@ -14,7 +14,11 @@ TODO
 #include "BMP085.h"
 #include "DHT.h"
 
-SoftwareSerial XBee(XBEE_RX,XBEE_TX);
+#define IMG_FILENAME "IMG01.JPG"
+#define PTH_FILENAME "PTH.TXT"
+
+
+//SoftwareSerial XBee(XBEE_RX,XBEE_TX);
 
 File PTH_File, Cam_File;
 int i=0;
@@ -32,8 +36,8 @@ void setup(){
 	Serial.begin(9600);
 	CamStart();
 	Serial.println("Debut");
-	XBee.begin(9600);
-	XBee.println("Debut");
+	//XBee.begin(9600);
+	//XBee.println("Debut");
 
 	// SD Initialisation
 	pinMode(10, OUTPUT);
@@ -49,25 +53,23 @@ void setup(){
 	dht.begin();
 
 	///////////////////////////////////////////// ETAPE 3
-	XBee.println("*[%3%]*");
-
-	// LinkSprite
-	SendResetCmd();
-	Serial.println("Reset");
-	delay(3000);
+	//XBee.println("*[%3%]*");
 
 	SendTakePhotoCmd();
 	Serial.println("Snap!");
 
 	///////////////////////////////////////////// ETAPE 2
-	XBee.println("*[%2%]*");
-/*
-	PTH_File = SD.open("PTH.txt", FILE_WRITE);
+	//XBee.println("*[%2%]*");
+
+
+	if(SD.exists(PTH_FILENAME))
+		SD.remove(PTH_FILENAME);
+	PTH_File = SD.open(PTH_FILENAME, FILE_WRITE);
 	while (i<10){
 		/*
 		Sortie série de la pression et de la température du capteur BMP085
 		*/
-/*
+
 		float temperature = bmp085GetTemperature(bmp085ReadUT()); //MUST be called first
 		float pressure = bmp085GetPressure(bmp085ReadUP());
 		PTH_File.print("B\t");
@@ -78,7 +80,7 @@ void setup(){
 		/*
 		Sortie série de l'humidité et de la température du capteur DH22
 		*/
-/*
+
 		float h = dht.readHumidity();
 		float t = dht.readTemperature();
 		// check if returns are valid, if they are NaN (not a number) then something went wrong!
@@ -100,13 +102,15 @@ void setup(){
 	PTH_File.close();
 	Serial.println("PTH_File closed");
 
-*/
-	///////////////////////////////////////////// ETAPE 1
-	XBee.println("*[%1%]*");
 
-	Cam_File = SD.open("IMG01.JPG", FILE_WRITE);
+	///////////////////////////////////////////// ETAPE 1
+	//XBee.println("*[%1%]*");
+
+	if(SD.exists(IMG_FILENAME))
+		SD.remove(IMG_FILENAME);
+	Cam_File = SD.open(IMG_FILENAME, FILE_WRITE);
 	Serial.println("Ouverture du fichier");
-	SaveToFile();
+	SaveToFile(Cam_File);
 
 	Cam_File.close();
 	Serial.println("Cam_File closed");
@@ -116,7 +120,7 @@ void setup(){
 void loop(){
 
 	///////////////////////////////////////////// ETAPE 0
-	XBee.println("*[%0%]*");
+	//XBee.println("*[%0%]*");
 	Serial.println("Fin");
 	delay(10000);
 
