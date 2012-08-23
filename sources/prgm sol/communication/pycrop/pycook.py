@@ -17,7 +17,7 @@ import sys, os
 import matplotlib.pyplot as plt
 
 if len(sys.argv)>1:
-	os.chdir('cooked')
+	os.chdir('parsed')
 	PTH_file = open(sys.argv[1],'r')
 	print 'Ouverture du fichier ' + sys.argv[1]
 else:
@@ -58,7 +58,7 @@ if __name__ ==  '__main__':
 	plt.ylabel(u'température (°C)')
 	plt.title(u'Évolution de la temperature en fonction du temps')
 	plt.grid(True)
-	plt.savefig('resultats/Temp.pdf', format='pdf')
+	plt.savefig('cooked/Temp.pdf', format='pdf')
 	plt.close()
 
 	plt.plot(temps,H_rht,'ro')
@@ -67,7 +67,7 @@ if __name__ ==  '__main__':
 	plt.ylabel(u'Humidité (%)')
 	plt.title(u'Évolution de l\'hygrométrie en fonction du temps')
 	plt.grid(True)
-	plt.savefig('resultats/Hygro.pdf', format='pdf')
+	plt.savefig('cooked/Hygro.pdf', format='pdf')
 	plt.close()
 
 	plt.plot(temps,P_bmp,'bo')
@@ -76,7 +76,7 @@ if __name__ ==  '__main__':
 	plt.ylabel(u'pression (Pa)') # à convertir en atm?
 	plt.title(u'Évolution de la pression en fonction du temps')
 	plt.grid(True)
-	plt.savefig('resultats/Press.pdf', format='pdf')
+	plt.savefig('cooked/Press.pdf', format='pdf')
 	plt.close()
 
 	PTH_file.close()

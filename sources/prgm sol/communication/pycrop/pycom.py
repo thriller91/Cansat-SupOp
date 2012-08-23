@@ -21,8 +21,8 @@ if len(sys.argv)>2:
 	file = open(sys.argv[2],'wb')
 	file.write('Ouverture du fichier\n')
 else:
-	print "USAGE: ./pycom PORT reception.dat"
-	sys.exit(0)
+	print "USAGE: python2 pycom.py PORT reception.bin"
+	quit()
 
 
 

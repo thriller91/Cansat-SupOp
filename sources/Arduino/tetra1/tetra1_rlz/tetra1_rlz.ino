@@ -37,7 +37,6 @@ void setup(){
 	// Communication
 	Serial.begin(9600);
 	CamStart();
-	Serial.println("Debut");
 	//XBee.begin(9600);
 	//XBee.println("Debut");
 
@@ -63,7 +62,6 @@ void setup(){
 		if(Serial.available()>0)
 			cmd[0] = Serial.read();
 		if(cmd[0] == 'C') {
-			Serial.println("PROUT");
 			while(Serial.available()>0)
 				Serial.read();
 			cmd[0] = 0;
@@ -132,7 +130,6 @@ void setup(){
 
 		PTH_File.println(millis());
 		i++;
-		Serial.println(i);
 	}
 	PTH_File.close();
 
