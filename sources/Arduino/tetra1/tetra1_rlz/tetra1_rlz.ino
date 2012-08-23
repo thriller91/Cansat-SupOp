@@ -20,18 +20,20 @@ TODO
 
 //SoftwareSerial XBee(XBEE_RX,XBEE_TX);
 
-File PTH_File, Cam_File;
+File PTH_File, Cam_File, dataFile;
 int i=0;
 
 // RHT03
 #define DHTPIN 2
 #define DHTTYPE DHT22 
 DHT dht(DHTPIN, DHTTYPE);
+bool isnan_t,isnan_h;
 
+// Station au sol
+char cmd[1]={'0'};
 
 
 void setup(){
-
 	// Communication
 	Serial.begin(9600);
 	CamStart();
@@ -52,19 +54,39 @@ void setup(){
 	//RHT03
 	dht.begin();
 
-	///////////////////////////////////////////// ETAPE 3
-	//XBee.println("*[%3%]*");
+
+	///////////////////////////////////////////// ETAPE 6
+	// Capture d'image (cf. étape 3 pour l'enregistrement)
+	Serial.println("*[%6%]*");
+	//
+	while(true) {
+		if(Serial.available()>0)
+			cmd[0] = Serial.read();
+		if(cmd[0] == 'C') {
+			Serial.println("PROUT");
+			while(Serial.available()>0)
+				Serial.read();
+			cmd[0] = 0;
+			break;
+		}
+	}
+
+	///////////////////////////////////////////// ETAPE 5
+	// Capture d'image (cf. étape 3 pour l'enregistrement)
+	Serial.println("*[%5%]*");
+	//
 
 	SendTakePhotoCmd();
-	Serial.println("Snap!");
 
-	///////////////////////////////////////////// ETAPE 2
-	//XBee.println("*[%2%]*");
-
+	///////////////////////////////////////////// ETAPE 4
+	// Mesure PTH et enregistrement sur carte µSD
+	Serial.println("*[%4%]*");
+	//
 
 	if(SD.exists(PTH_FILENAME))
 		SD.remove(PTH_FILENAME);
 	PTH_File = SD.open(PTH_FILENAME, FILE_WRITE);
+
 	while (i<10){
 		/*
 		Sortie série de la pression et de la température du capteur BMP085
@@ -84,11 +106,24 @@ void setup(){
 		float h = dht.readHumidity();
 		float t = dht.readTemperature();
 		// check if returns are valid, if they are NaN (not a number) then something went wrong!
-		if (isnan(t) || isnan(h)) {
-			PTH_File.println("R\tX\tX");
+		isnan_t = isnan(t);
+		isnan_h = isnan(h);
+
+		PTH_File.print("R\t");
+		if (isnan_t || isnan_h) {
+			if (isnan_h && isnan_t) {
+				PTH_File.println("NaN\tNaN");
+			}
+			else if (isnan_t){
+				PTH_File.print(h);
+				PTH_File.println("\tNaN");
+			}
+			else {
+				PTH_File.print("NaN\t");
+				PTH_File.println(t);
+			}
 		}
 		else {
-			PTH_File.print("R\t");
 			PTH_File.print(h);
 			PTH_File.print("\t");
 			PTH_File.println(t);
@@ -100,28 +135,64 @@ void setup(){
 		Serial.println(i);
 	}
 	PTH_File.close();
-	Serial.println("PTH_File closed");
 
-
-	///////////////////////////////////////////// ETAPE 1
-	//XBee.println("*[%1%]*");
+	///////////////////////////////////////////// ETAPE 3
+	// Enregistrement du fichier image 1 (IMG01.JPG) sur la carte µSD
+	Serial.println("*[%3%]*");
+	//
 
 	if(SD.exists(IMG_FILENAME))
 		SD.remove(IMG_FILENAME);
 	Cam_File = SD.open(IMG_FILENAME, FILE_WRITE);
-	Serial.println("Ouverture du fichier");
+
 	SaveToFile(Cam_File);
 
 	Cam_File.close();
-	Serial.println("Cam_File closed");
+	ShutDownCmd();
 
+	///////////////////////////////////////////// ETAPE 2
+	// Transmission du fichier PTH : PTH.TXT
+	Serial.println("*[%2%]*");
+	//
+
+	dataFile = SD.open(PTH_FILENAME);
+
+	if (dataFile) {
+		while (dataFile.available())
+			Serial.write(dataFile.read());
+		dataFile.close();
+	}
+
+	else {
+		Serial.println("*-*-*-ERROR-*-*-*");
+	}
+
+
+	///////////////////////////////////////////// ETAPE 1
+	// Transmission du fichier image 1 : IMG01.JPG
+	Serial.println("*[%1%]*");
+	//
+
+	dataFile = SD.open(IMG_FILENAME);
+
+	if (dataFile) {
+		while (dataFile.available())
+			Serial.write(dataFile.read());
+		dataFile.close();
+	}
+
+	else {
+		Serial.println("*-*-*-ERROR-*-*-*");
+	}
 }
 
 void loop(){
 
 	///////////////////////////////////////////// ETAPE 0
-	//XBee.println("*[%0%]*");
-	Serial.println("Fin");
+	// Fin de transmission
+	Serial.println("*[%0%]*");
+	//
+
 	delay(10000);
 
 

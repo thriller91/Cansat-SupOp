@@ -5,7 +5,7 @@
 
 // LinkSprite
 byte incomingbyte;
-boolean EndFlag=0;
+bool EndFlag=0;
 byte a[32];
 int j=0,k=0;
 
@@ -57,6 +57,15 @@ void SaveToFile(File f) {
 	}
 }
 
+void ShutDownCmd() {
+	Seriol.write(0x56);
+	Seriol.write(byte(0x00));
+	Seriol.write(0x3E);
+	Seriol.write(0x03);
+	Seriol.write(byte(0x00));
+	Seriol.write(0x01);
+	Seriol.write(0x01);
+}
 
 void SendResetCmd() {
 	Seriol.write(0x56);

@@ -9,6 +9,7 @@
 
 void CamStart();
 void SaveToFile(File f);
+void ShutDownCmd();
 
 void SendResetCmd();
 void ReadImageSizeCmd();
