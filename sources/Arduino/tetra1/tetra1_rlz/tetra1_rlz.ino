@@ -17,11 +17,14 @@ TODO
 #define IMG_FILENAME "IMG01.JPG"
 #define PTH_FILENAME "PTH.TXT"
 
+#define INTERRUPT_PIN 1
+
+const unsigned long stop_missions_time = 100000000; // 100 secondes (en µs)
+
 
 //SoftwareSerial XBee(XBEE_RX,XBEE_TX);
 
 File PTH_File, Cam_File, dataFile;
-int i=0;
 
 // RHT03
 #define DHTPIN 2
@@ -30,21 +33,29 @@ DHT dht(DHTPIN, DHTTYPE);
 bool isnan_t,isnan_h;
 
 // Station au sol
-char cmd[1]={'0'};
+char cmd[3]={'0','0'};
+
+// interrupt
+volatile unsigned long start_missions = 0;
+volatile boolean start_flag = false;
 
 
 void setup(){
 	// Communication
 	Serial.begin(9600);
 	CamStart();
+	attachInterrupt(INTERRUPT_PIN, start_counter, RISING);
+
 	//XBee.begin(9600);
 	//XBee.println("Debut");
 
 	// SD Initialisation
 	pinMode(10, OUTPUT);
 
-	if (!SD.begin(CHIP_SELECT))
+	if (!SD.begin(CHIP_SELECT)) {
 		Serial.println("initialization failed!");
+		while(true); // ça sert à rien de continuer
+	}
 
 	//BMP085
 	Wire.begin();
@@ -54,20 +65,37 @@ void setup(){
 	dht.begin();
 
 
-	///////////////////////////////////////////// ETAPE 6
-	// Capture d'image (cf. étape 3 pour l'enregistrement)
-	Serial.println("*[%6%]*");
+	///////////////////////////////////////////// ETAPE 8
+	// L'Éveil du τετραφάρμακος
+	Serial.println("*[%8%]*");
 	//
 	while(true) {
-		if(Serial.available()>0)
-			cmd[0] = Serial.read();
-		if(cmd[0] == 'C') {
+		if(Serial.available()>0) {
+			cmd[0] = cmd[1];
+			cmd[1] = Serial.read();
+		}
+		if(cmd[0] == 'G' && cmd[1] == 'f') {
 			while(Serial.available()>0)
 				Serial.read();
-			cmd[0] = 0;
+			cmd[0] = '0';
+			cmd[1] = '0';
 			break;
 		}
 	}
+
+	///////////////////////////////////////////// ETAPE 7
+	// Attente de largage ...
+	Serial.println("*[%7%]*");
+	//
+
+	while(!start_flag);
+
+	///////////////////////////////////////////// ETAPE 6
+	// Largage, le cavalier saute!
+	Serial.println("*[%6%]*");
+	//
+
+
 
 	///////////////////////////////////////////// ETAPE 5
 	// Capture d'image (cf. étape 3 pour l'enregistrement)
@@ -85,7 +113,7 @@ void setup(){
 		SD.remove(PTH_FILENAME);
 	PTH_File = SD.open(PTH_FILENAME, FILE_WRITE);
 
-	while (i<10){
+	while ((micros()-start_missions) < stop_missions_time) {
 		/*
 		Sortie série de la pression et de la température du capteur BMP085
 		*/
@@ -128,8 +156,7 @@ void setup(){
 		}
 
 
-		PTH_File.println(millis());
-		i++;
+		PTH_File.println(micros()-start_missions);
 	}
 	PTH_File.close();
 
@@ -161,7 +188,7 @@ void setup(){
 	}
 
 	else {
-		Serial.println("*-*-*-ERROR-*-*-*");
+		Serial.println("*-*-*-ERROR:1-*-*-*");
 	}
 
 
@@ -179,7 +206,7 @@ void setup(){
 	}
 
 	else {
-		Serial.println("*-*-*-ERROR-*-*-*");
+		Serial.println("*-*-*-ERROR:0-*-*-*");
 	}
 }
 
@@ -196,4 +223,8 @@ void loop(){
 }
 
 
-
+void start_counter() {
+  start_missions = micros();
+  start_flag = true;
+  detachInterrupt(INTERRUPT_PIN);
+}
