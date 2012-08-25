@@ -12,7 +12,7 @@ Licence: Librement copiable et modifiable.
 from serial import *
 import sys, threading, os, time
 
-NUM_ETAPE = 8
+NUM_ETAPE = 10
 TX_PATH = 'tx.cmd'
 
 
