@@ -65,7 +65,6 @@ void loop()
 		    
 		while(Seriol.available()>0)
 		{
-			Serial.println("X");
 			incomingbyte=Seriol.read();
 			k++;               
 			if((k>5)&&(j<32)&&(!EndFlag))

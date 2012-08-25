@@ -16,13 +16,13 @@ TODO
 
 #define IMG_FILENAME "IMG01.JPG"
 #define PTH_FILENAME "PTH.TXT"
-#define POS_FILENAME "POS.TXT"
+
+#define INTERRUPT_PIN 1
 
 
 //SoftwareSerial XBee(XBEE_RX,XBEE_TX);
-SoftwareSerial InterArduino(7, 6); // RX, TX
 
-File PTH_File, Cam_File, dataFile, saveFile;
+File PTH_File, Cam_File, dataFile;
 
 // RHT03
 #define DHTPIN 2
@@ -44,10 +44,6 @@ void setup(){
 	CamStart();
 	attachInterrupt(INTERRUPT_PIN, start_counter, RISING);
 
-	pinMode(5, OUTPUT);
-	pinMode(4, INPUT);
-	digitalWrite(5, LOW);
-
 	//XBee.begin(9600);
 	//XBee.println("Debut");
 
@@ -55,7 +51,7 @@ void setup(){
 	pinMode(10, OUTPUT);
 
 	if (!SD.begin(CHIP_SELECT)) {
-		Serial.println("SD initialization failed!");
+		Serial.println("initialization failed!");
 		while(true); // ça sert à rien de continuer
 	}
 
@@ -67,9 +63,9 @@ void setup(){
 	dht.begin();
 
 
-	///////////////////////////////////////////// ETAPE 10
+	///////////////////////////////////////////// ETAPE 8
 	// L'Éveil du τετραφάρμακος
-	Serial.println("*[%10%]*");
+	Serial.println("*[%8%]*");
 	//
 	while(true) {
 		if(Serial.available()>0) {
@@ -85,39 +81,37 @@ void setup(){
 		}
 	}
 
-	///////////////////////////////////////////// ETAPE 9
+	///////////////////////////////////////////// ETAPE 7
 	// Attente de largage ...
-	Serial.println("*[%9%]*");
+	Serial.println("*[%7%]*");
 	//
 
 	while(!start_flag);
 
-	///////////////////////////////////////////// ETAPE 8
+	///////////////////////////////////////////// ETAPE 6
 	// Largage, le cavalier saute!
-	Serial.println("*[%8%]*");
+	Serial.println("*[%6%]*");
 	//
 
 
 
-	///////////////////////////////////////////// ETAPE 7
+	///////////////////////////////////////////// ETAPE 5
 	// Capture d'image (cf. étape 3 pour l'enregistrement)
-	Serial.println("*[%7%]*");
+	Serial.println("*[%5%]*");
 	//
 
 	SendTakePhotoCmd();
 
-	///////////////////////////////////////////// ETAPE 6
+	///////////////////////////////////////////// ETAPE 4
 	// Mesure PTH et enregistrement sur carte µSD
-	Serial.println("*[%6%]*");
+	Serial.println("*[%4%]*");
 	//
 
 	if(SD.exists(PTH_FILENAME))
 		SD.remove(PTH_FILENAME);
-	Serial.println(millis());
 	PTH_File = SD.open(PTH_FILENAME, FILE_WRITE);
-	Serial.println(millis());
 
-	while ((micros()-start_missions) < ((unsigned long) 10000000)) {//stop_missions_time) {
+	while ((micros()-start_missions) < stop_missions_time) {
 		/*
 		Sortie série de la pression et de la température du capteur BMP085
 		*/
@@ -159,15 +153,14 @@ void setup(){
 			PTH_File.println(t);
 		}
 
-		Serial.println(millis());
 
 		PTH_File.println(micros()-start_missions);
 	}
 	PTH_File.close();
 
-	///////////////////////////////////////////// ETAPE 5
+	///////////////////////////////////////////// ETAPE 3
 	// Enregistrement du fichier image 1 (IMG01.JPG) sur la carte µSD
-	Serial.println("*[%5%]*");
+	Serial.println("*[%3%]*");
 	//
 
 	if(SD.exists(IMG_FILENAME))
@@ -179,9 +172,9 @@ void setup(){
 	Cam_File.close();
 	ShutDownCmd();
 
-	///////////////////////////////////////////// ETAPE 4
+	///////////////////////////////////////////// ETAPE 2
 	// Transmission du fichier PTH : PTH.TXT
-	Serial.println("*[%4%]*");
+	Serial.println("*[%2%]*");
 	//
 
 	dataFile = SD.open(PTH_FILENAME);
@@ -197,9 +190,9 @@ void setup(){
 	}
 
 
-	///////////////////////////////////////////// ETAPE 3
+	///////////////////////////////////////////// ETAPE 1
 	// Transmission du fichier image 1 : IMG01.JPG
-	Serial.println("*[%3%]*");
+	Serial.println("*[%1%]*");
 	//
 
 	dataFile = SD.open(IMG_FILENAME);
@@ -213,51 +206,6 @@ void setup(){
 	else {
 		Serial.println("*-*-*-ERROR:0-*-*-*");
 	}
-
-	///////////////////////////////////////////// ETAPE 2
-	// Reception du fichier : POS.TXT de la part de l'Arduino n°2
-	Serial.println("*[%2%]*");
-	//
-
-
-	InterArduino.begin(4800);
-
-	if(SD.exists(POS_FILENAME))
-		SD.remove(POS_FILENAME);
-
-	File saveFile = SD.open(POS_FILENAME, FILE_WRITE);
-
-	digitalWrite(5, HIGH);
-
-	if (saveFile) {
-		while (digitalRead(4) == HIGH) {
-			if (InterArduino.available())
-				saveFile.write(InterArduino.read());
-		}
-		saveFile.close();
-	}
-	else
-		Serial.println("*-*-*-ERROR:2-*-*-*");
-
-	digitalWrite(5, LOW);
-
-
-	///////////////////////////////////////////// ETAPE 1
-	// Transmission du fichier : POS.TXT
-	Serial.println("*[%1%]*");
-	//
-
-	dataFile = SD.open(POS_FILENAME);
-
-	if (dataFile) {
-		while (dataFile.available())
-			Serial.write(dataFile.read());
-		dataFile.close();
-	}
-
-	else
-		Serial.println("*-*-*-ERROR:1-*-*-*");
-
 }
 
 void loop(){
@@ -278,3 +226,4 @@ void start_counter() {
   start_flag = true;
   detachInterrupt(INTERRUPT_PIN);
 }
+

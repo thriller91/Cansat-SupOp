@@ -1,0 +1,17 @@
+run("Split Channels");
+selectWindow("IMG01.JPG (green)");
+selectWindow("IMG01.JPG (red)");
+imageCalculator("Subtract create 32-bit", "IMG01.JPG (red)","IMG01.JPG (blue)");
+selectWindow("Result of IMG01.JPG (red)");
+imageCalculator("Add create 32-bit", "IMG01.JPG (red)","IMG01.JPG (blue)");
+selectWindow("Result of IMG01.JPG (red)");
+rename("Num");
+imageCalculator("Add create 32-bit", "IMG01.JPG (red)","IMG01.JPG (blue)");
+selectWindow("Result of IMG01.JPG (red)");
+rename("Denum");
+imageCalculator("Divide create 32-bit", "Num","Denum");
+selectWindow("Result of Num");
+selectWindow("Denum");
+close();
+selectWindow("Num");
+close();
