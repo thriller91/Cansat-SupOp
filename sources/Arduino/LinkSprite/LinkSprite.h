@@ -11,6 +11,9 @@ void CamStart();
 void SaveToFile(File f);
 void ShutDownCmd();
 
+File OpenNewFile();
+File OpenLastFile();
+
 void SendResetCmd();
 void ReadImageSizeCmd();
 void SetImageSizeCmd();

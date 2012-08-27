@@ -67,6 +67,35 @@ void ShutDownCmd() {
 	Seriol.write(0x01);
 }
 
+/*
+The two following functions are not factorised
+*/
+File OpenNewFile() {
+	char filename[] = "IMG00.jpg";
+	for (uint8_t i = 0; i < 100; i++) {
+		filename[3] = i/10 + '0';
+		filename[4] = i%10 + '0';
+		if (!SD.exists(filename)) {
+			return (SD.open(filename, FILE_WRITE));
+			break;
+		}
+	}
+}
+
+File OpenLastFile() {
+	char filename[] = "IMG00.jpg";
+	for (uint8_t i = 0; i < 100; i++) {
+		filename[3] = i/10 + '0';
+		filename[4] = i%10 + '0';
+		if (!SD.exists(filename)) {
+			filename[3] = (i-1)/10 + '0';
+			filename[4] = (i-1)%10 + '0';
+			return (SD.open(filename, FILE_WRITE));
+			break;
+		}
+	}
+}
+
 void SendResetCmd() {
 	Seriol.write(0x56);
 	Seriol.write(byte(0x00));
