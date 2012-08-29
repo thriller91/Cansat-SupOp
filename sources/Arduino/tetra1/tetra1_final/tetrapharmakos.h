@@ -11,6 +11,6 @@
 
 #define INTERRUPT_PIN 1
 
-const unsigned long stop_missions_time = 10000000; // 10 secondes (en µs)
+const unsigned long stop_missions_time = 100000000; // 100 secondes (en µs)
 
 #endif

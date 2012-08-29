@@ -2,7 +2,6 @@
 Programme final, embarqué sur l'Arduino Mini n°1 du τετραφάρμακος.
 TODO:
 - rallonger le temps de mesure
-- prendre la photo après n secondes
 */
 
 #include <SD.h>
@@ -23,6 +22,7 @@ TODO:
 
 
 SoftwareSerial XBee(8,9);
+SoftwareSerial InterArduino(6,7);
 
 File PTH_File, Cam_File, dataFile;
 
@@ -35,7 +35,8 @@ bool isnan_t,isnan_h;
 // interrupt
 volatile unsigned long start_missions = 0;
 volatile boolean start_flag = false;
-
+int count_snap=7;
+int count=0;
 
 void setup(){
 	// Communication
@@ -76,13 +77,6 @@ void setup(){
 	XBee.println("*[%5%]*");
 	//
 
-	SendTakePhotoCmd();
-
-	///////////////////////////////////////////// ETAPE 4
-	// Capture d'image (cf. étape 3 pour l'enregistrement)
-	XBee.println("*[%4%]*");
-	//
-
 	if(SD.exists(PTH_FILENAME))
 		SD.remove(PTH_FILENAME);
 	PTH_File = SD.open(PTH_FILENAME, FILE_WRITE);
@@ -105,6 +99,15 @@ void setup(){
 		Sortie série de l'humidité et de la température du capteur DH22
 		*/
 
+                if(count == count_snap) {
+                    SendTakePhotoCmd();
+ 
+        	    ///////////////////////////////////////////// ETAPE 4
+	            // Capture d'image (cf. étape 3 pour l'enregistrement)
+	            XBee.println("*[%4%]*");
+	            //
+                }
+
 		float h = dht.readHumidity();
 		float t = dht.readTemperature();
 		// check if returns are valid, if they are NaN (not a number) then something went wrong!
@@ -118,6 +121,7 @@ void setup(){
 		}
 
 		PTH_File.println(micros()-start_missions);
+                count++;
 	}
 	PTH_File.close();
 
