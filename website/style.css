@@ -101,7 +101,7 @@ nav { display:block; position:relative; background: rgba(4, 13, 22, 0.4);}
 nav ul { padding:0; margin:0; }
 nav li { position:relative; float:left; list-style-type:none; }
 nav ul:after { content:"."; display:block; height:0; clear:both; visibility:hidden; }
-nav li a, nav li a:visited, nav li a:active  { display:block; font-size: 1.5rem;cursor: pointer; font-family: 'Audiowide', cursive; color: #4e86a6;padding:1rem 1rem; color: #4e86a6; text-decoration:none; }
+nav li a, nav li a:visited, nav li a:active  { display:block; font-size: 1.5rem;cursor: pointer; font-family: 'Audiowide', cursive; color: white;padding:1rem 1rem; text-decoration:none; }
 nav li a:focus { outline:none; text-decoration:underline; }
 nav li:first-child a { border-left:none; }
 nav li.last a { border-right:none; }
@@ -109,11 +109,11 @@ nav a span { display:block; float:right; margin-left:5px; }
 nav ul ul { display:none; width:100%; position:absolute; left:0;}
 nav ul ul li { float:none; }
 nav ul ul a { padding:5px 10px; border-left:none; border-right:none; font-size:14px;background: rgba(4, 13, 22, 0.4);  }
-nav li a:hover{color: #FFFFFF; text-decoration:overline underline;}
+nav li a:hover{color: yellow; text-decoration:overline underline;}
 
 section.bienvenue {
   background: rgba(4, 13, 22, 0.4);
-	color: #4e86a6; /* Blue */
+  color: #4e86a6; /* Blue */
   border: 0;
   margin-bottom: 5rem;
   margin-top: 5rem;
@@ -154,7 +154,7 @@ header h2.description {
 
 header h3 {
 	background-color: rgba(100, 50, 200, 0.35);
-	color: #4E86A6;
+	color: white;
 	text-align: justify;
 	border-radius: 2rem;
 	font-size: 2rem;
@@ -164,10 +164,10 @@ header h3 {
 }
 
 header h4 {
-	font-size: 0.8rem;
-	color: #E6C800;
+	font-size: 0.9rem;
+	color: aqua;
 	text-align: right;
-	margin-top: 0.2rem;
+	margin-top: 0.5rem;
 	margin-bottom: 0;
 }
 
@@ -201,6 +201,18 @@ section.main {
   padding: 0.5rem;
 }
 
+.vcard {
+	margin-top: 0.5rem;
+}
+
+.vcard h3 {
+	margin-bottom: 0.4rem;
+}
+
+.dotted {
+	border-bottom: 1px dotted;
+}
+
 footer {
   background-color: rgba(0, 0, 0, 0.45);
   font-family: 'Salsa','Georgia', serif;
@@ -223,17 +235,17 @@ footer section ul{list-style-type:none; display:block; float:left; margin: 2rem;
    ========================================================================== */
 
 a {
-  color: #DCF72F;
+  color: yellow;
   text-decoration:none;
 }
 a:visited { 
-  color: #F1FDA4;
+  color: orange;
 }
 /*a:focus { outline: thin dotted; }*/
 
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
 a:hover, a:active {
-  color: #0ff;
+  color: aqua;
   /*outline: dotted;*/
   text-decoration:underline; 
 }
@@ -472,13 +484,13 @@ ul.polaroids a {
     font-family: monospace;
     font-size: 1rem;
     margin: 0 0 3rem 3rem;
-    padding: 1rem 1rem 1rem 1.5rem;
+    padding: 1rem 1rem 1rem 1rem;
     text-align: center;
     text-decoration: none;
 }
 ul.polaroids a:after {
     content: attr(title);
-    text-shadow: 1px 1px 3px #aaa;
+    text-shadow: 1px 1px 3px #555555;
 }
 ul.polaroids li:nth-child(2n) a {
     -moz-transform: rotate(2deg);

@@ -36,7 +36,7 @@ if __name__ ==  '__main__':
 	for line in PTH_file:
 		liste = line.split()
 		if len(liste) == 1:
-			temps.append(liste)
+			temps.append((float(liste[0])/1000000))
 		else:
 			if liste[0] == 'B':
 				T_bmp.append(liste[1])
@@ -47,6 +47,7 @@ if __name__ ==  '__main__':
 
 
 	print 'Fin de la lecture du fichier ' + sys.argv[1]
+	print str(temps[0])
 	print 'Tracage des graphs'
 	'''
 	plt.subplot(211)
@@ -54,24 +55,26 @@ if __name__ ==  '__main__':
 	plt.plot(temps,T_bmp,'b')
 	plt.ylabel(u'température (°C)')
 	plt.grid(True)
-	plt.title(u'Évolution de la température en fonction du temps')
 	plt.subplot(212)
 	'''
 	plt.plot(temps,T_rht,'ro')
 	plt.plot(temps,T_rht,'r')
-	plt.xlabel(u'temps (µs)')
-	plt.ylabel(u'température (°C)')
+	plt.xlabel(u'time since drop (s)')
+	plt.ylabel(u'temperature (°C)')
 	plt.grid(True)
+	plt.title(u'Graph of Temperature with respect to Time')
 	plt.savefig('cooked/Temp.pdf', format='pdf')
+	plt.savefig('cooked/Temp.png', format='png')
 	plt.close()
 
 	plt.plot(temps,H_rht,'ro')
 	plt.plot(temps,H_rht,'r')
-	plt.xlabel(u'temps (µs)')
-	plt.ylabel(u'Humidité (%)')
-	plt.title(u'Évolution de l\'hygrométrie en fonction du temps')
+	plt.xlabel(u'time since drop (s)')
+	plt.ylabel(u'humidity (%)')
+	plt.title(u'Graph of Humidity with respect to Time')
 	plt.grid(True)
 	plt.savefig('cooked/Hygro.pdf', format='pdf')
+	plt.savefig('cooked/Hygro.png', format='png')
 	plt.close()
 
 	'''

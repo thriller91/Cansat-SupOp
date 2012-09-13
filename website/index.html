@@ -33,13 +33,34 @@
 <body>
 	<header>
 		<!-- Menu de navigation -->
-		<nav>
+		<nav id="topNav">
 			<ul>
-				<li><a id="linkabout">à propos du projet</a></li>
-				<li><a id="linkteam">l'équipe</a></li>
-				<li><a id="linkmission">les missions</a></li>
+				<li><a id="linkabout">à propos du projet</a>
+					<ul>
+						<li><a href="parachute.html">le parachute</a></li>
+						<li><a href="elec.html">l'électronique</a></li>
+						<li><a href="C-Space.html">le C'Space</a></li>
+					</ul>
+				</li>
+				<li><a id="linkteam">l'équipe</a>
+					<ul>
+						<li><a href="partner.html">nos partenaires</a></li>
+						<li><a href="WoF.html">Wall of fame</a></li>
+					</ul>
+				</li>
+				<li><a id="linkmission">les missions</a>
+					<ul>
+						<li><a href="resultats.html#NDVI">NDVI</a></li>
+						<li><a href="resultats.html#meteo">météo</a></li>
+						<li><a href="resultats.html#track">tracking</a></li>
+					</ul>
+				</li>
 				<li><a id="linkagenda">agenda</a></li>
-				<li><a id="linkcontact">contact</a></li>
+				<li><a id="linkcontact">contact</a>
+					<ul>
+						<li><a id="linkfooter">le plan du site</a></li> <!-- à javascriptizer -->
+					</ul>
+				</li>
 			</ul>
 		</nav>
 		<!-- Fork us on GitHub! -->
@@ -47,13 +68,13 @@
 
 
 		<!-- Article -->
-		<a style="position: absolute; top: 12rem; left: 0; border: 0; background-color: rgba(4, 13, 22, 0.4); padding:1rem;" href="T3-tetrapharmakos.pdf"><h2>Article du jalon T3</h2></a>
+		<a style="position: absolute; top: 12rem; left: 0; border: 0; width: 18em; background-color: rgba(4, 13, 22, 0.4); padding:1rem;" href="C-Space.html"><h2 style = "display: inline">Résultats: </h2> <p style = "display: inline; background-color: rgba(0, 0, 0, 0);">Les proton-thérapeutes finissent 2<sup>ème</sup> de la compétition.</p></a>
 		<!-- Logo -->
 		<div class="centrage"><img src="images/logo-small240.png" alt="Cansat"/></div>
 		<!-- Bannière bidon -->
 		<section class="bienvenue">
 			<h3 class="description">Le projet Cansat 2012, c'est la fabrication d'un prototype de sonde spatiale de taille miniature, pouvant tenir dans une canette de 33 cL.</h3>
-			<h4><span class="location">Institut d'Optique Graduate School</span></h4>
+			<h4><span class="location">Institut d'Optique <em>Graduate School</em></span></h4>
 		</section>
 	</header>
 
@@ -68,21 +89,24 @@
 
 	<section id="team" class="main">
 		<h2>l'équipe</h2>
+		<p>Notre équipe était composée de 3 étudiants en deuxième année d'école d'ingénieur (1st year MSc) à l'Institut d'Optique <em>Graduate School</em> : Denis (au premier plan), Clément et Zubair (au second plan, respectivement à gauche et à droite).
+
+		<div class="centrage"><img style = "width: 30em" src="images/DSCF3313.JPG " alt="Photo d'équipe au C'Space"/></div>
 		<ul>
-			<li class="vcard" id="denis-savoie">
-				<h3 class="fn">Denis Savoie</h3>
+			<li class="vcard">
+				<h3><span class="dotted">Denis Savoie</span></h3>
 				<div class="note">
-					<p>Denis est un geek infatigable, en américain, on dirait plutôt que c'est un <em>nerd</em>. J'avoue que s'il ne m'avait pas suivi dans cette aventure, le projet serait mort dans l'œuf. Outre son implication quotidienne, il nous sera d'une aide considérable au moment de programmer la fameuse <a href="http://www.arduino.cc/en/Main/ArduinoBoardNano">carte Arduino</a>. </p>
+					<p>Denis est un geek infatigable, en américain, on dirait plutôt que c'est un <em>nerd</em>. J'avoue que s'il ne m'avait pas suivi dans cette aventure, le projet serait mort dans l'œuf. Outre son implication quotidienne, il nous sera d'une aide considérable au moment de programmer la fameuse <a href="http://www.arduino.cc/en/Main/ArduinoBoardMini">carte Arduino</a>. </p>
 				</div>
 			</li>
-			<li class="vcard" id="clément-javerzac">
-				<h3 class="fn">Clément Javerzac</h3>
+			<li class="vcard">
+				<h3><span class="dotted">Clément Javerzac</span></h3>
 				<div class="note">
-					<p>Il ne se passe pas un jour sans que Clément ne me dise: "Il me tarde de manipuler les composants". Et à l'inverse de nous deux, Clément a beaucoup de facilités à communiquer, c'est peut-être pour cette raison qu'il est le secrétaire d'Optoservices.</p>
+					<p>Il ne se passe pas un jour sans que Clément ne me dise: "Il me tarde de manipuler les composants". Et à l'inverse de nous deux, Clément a beaucoup de facilités à communiquer. Pour moi, il incarne presque mon paradoxe préféré, je dirais que Clément est un quasi-<a href = "http://fr.wikipedia.org/wiki/Paradoxe_du_menteur">Crétois</a> : il n'est jamais sérieux, sauf quand il dit qu'il l'est.</p>
 				</div>
 			</li>
-			<li class="vcard" id="zubair-iftikhar">
-				<h3 class="fn">Zubair Iftikhar</h3>
+			<li class="vcard">
+				<h3><span class="dotted">Zubair Iftikhar</span></h3>
 				<div class="note">
 					<p>On m'a toujours dit de se citer en dernier dans une liste. Alors vous l'aurez compris, je suis l'auteur de ce site.</p>
 				</div>
@@ -108,19 +132,24 @@
 		<ul>
 			<li class="event">
 				<abbr title="15-11-2011">15 novembre 2011</abbr>
-				<p class="event">Mise en ligne du règlement du concours de l'année 2012.</p>
+				<p class="event">Mise en ligne du <a href="http://www.planete-sciences.org/espace/IMG/pdf/reglement_Cansat_2012-1.pdf">règlement</a> du concours de l'année 2012.</p>
 			</li>
 			<li class="event">
 				<abbr title="31-12-2011">31 décembre 2011</abbr>
 				<p class="event">Inscription au concours, vous pouvez nous trouver sur le site de <a href="http://www.planete-sciences.org/espace/Status-of-project-2012">plantète-sciences.</a></p>
 			</li>
-      <li class="event">
+			<li class="event">
 				<abbr title="04-05-2012">4 mai 2012</abbr>
 				<p class="event">Soutenance (<a href="presentation.html">bêta</a>) de notre projet système, le tetrapharmakos.</p>
 			</li>
 			<li class="event">
-				<abbr title="19-09-2012">19 août 2012</abbr>
-				<p class="event">Début de la compétition à Biscarrosse.</p>
+				<abbr title="03-06-2012">3 juin 2012</abbr>
+				<p class="event">Soumission de l'<a href="T3-tetrapharmakos.pdf">article scientifique</a> (<a href="https://github.com/thriller91/Cansat-SupOp/tree/master/rapport">sources</a>) de présentation du projet.</p>
+			</li>
+
+			<li class="event">
+				<abbr title="25-08-2012">25 août 2012</abbr>
+				<p class="event">Début de la <a href="http://cspace.fr">compétition</a> à Biscarrosse.</p>
 			</li>
 		</ul>
 
@@ -130,10 +159,10 @@
 	<section id="contact" class="main">
 		<h2>Contact</h2>
 			<p>Pour plus d'informations n'hésitez pas nous contacter à l'adresse <a class="contact-link" href="mailto:cansat2012@supop.fr">cansat2012@supop.fr</a>.</p>
-      <p>Vous pouvez croire que ce site n'est pas très esthétique. C'est sans doute vrai, mais essayez tout de même d'utiliser un navigateur tel que <a href="http://www.mozilla-europe.org/fr/">Mozilla Firefox</a>. En effet, ce site a été réalisé avec les dernières technologie du web, et il nécessite un navigateur récent.</p>
+      <p>Ce site a été réalisé avec les dernières technologie du Web. Pour une visite optimale, utilisez un navigateur récent et de préférence <a href="http://www.mozilla-europe.org/fr/">Mozilla Firefox</a>.</p>
 	</section>
 
-	<footer>
+	<footer id="footer">
 <section><h3><a href="/#about">à propos du projet</a></h3>
   <ul>
     <li><a href="/parachute.html">parachute</a></li>
@@ -203,6 +232,9 @@
 		$('#linkcontact').click(function() {
 			$(documentBody).animate({scrollTop: $('#contact').offset().top}, 2*temps);
 		});
+		$('#linkfooter').click(function() {
+			$(documentBody).animate({scrollTop: $('#footer').offset().top}, 2*temps);
+		});
 
 		
 		$(function(){
@@ -217,6 +249,30 @@
 				}
 			});
 		});
+
+    (function($){
+				
+				//cache nav
+				var nav = $("#topNav");
+				
+				//add indicator and hovers to submenu parents
+				nav.find("li").each(function() {
+					if ($(this).find("ul").length > 0) {
+						$("<span>").appendTo($(this).children(":first"));
+
+						//show subnav on hover
+						$(this).mouseenter(function() {
+							$(this).find("ul").stop(true, true).slideDown();
+						});
+						
+						//hide submenus on exit
+						$(this).mouseleave(function() {
+							$(this).find("ul").stop(true, true).slideUp();
+						});
+					}
+				});
+			})(jQuery);
+
 	</script>
 
 </body>
