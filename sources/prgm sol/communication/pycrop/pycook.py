@@ -48,6 +48,7 @@ if __name__ ==  '__main__':
 
 	print 'Fin de la lecture du fichier ' + sys.argv[1]
 	print 'Tracage des graphs'
+	'''
 	plt.subplot(211)
 	plt.plot(temps,T_bmp,'bo')
 	plt.plot(temps,T_bmp,'b')
@@ -55,6 +56,7 @@ if __name__ ==  '__main__':
 	plt.grid(True)
 	plt.title(u'Évolution de la température en fonction du temps')
 	plt.subplot(212)
+	'''
 	plt.plot(temps,T_rht,'ro')
 	plt.plot(temps,T_rht,'r')
 	plt.xlabel(u'temps (µs)')
@@ -72,6 +74,7 @@ if __name__ ==  '__main__':
 	plt.savefig('cooked/Hygro.pdf', format='pdf')
 	plt.close()
 
+	'''
 	plt.plot(temps,P_bmp,'bo')
 	plt.plot(temps,P_bmp,'b')
 	plt.xlabel(u'temps (µs)')
@@ -80,6 +83,7 @@ if __name__ ==  '__main__':
 	plt.grid(True)
 	plt.savefig('cooked/Press.pdf', format='pdf')
 	plt.close()
+	'''
 
 	PTH_file.close()
 	print 'FIN'

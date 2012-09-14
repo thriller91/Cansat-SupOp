@@ -12,7 +12,7 @@ Licence: Librement copiable et modifiable.
 from serial import *
 import sys, threading, os, time
 
-NUM_ETAPE = 10
+NUM_ETAPE = 5
 TX_PATH = 'tx.cmd'
 
 
@@ -28,8 +28,8 @@ else:
 
 
 def RX(ser):
-	buffer = ''
 	etape = NUM_ETAPE
+	buffer = ''
 
 	while True:
 		buffer += ser.read(ser.inWaiting())
@@ -59,12 +59,15 @@ def TX(ser):
 			tx_cmd = tx.readline()
 			tx.close()
 			os.remove(TX_PATH)
-			if '*[%FIN%]*' in tx_cmd:
+			if '*[%END%]*' in tx_cmd:
+				print 'END TX'
 				if not thread_RX.isAlive():
 					ser.close()
 					break
-			ser.write(tx_cmd)
-			print 'TX:\t'+tx_cmd
+			if '*[%JUMP%]*' in tx_cmd:
+				print 'JUMP TO ETAPE:\t'+str(etape)
+				file.write(buffer)
+				etape -= 1
 
 
 class myThread (threading.Thread):
@@ -85,6 +88,8 @@ if __name__ ==  '__main__':
 
 	print "Debut du programme"
 	print "PORT choisi: "+PORT
+
+	etape = NUM_ETAPE
 
 	ser = Serial(
 		port=PORT,
