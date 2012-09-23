@@ -1,1 +1,1 @@
-../BMP085/sketch_may03a/BMP085.h
+../BMP085/BMP085tester/BMP085.h
