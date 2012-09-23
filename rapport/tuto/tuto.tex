@@ -1,6 +1,7 @@
 \documentclass[twocolumn, 8pt]{article}
 \usepackage[greek,francais]{babel}
 \newcommand\tet{\textgreek{tetraf'armakos} }
+\newcommand\IdC{I\textsuperscript{2}C }
 \usepackage{eurosym}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -153,13 +154,27 @@ Ce qui revient alors à 266\euro environ. Vous pouvez très bien adapter ce tuto
 \par Il faut ensuite programmer votre micro-contrôleur pour envoyer les données du capteur sur le port Série de votre Arduino. Pour cela, téléchargez le programme \textsf{'DHTtester'} à l'adresse suivante: \url{https://github.com/thriller91/Cansat-SupOp/tree/master/sources/Arduino/DHT22/DHTtester}. Il faut télécharger les trois fichiers (\texttt{DHTtester.pde}, \texttt{DHT.cpp} et \texttt{DHT.h}), et les placer dans un même dossier appellé \textbf{DHTtester}.
 
 \subsubsection{Capteur de pression}
-\par Notre capteur de pression est le \emph{BMP085}. Il se connecte en I\textsuperscript{2}C. Comme le montre la figure \ref{BMP085}, il faut donc utiliser les broches analogiques \no{}4 et 5 de l'Arduino.
+\par Notre capteur de pression est le \emph{BMP085}. Il se connecte en \IdC. Comme le montre la figure \ref{BMP085}, il faut donc utiliser les broches analogiques \no{}4 et 5 de l'Arduino.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=.2]{BMP085.png}
 	\caption{Branchement du BMP085 à une Arduino}
 	\label{BMP085}
+\end{figure}
+
+\par Le programme à télécharger pour essayer ce capteur est disponible à l'adresse suivante: \url{https://github.com/thriller91/Cansat-SupOp/tree/master/sources/Arduino/BMP085/BMP085tester}.
+
+\subsubsection{Accéléromètre}
+\par Nous avons utilisé un accéléromètre numérique, l'\emph{ADXL345}. Ce composant peut se connecter en \IdC ou en SPI (déjà utilisé par la carte SD). On peut connecter l'accéléromètre et le capteur de pression sur le même bus \IdC, mais comme nous avions 2 Arduino, nous avons utilisé une pour chaque capteur. Si vous voulez éviter d'utiliser une autre Arduino et que vous ne voulez pas placer ces deux composants sur le même bus, vous pouvez choisir d'utiliser un accéléromètre analogique (l'\emph{ADXL335} par exemple).
+
+\par La figure \ref{ADXL345} montre comment brancher l'\emph{ADXL345} sur une Arduino en \IdC:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=.25]{ADXL345.png}
+	\caption{Branchement de l'ADXL345 en \IdC}
+	\label{ADXL345}
 \end{figure}
 
 
