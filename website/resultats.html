@@ -1,0 +1,195 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+
+	<title>Résultats</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="NDVI, hygrometrie, temperature, acceleration, cansat, 2012, Supop, Institut d'Optique">
+	<meta name="author" content="Zubair Iftikhar">
+
+	<!-- Mobile viewport optimized: j.mp/bplateviewport -->
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+
+	<!-- CSS: implied media=all -->
+	<!-- CSS concatenated and minified via ant build script-->
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+	<!-- end CSS-->
+	<link rel="icon" href="http://arduino.cc/en/favicon.png" type="image/x-icon" />
+	<!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+	<link href='http://fonts.googleapis.com/css?family=Bangers|Audiowide|Philosopher:700|Salsa&amp;subset=latin-ext' rel='stylesheet' type='text/css'>
+
+	<script src="js/libs/modernizr-custom.min.js"></script>
+
+	<!-- Inclusion de thickbox.js pour afficher les images -->
+	<link rel="stylesheet" href="js/thickbox.css" type="text/css" media="screen" />
+
+</head>
+<body>
+	<header>
+		<!-- Menu de navigation -->
+		<nav id="topNav">
+			<ul>
+				<li><a href="/">accueil</a></li>
+				<li><a id="lk-ndvi">NDVI</a></li>
+				<li><a id="lk-meteo">météo</a></li>
+				<li><a id="lk-track">tracking</a></li>
+				<li><a id="lk-contact">contact</a></li>
+			</ul>
+		</nav>
+		<!-- Fork us on GitHub! -->
+		<a href="http://github.com/thriller91/Cansat-SupOp"><img style="position: absolute; top: 0; right: 0; border: 0; background-color: transparent;" src="https://a248.e.akamai.net/camo.github.com/71eeaab9d563c2b3c590319b398dd35683265e85/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub"></a>
+
+		<!-- Logo -->
+		<div class="centrage"><img src="images/logo-small240.png" alt="Cansat"/></div>
+		</section>
+	</header>
+
+	<div id="btn_up">↑</div>
+
+	<section id="ndvi" class="main">
+		<h2>NDVI</h2>
+
+		<p>La mesure de l'indice de chlorophylle passe par la photographie d'une scène à travers deux filtres optiques. La chlorophylle a une fluorescence dans le proche infra-rouge, vers 650nm (<em>cf.</em> la figure 2 à la page 2 de notre <a href="/T3-tetrapharmakos.pdf">article</a>). En utilisant un filtre proche infra-rouge, on peut donc mettre en évidence la présence de chlorophylle.
+		</p>
+		<p>Pour pouvoir quantifier le résultat, il peut être judicieux de prendre une photographie sans filtre (pour être plus exacte, il faut utiliser un filtre rouge, on se rapproche ainsi des conditions de la première photographie). Il suffit alors de faire la différence des deux images pour analyser la présence de chlorophylle de façon automatique. On voit alors apparaître uniquement la chlorophylle, contrairement à l'image de la figure 5 du même article, qui a été prise à travers un filtre proche infra-rouge; et où on voit très bien la végétation, mais aussi le bâtiment en arrière plan.
+		</p>
+		<p>Une panne de caméra la semaine juste avant le C'Space nous a empêché de prendre les deux photographies nécessaires pour calculer le NDVI. Nous pouvions cependant prendre la photo derière le filtre proche infra-rouge. Et c'est ce que nous avons fait, voici l'image brute:
+		</p>
+		<div class="centrage"><img src="images/resultats/IMG01.JPG" alt="Photo prise derière une filtre proche IR pendant la chute du cansat sur un terrain de football."/></div>
+
+		<p>En construction ...</p>
+	</section>
+
+	<section id="meteo" class="main">
+		<h2>météo</h2>
+
+		<p>En construction ...</p>
+	</section>
+
+	<section id="track" class="main">
+		<h2>tracking</h2>
+
+		<p>En construction ...</p>
+	</section>
+
+
+
+	<section id="contact" class="main">
+		<h2>Contact</h2>
+			<p>Pour plus d'informations n'hésitez pas nous contacter à l'adresse <a class="contact-link" href="mailto:cansat2012@supop.fr">cansat2012@supop.fr</a>.</p>
+      <p>Ce site a été réalisé avec les dernières technologie du Web. Pour une visite optimale, utilisez un navigateur récent et de préférence <a href="http://www.mozilla-europe.org/fr/">Mozilla Firefox</a>.</p>
+	</section>
+
+	<footer id="footer">
+<section><h3><a href="/#about">à propos du projet</a></h3>
+  <ul>
+    <li><a href="/parachute.html">parachute</a></li>
+    <li><a href="/elec.html">électronique</a></li>
+  </ul>
+</section>
+<section><h3><a href="/#team">l'équipe</a></h3>
+ <ul>
+    <li>photos</li>
+  </ul>
+</section>
+<section><h3><a href="/#mission">missions</a></h3>
+  <ul>
+    <li>indice de végétation</li>
+    <li>données météo</li>
+    <li>paramètres de vol</li>
+  </ul>
+</section>
+<section><h3><a href="/#agenda">agenda</a></h3>
+  <ul>
+    <li>Convension</li>
+    <li>Soutenance</li>
+  </ul>
+</section>
+<section><h3>liens</h3>
+	<ul>
+    <li><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" /></a></li>
+    <li><a href="http://validator.w3.org/check?uri=http%3A%2F%2Fcansat2012.supop.fr%2F"><img alt="I heart validator" style="border-width:0" src="http://www.w3.org/QA/Tools/I_heart_validator" /></a></li>
+    <li><a href="http://www.institutoptique.fr"><img alt="Institut d'Optique Graduate School" style="border-width:0;" src="images/logo-supop-80px.jpg" /></a></li>
+  </ul>
+</section>
+
+  <br style="clear: both;"/>
+  <p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</p>
+	</footer>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!-- Inclusion de thickbox.js pour afficher les images -->
+	<script type="text/javascript" src="js/thickbox-compressed.js"></script>
+	<script type="text/javascript">
+		var documentBody = (($.browser.chrome)||($.browser.safari)) ? document.body : document.documentElement;
+
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-27825146-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+		
+		var temps=1000;
+		
+		$('#lk-ndvi').click(function() {
+			$(documentBody).animate({scrollTop: $('#ndvi').offset().top}, temps);
+		});
+		$('#lk-meteo').click(function() {
+			$(documentBody).animate({scrollTop: $('#meteo').offset().top}, temps);
+		});
+		$('#lk-track').click(function() {
+			$(documentBody).animate({scrollTop: $('#track').offset().top}, 1.5*temps);
+		});
+		$('#lk-contact').click(function() {
+			$(documentBody).animate({scrollTop: $('#contact').offset().top}, 2*temps);
+		});
+
+		$(function(){
+			$('#btn_up').click(function() {
+				$('html,body').animate({scrollTop: 0}, 'slow');
+			});
+			$(window).scroll(function(){
+				if($(window).scrollTop()<300){
+					$('#btn_up').fadeOut();
+				}else{
+					$('#btn_up').fadeIn();
+				}
+			});
+		});
+
+    (function($){
+				
+				//cache nav
+				var nav = $("#topNav");
+				
+				//add indicator and hovers to submenu parents
+				nav.find("li").each(function() {
+					if ($(this).find("ul").length > 0) {
+						$("<span>").appendTo($(this).children(":first"));
+
+						//show subnav on hover
+						$(this).mouseenter(function() {
+							$(this).find("ul").stop(true, true).slideDown();
+						});
+						//hide submenus on exit
+						$(this).mouseleave(function() {
+							$(this).find("ul").stop(true, true).slideUp();
+						});
+					}
+				});
+			})(jQuery);
+
+	</script>
+
+</body>
+</html>

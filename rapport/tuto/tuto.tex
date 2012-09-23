@@ -1,0 +1,117 @@
+\documentclass[twocolumn,landscape, 8pt]{article}
+\usepackage[greek,francais]{babel}
+\newcommand\tet{\textgreek{tetraf'armakos} }
+\usepackage{eurosym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[top=2cm, bottom=2cm, left=1cm, right=1cm]{geometry}
+\setlength{\columnsep}{1cm}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{listings}
+\lstset{language=C,
+basicstyle=\ttfamily\small,
+keywordstyle=\color{Blue}\bfseries,
+identifierstyle=,
+commentstyle=\color{Gray}, 
+stringstyle=\color{BrickRed}\ttfamily,
+morecomment=[l][\color{Green}]{\#},
+showstringspaces=false,
+tabsize=2,
+numbers=left
+}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsfonts}
+
+\title{Tutoriel de fabrication du \tet}
+\author{Clément Javerzac-Galy \and{Denis Savoie}\\
+\texttt{http://cansat2012.supop.fr}
+\and{Zubair Iftikhar}
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    \begin{bfseries}
+	    \par \small Le projet \tet \footnote{pronouncez \textit{tetrapharmakos}} est un projet de Cansat réalisé par l'équipe des \textit{Proton-thérapeutes} de l'Institut d'Optique \textit{Graduate School} afin de participer au \textit{C'Space}, une compétition internationale co-organisée par Planète-Sciences et le CNES. 
+	    \par \small Ce prototype de sonde spatiale embarque un module de mesure de l'indice de végétation fait-maison. Il enregistre en outre certains paramètres de vol à l'aide de divers capteurs (météorologiques et positionels).
+    \par \small Nous espérons que toutes ces données mesurées permettront de caractériser les chances de présence de vie sur une exo-planète semblable à la Terre.
+    \par \small Dans ce tutoriel, vous apprendrez à utiliser les différents composants que nous avons embarqués dans notre Cansat. Vous verrez comment tester le matériel, enregistrer les données mesurées sur une carte $\mu$SD et transférer des données à votre PC \textit{via} une liaison sans-fil.
+     \end{bfseries}
+\end{abstract}
+
+\section{Matériel nécessaire}
+Si vous souhaitez réaliser une copie exacte de notre projet (dont le coût total est d'environ 368\euro), il vous faudra:
+\begin{enumerate}
+	\item Contrôle et calculs:
+		\begin{itemize}
+			\item 2 x Micro-controlleurs Arduino Mini, 2 x 17\euro
+			\item 1 adaptateur Arduino-Mini -- USB, 15\euro
+		\end{itemize}
+	\item Alimentation \footnote{Pour commencer, vous pouvez utiliser l'alimentation de la liaison USB entre votre Arduino et votre ordinateur.}
+		\begin{itemize}
+			\item 1 batterie 9V (NiMH), 13\euro
+			\item 1 circuit d'adaptation de tension délivrant du 3,3V et du 5V, 5\euro
+		\end{itemize}
+	\item Stockage d'information
+		\begin{itemize}
+			\item 2 modules pour carte $\mu$SD, 2 x 13\euro
+			\item 2 cartes $\mu$SD, 2 x 7\euro
+		\end{itemize}
+	\item Transfert de données sans-fil
+		\begin{itemize}
+			\item 2 modules XBee Pro, 2 x 36\euro 
+			\item 1 \textit{dongle}-USB XBee, 21\euro
+		\end{itemize}
+	\item Capteurs
+		\begin{itemize}
+			\item 1 capteur d'humidité et température [RHT22], 15\euro
+			\item 1 capteur de pression et température [BMP085], 18\euro
+			\item 1 accéléromètre [ADXL345], 22\euro
+			\item 1 module GPS [EM-406A], 29\euro 
+			\item 2 caméras Jpeg [LinkSprite Jpeg TTL], 2 x 42\euro
+		\end{itemize}
+\end{enumerate}
+
+\par Nous utilisons des composants en double car nous avons besoin de prendre deux photographies simultanées pour réaliser notre mesure de l'indice de végétation. Vous préfèrerez sans doute une Arduino Nano à une Mini, puisqu'elle est plus simple à programmer et à connecter à un ordinateur. Si vous voulez réduire les coûts et les contraintes techniques, voici la liste de composants à utiliser:
+\begin{enumerate}
+	\item Contrôle et calculs:
+		\begin{itemize}
+			\item 1 Micro-controlleurs Arduino Nano, 29\euro
+		\end{itemize}
+	\item Alimentation
+		\begin{itemize}
+			\item 1 batterie 9V (NiMH), 13\euro
+			\item 1 circuit d'adaptation de tension délivrant du 3,3V et du 5V, 5\euro
+		\end{itemize}
+	\item Stockage d'information
+		\begin{itemize}
+			\item 1 modules pour carte $\mu$SD, 13\euro
+			\item 1 cartes $\mu$SD, 7\euro
+		\end{itemize}
+	\item Transfert de données sans-fil
+		\begin{itemize}
+			\item 2 modules XBee, 2 x 26\euro 
+			\item 1 \textit{dongle}-USB XBee, 21\euro
+		\end{itemize}
+	\item Capteurs
+		\begin{itemize}
+			\item 1 capteur d'humidité et température [RHT22], 15\euro
+			\item 1 capteur de pression et température [BMP085], 18\euro
+			\item 1 accéléromètre [ADXL345], 22\euro
+			\item 1 module GPS [EM-406A], 29\euro 
+			\item 1 caméras Jpeg [LinkSprite Jpeg TTL], 42\euro
+		\end{itemize}
+\end{enumerate}
+Ce qui revient alors à 266\euro environ. Vous pouvez très bien adapter ce tutoriel à vos envies et choisir de faire une simple station météo (100\euro), ou un système de prise de photographies géolocalisées (138\euro).
+
+\section{Assemblage et vérification du matériel}
+
+\par Nous allons commencer par vérifier l'état de marche de chacun des composants. N'utilisez pas de pile au départ, l'alimentation se fera grâce à l'ordinateur. Par exemple si vous avez une Arduino Nano, il suffit de la connecter à votre ordinateur \textit{via} un câble USB (si vous utilisez une Arduino Mini, vous devez utiliser l'adaptateur Arduino FTDI USB-Série pour alimenter et programmer votre système).
+
+\subsection{Le micro-contrôleur}
+
+
+\end{document}
