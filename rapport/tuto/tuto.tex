@@ -1,4 +1,4 @@
-\documentclass[twocolumn,landscape, 8pt]{article}
+\documentclass[twocolumn, 8pt]{article}
 \usepackage[greek,francais]{babel}
 \newcommand\tet{\textgreek{tetraf'armakos} }
 \usepackage{eurosym}
@@ -21,10 +21,11 @@ numbers=left
 }
 \usepackage{graphicx}
 \usepackage{amsmath,amssymb,amsfonts}
+\usepackage{hyperref}
 
 \title{Tutoriel de fabrication du \tet}
 \author{Clément Javerzac-Galy \and{Denis Savoie}\\
-\texttt{http://cansat2012.supop.fr}
+	\texttt{\url{http://cansat2012.supop.fr}}
 \and{Zubair Iftikhar}
 }
 \date{\today}
@@ -67,7 +68,7 @@ Si vous souhaitez réaliser une copie exacte de notre projet (dont le coût tota
 		\end{itemize}
 	\item Capteurs
 		\begin{itemize}
-			\item 1 capteur d'humidité et température [RHT22], 15\euro
+			\item 1 capteur d'humidité et température [RHT03], 15\euro
 			\item 1 capteur de pression et température [BMP085], 18\euro
 			\item 1 accéléromètre [ADXL345], 22\euro
 			\item 1 module GPS [EM-406A], 29\euro 
@@ -98,7 +99,7 @@ Si vous souhaitez réaliser une copie exacte de notre projet (dont le coût tota
 		\end{itemize}
 	\item Capteurs
 		\begin{itemize}
-			\item 1 capteur d'humidité et température [RHT22], 15\euro
+			\item 1 capteur d'humidité et température [RHT03], 15\euro
 			\item 1 capteur de pression et température [BMP085], 18\euro
 			\item 1 accéléromètre [ADXL345], 22\euro
 			\item 1 module GPS [EM-406A], 29\euro 
@@ -111,7 +112,55 @@ Ce qui revient alors à 266\euro environ. Vous pouvez très bien adapter ce tuto
 
 \par Nous allons commencer par vérifier l'état de marche de chacun des composants. N'utilisez pas de pile au départ, l'alimentation se fera grâce à l'ordinateur. Par exemple si vous avez une Arduino Nano, il suffit de la connecter à votre ordinateur \textit{via} un câble USB (si vous utilisez une Arduino Mini, vous devez utiliser l'adaptateur Arduino FTDI USB-Série pour alimenter et programmer votre système).
 
+
 \subsection{Le micro-contrôleur}
+\par Pour savoir comment connecter votre Arduino à votre ordinateur pour la programmer, vous pouvez vous rendre sur le site officiel du fabricant: 
+\begin{itemize}
+	\item Arduino Mini: \url{http://arduino.cc/en/Guide/ArduinoMini}
+	\item Arduino Nano: \url{http://arduino.cc/en/Guide/ArduinoNano}
+\end{itemize}
+\par Dans tous les cas, vous devez télécharger le logiciel de programmation Arduino sur \url{http://arduino.cc/en/Main/Software}. Utilisez le programme d'exemple \textsf{'Blink'} pour vérifier l'état de marche de votre micro-contrôleur.
+
+
+\subsection{Le stockage sur carte $\mu$SD}
+\par La plupart des applications nécessitent un enregistrement sur carte SD. Le prix de ces cartes mémoire Flash a beaucoup diminué, et on peut aujourd'hui facilement trouver une carte $\mu$SD de 2Go pour moins d'une dizaine d'euros. Il est recommandé d'utiliser des cartes de marque (j'avais une carte générique qui n'était pas reconnue, bien qu'elle soit bien formattée).
+
+\par La figure \ref{SD} montre comment connecter le module de carte $\mu$SD à une Arduino Mini \footnote{Il faut savoir que les cartes SD doivent être alimentées en 3,3V, et que l'Arduino Mini fonctionne en 5V.}:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=.25]{SD.png}
+	\caption{Branchement d'une carte SD à une Arduino}
+	\label{SD}
+\end{figure}
+
+\par Il faut alors utliser le programme d'exemple \textsf{'CardInfo'} du logiciel Arduino pour vérifier l'état de votre carte SD et de votre branchement.
+
+
+\subsection{Les capteurs}
+\par Notre Cansat devait remplir deux missions (sondage atmosphérique et mesure de l'indice de chlorophille). Pour la première, nous avions besoin d'un capteur d'humidité et d'un capteur de pression. Pour la seconde, nous avions besoin de deux caméra. L'accéléromètre et le module GPS étaient utilisés en vue de préparer une troisième mission: le atterissage maîtrisé sur une cible.
+
+\subsubsection{Capteur d'humidité}
+\par Le capteur d'humidité que nous avons utilisé est le \emph{RHT03}. Comme le reste des capteurs que nous avons utilisés, il est très simple d'emploi. La figure \ref{RHT03} montre comment le brancher \footnote{Il faut utiliser une résistance de tirage de 10k$\Omega$ entre la broche \no{}2 et l'alimentation +5V.}:
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=.2]{RHT03.png}
+	\caption{Branchement du RHT03 à une Arduino}
+	\label{RHT03}
+\end{figure}
+
+\par Il faut ensuite programmer votre micro-contrôleur pour envoyer les données du capteur sur le port Série de votre Arduino. Pour cela, téléchargez le programme \textsf{'DHTtester'} à l'adresse suivante: \url{https://github.com/thriller91/Cansat-SupOp/tree/master/sources/Arduino/DHT22/DHTtester}. Il faut télécharger les trois fichiers (\texttt{DHTtester.pde}, \texttt{DHT.cpp} et \texttt{DHT.h}), et les placer dans un même dossier appellé \textbf{DHTtester}.
+
+\subsubsection{Capteur de pression}
+\par Notre capteur de pression est le \emph{BMP085}. Il se connecte en I\textsuperscript{2}C. Comme le montre la figure \ref{BMP085}, il faut donc utiliser les broches analogiques \no{}4 et 5 de l'Arduino.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=.2]{BMP085.png}
+	\caption{Branchement du BMP085 à une Arduino}
+	\label{BMP085}
+\end{figure}
 
 
 \end{document}
