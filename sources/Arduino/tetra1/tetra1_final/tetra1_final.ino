@@ -1,16 +1,22 @@
-
 /*
-Programme embarqué sur l'Arduino Mini n°1 du τετραφάρμακος, pour la misson ultime.
-Le τετραφάρμακος est embarqué dans le lanceur de la fusée EVE4 de l'équipe Octave pour le projet Protheus.
-Date du largage: 30 aout 2012.
+Programme embarqué sur l'Arduino Mini n°1 du τετραφάρμακος, pour la Fête de la science 2012.
+Date du largage: 13 octobre 2012.
 Auteur: Zubair Iftikhar
 Licence: Libre
 */
 #include <SD.h>
 #include <SoftwareSerial.h>
 #include "tetrapharmakos.h"
+#include "DHT.h"
 
 #define ULTLOG_NAME "ULTM.LOG"
+
+// RHT03
+#define DHTPIN 2
+#define DHTTYPE DHT22 
+#define PTH_FILENAME "PTH.TXT"
+File PTH_File;
+DHT dht(DHTPIN, DHTTYPE);
 
 byte incomingbyte;
 byte a[32];                            //Array to store image chuncks to be read off the camera
@@ -50,6 +56,10 @@ void setup()
 	XBee.begin(9600);
         attachInterrupt(INTERRUPT_PIN, send_data, RISING);
 
+	//RHT03
+	dht.begin();
+	PTH_File = SD.open(PTH_FILENAME, FILE_WRITE);
+
 	XBee.println("Debut");
 	pinMode(10, OUTPUT);
 	if (!SD.begin(CHIP_SELECT)) {
@@ -63,7 +73,35 @@ void setup()
 
 void loop()
 {
+	float h = dht.readHumidity();
+	float t = dht.readTemperature();
+
+	if (isnan(t)|| isnan(h))
+		PTH_File.println("NaN\tNaN");
+	else {
+		PTH_File.print(h);
+		PTH_File.print("\t");
+		PTH_File.println(t);
+	}
+
+
+	PTH_File.println(millis());
+
 	if(data_flag){
+		PTH_File.close();
+		XBee.println("*[%4%]*");
+		//Transmission PTH
+		PTH_File = SD.open(PTH_FILENAME);
+
+		if (PTH_File) {
+			while (PTH_File.available())
+				XBee.write(PTH_File.read());
+			PTH_File.close();
+		}
+		delay(100);
+		PTH_File.close();
+		SD.remove(PTH_FILENAME);
+
 		/*
 		logy = SD.open(ULTLOG_NAME, FILE_WRITE);
 		logy.println(millis());
@@ -102,7 +140,7 @@ void loop()
 				{
 					a[j]=incomingbyte;
 					if((a[j-1]==0xFF)&&(a[j]==0xD9))      //Check if the picture is over
-						EndFlag=1; 
+						EndFlag=1;
 					logfile.print((char)incomingbyte);
 					j++;
 				}
@@ -119,8 +157,9 @@ void loop()
 				XBee.write(logfile.read());
 			logfile.close();
 		}
+		XBee.println("*[%1%]*");
 		delay(100);
-		XBee.println("*[%0%]*");
+		PTH_File = SD.open(PTH_FILENAME, FILE_WRITE);
 		data_flag=false;
 	}
 

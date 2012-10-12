@@ -22,12 +22,18 @@ else:
 
 
 
-
 def RX(ser):
     buffer = ''
 
     while True:
         buffer += ser.read(ser.inWaiting())
+
+        if '*[%4%]*' in buffer:
+            print 'Meteo OK'
+            file = open("meteo.dat",'w+')
+            file.write(buffer)
+            buffer = ''
+            file.close()
 
         if '*[%3%]*' in buffer:
             print 'Reset'
