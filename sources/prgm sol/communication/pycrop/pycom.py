@@ -12,7 +12,7 @@ Licence: Librement copiable et modifiable.
 from serial import *
 import sys, threading, os, time
 
-NUM_ETAPE = 5
+NUM_ETAPE = 2
 TX_PATH = 'tx.cmd'
 
 
@@ -112,7 +112,7 @@ if __name__ ==  '__main__':
 	thread_TX = myThread('TX',ser)
 
 	# Lancement des threads
-	thread_TX.start()
+	#thread_TX.start()
 	thread_RX.start()
 
 	#ser.close()

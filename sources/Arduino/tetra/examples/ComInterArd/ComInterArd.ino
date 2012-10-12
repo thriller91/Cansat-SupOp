@@ -13,6 +13,8 @@ On peut aussi essayer en diminuant le Baudrate de la connection SoftwareSerial.
 
 #define CHIP_SELECT 10
 
+#define READ_FILENAME "IMG08.JPG" // 12504 Ko
+
 SoftwareSerial InterArduino(6, 7); // RX, TX
 
 void setup() {
@@ -33,7 +35,7 @@ void setup() {
 	}
 	Serial.println("card initialized.");
 
-	File dataFile = SD.open("IMG01.JPG");
+	File dataFile = SD.open(READ_FILENAME);
 
 	delay(5000);
 	digitalWrite(4, HIGH);
