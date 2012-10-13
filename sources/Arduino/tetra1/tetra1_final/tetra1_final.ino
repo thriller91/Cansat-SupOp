@@ -8,6 +8,8 @@ Licence: Libre
 #include <SoftwareSerial.h>
 #include "tetrapharmakos.h"
 #include "DHT.h"
+#include <Wire.h>
+#include "BMP085.h"
 
 #define ULTLOG_NAME "ULTM.LOG"
 
@@ -58,7 +60,9 @@ void setup()
 
 	//RHT03
 	dht.begin();
-	PTH_File = SD.open(PTH_FILENAME, FILE_WRITE);
+	//BMP085
+	Wire.begin();
+	bmp085Calibration();
 
 	XBee.println("Debut");
 	pinMode(10, OUTPUT);
@@ -69,27 +73,37 @@ void setup()
                 }
 	}
 
+	delay(3000);
 }
 
 void loop()
 {
+	PTH_File = SD.open(PTH_FILENAME, FILE_WRITE);
+
+	PTH_File.print(millis());
+
+	float temperature = bmp085GetTemperature(bmp085ReadUT()); //MUST be called first
+	float pressure = bmp085GetPressure(bmp085ReadUP());
+	PTH_File.print("\t");
+	PTH_File.print(temperature, 2); //display 2 decimal places
+	PTH_File.print("\t");
+	PTH_File.print(pressure, 0); //whole number only.
+
 	float h = dht.readHumidity();
 	float t = dht.readTemperature();
-
 	if (isnan(t)|| isnan(h))
-		PTH_File.println("NaN\tNaN");
+		PTH_File.println("\tNaN\tNaN");
 	else {
+		PTH_File.print("\t");
 		PTH_File.print(h);
 		PTH_File.print("\t");
 		PTH_File.println(t);
 	}
 
 
-	PTH_File.println(millis());
-
 	if(data_flag){
 		PTH_File.close();
-		XBee.println("*[%4%]*");
+		XBee.print("*[%4%]*");
 		//Transmission PTH
 		PTH_File = SD.open(PTH_FILENAME);
 
@@ -101,6 +115,7 @@ void loop()
 		delay(100);
 		PTH_File.close();
 		SD.remove(PTH_FILENAME);
+
 
 		/*
 		logy = SD.open(ULTLOG_NAME, FILE_WRITE);
@@ -117,7 +132,7 @@ void loop()
 		SendResetCmd();                  // Reset the Camera
 		delay(3000);                     //After reset, wait 2-3 second to send take picture command 
 
-		XBee.println("*[%2%]*");
+		XBee.print("*[%2%]*");
 		SendTakePhotoCmd();
 		while(Serial.available()>0)
 		{
@@ -148,7 +163,7 @@ void loop()
 		}
 		logfile.close();
 
-		XBee.println("*[%1%]*");
+		XBee.print("*[%1%]*");
 		// Transmission
 		logfile = SD.open(filename);
 
@@ -157,12 +172,14 @@ void loop()
 				XBee.write(logfile.read());
 			logfile.close();
 		}
-		XBee.println("*[%1%]*");
+		XBee.print("*[%0%]*");
 		delay(100);
+
 		PTH_File = SD.open(PTH_FILENAME, FILE_WRITE);
 		data_flag=false;
 	}
-
+	PTH_File.close();
+	delay(10000);
 }
 
 void send_data() {

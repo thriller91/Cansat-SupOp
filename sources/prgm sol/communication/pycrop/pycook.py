@@ -17,7 +17,6 @@ import sys, os
 import matplotlib.pyplot as plt
 
 if len(sys.argv)>1:
-	os.chdir('parsed')
 	PTH_file = open(sys.argv[1],'r')
 	print 'Ouverture du fichier ' + sys.argv[1]
 else:
@@ -35,31 +34,28 @@ if __name__ ==  '__main__':
 
 	for line in PTH_file:
 		liste = line.split()
-		if len(liste) == 1:
-			temps.append(liste)
-		else:
-			if liste[0] == 'B':
-				T_bmp.append(liste[1])
-				P_bmp.append(liste[2])
-			else:
-				H_rht.append(liste[1])
-				T_rht.append(liste[2])
+		if len(liste) == 5:
+			temps.append(str(float(liste[0])/1000))
+                        T_bmp.append(liste[1])
+                        P_bmp.append(liste[2])
+                        H_rht.append(liste[3])
+                        T_rht.append(liste[4])
 
 
 	print 'Fin de la lecture du fichier ' + sys.argv[1]
 	print 'Tracage des graphs'
-	'''
-	plt.subplot(211)
+
+	#plt.subplot(211)
 	plt.plot(temps,T_bmp,'bo')
 	plt.plot(temps,T_bmp,'b')
 	plt.ylabel(u'température (°C)')
 	plt.grid(True)
 	plt.title(u'Évolution de la température en fonction du temps')
-	plt.subplot(212)
-	'''
+	#plt.subplot(212)
+
 	plt.plot(temps,T_rht,'ro')
 	plt.plot(temps,T_rht,'r')
-	plt.xlabel(u'temps (µs)')
+	plt.xlabel(u'temps (s)')
 	plt.ylabel(u'température (°C)')
 	plt.grid(True)
 	plt.savefig('cooked/Temp.pdf', format='pdf')
@@ -67,14 +63,14 @@ if __name__ ==  '__main__':
 
 	plt.plot(temps,H_rht,'ro')
 	plt.plot(temps,H_rht,'r')
-	plt.xlabel(u'temps (µs)')
+	plt.xlabel(u'temps (s)')
 	plt.ylabel(u'Humidité (%)')
 	plt.title(u'Évolution de l\'hygrométrie en fonction du temps')
 	plt.grid(True)
 	plt.savefig('cooked/Hygro.pdf', format='pdf')
 	plt.close()
 
-	'''
+
 	plt.plot(temps,P_bmp,'bo')
 	plt.plot(temps,P_bmp,'b')
 	plt.xlabel(u'temps (µs)')
@@ -83,7 +79,7 @@ if __name__ ==  '__main__':
 	plt.grid(True)
 	plt.savefig('cooked/Press.pdf', format='pdf')
 	plt.close()
-	'''
+
 
 	PTH_file.close()
 	print 'FIN'
